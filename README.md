@@ -15,5 +15,6 @@ git push origin develop
 4. Merge 이후 동기화 및 branch 삭제할 것
 ```
 git pull father
-git branch -D <branch 이름>
+git checkout master
+git branch -d <branch 이름>
 ```
