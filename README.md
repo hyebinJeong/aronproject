@@ -1,6 +1,10 @@
 ## morgorithm
 
 ### PR 활용법
+0. 항상 보내기 전에 pull부터 실행합시다.
+```
+git pull origin master
+```
 1. git branch 생성하고 그 branch로 이동함
 ```
 git checkout -b <branch 이름>
