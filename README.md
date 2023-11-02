@@ -14,7 +14,6 @@ git push origin <branch 이름>
 3. PR 승인 대기하기
 4. Merge 이후 동기화 및 branch 삭제할 것
 ```
-git pull father
-git checkout master
+git pull origin master
 git branch -d <branch 이름>
 ```
