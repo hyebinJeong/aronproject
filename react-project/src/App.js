@@ -1,19 +1,21 @@
-import "./App.css";
-import Login from "./components/Login";
-import NavBar from "./components/NavBar";
-import Main01 from "./pages/Main01";
+import logo from './logo.svg';
+import './App.css';
+import Login from './components/Login';
+import Header from './components/Header';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 function App() {
   return (
-    <div>
-      <div className='space'>
-        <NavBar></NavBar>
+    <BrowserRouter>
+      <div className="space" >
+        {/* <Header /> */}
+        {/* <Login /> */}
+        <Routes>
+          <Route path='/login' element={<Login></Login>}></Route>
+          <Route path='/header' element={<Header></Header>}></Route>
+        </Routes>
       </div>
-      <hr />
-      <div className='space'>
-        <Main01></Main01>
-      </div>
-    </div>
+    </BrowserRouter>
   );
 }
 
