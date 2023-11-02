@@ -1,0 +1,32 @@
+.main-bar {
+  width: 100%;
+  height: 5vh;
+  margin: 0.5vw 0 0 0;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+}
+
+.status-main {
+  display: flex;
+  position: absolute;
+  /* padding: 0 0 0 10vw; */
+  justify-content: space-between;
+}
+
+b1 {
+  width: 70px;
+  height: 20px;
+  font-family: Pretendard;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 700;
+}
+
+.btn-main {
+  padding: 0 0 0 10vw;
+  display: flex;
+  position: absolute;
+  right: 10vw;
+  align-items: center;
+}
