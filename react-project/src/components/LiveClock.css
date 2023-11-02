@@ -1,0 +1,12 @@
+.live-clock {
+  display: inline-block;
+  width: 230px;
+  /* height: 35px; */
+  margin: 0 0 0 12px;
+  color: #000;
+  font-family: Pretendard Variable;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
