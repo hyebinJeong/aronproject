@@ -13,7 +13,7 @@
 .nav-back {
   display: flex;
   position: absolute;
-  right: 7vw;
+  right: 5vw;
   align-items: center;
   justify-content: flex-end;
 }
