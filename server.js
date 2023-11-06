@@ -7,13 +7,19 @@ const indexRouter= require('./routes');
 const path = require('path');
 
 const session = require('express-session');
-const fileStore = require('express-mysql-session')(session)
+const MySQLStore = require('express-mysql-session')(session)
 
 // 세션
 app.use(session({
     httpOnly : true,
     secret: 'secret',
-    store: new fileStore(),
+    store: new MySQLStore({
+        host : 'project-db-stu3.smhrd.com',
+        port : 3308,
+        user : 'Insa4_JSB_final_3',
+        password : 'aishcool3',
+        database : 'Insa4_JSB_final_3'
+    }),
     resave: false,
     saveUninitialized: false,
     cookie: { maxAge: 50 * 60 * 1000 } // 50분
