@@ -2,29 +2,67 @@ import React from 'react'
 import Modify from '../components/button/Modify'
 import Emr from '../components/button/Emr'
 import './Main01.css'
+import LiveClock from '../components/LiveClock'
+import iconRe from '../image/iconRe.svg'
+import iconSearch from '../image/iconSearch.svg'
+import '../components/NavBar.css'
+import List from '../components/button/List';
+import ChartLine from '../components/button/ChartLine';
+import Header from '../components/Header'
+import Table from '../components/Table'
 
-const TableMain = () => {
-
+const Main01 = () => {
+    function refreshPage() {
+        window.location.reload();
+    }
     return (
         <div>
+            <Header></Header>
 
-            <div className='main-bar'>
+            <div className='space'>
+                <div className='nav'>
+                    <div className='nav-front'>
+                        <List />
+                        <ChartLine />
+                    </div>
 
-                <div className='status-main'>
-                    <b1 className='all'>전체</b1>
+                    <div className='nav-back'>
+                        <input className='search-bar'></input>
+                        <button className='btn-search'>
+                            <img className='search-icon' src={iconSearch} alt="" />
+                        </button>
+                        <button className='btn-re' onClick={refreshPage}>
+                            <img className='re-icon' src={iconRe} alt="" />
+                        </button>
+                        <LiveClock />
+                    </div>
 
-                    <b1 className='new'>신규</b1>
-
-                    <b1 className='obsv'>관찰중</b1>
                 </div>
+            </div>
+            <hr />
+            <div className='space'>
+                <div className='main-bar'>
 
-                <div className='btn-main'>
-                    <Modify></Modify>
-                    <Emr></Emr>
+                    <div className='status-main'>
+                        <b1 className='class-status'>전체</b1>
+
+                        <b1 className='class-status'>신규</b1>
+
+                        <b1 className='class-status'>관찰중</b1>
+                    </div>
+
+                    <div className='btn-main'>
+                        <Modify></Modify>
+                        <Emr></Emr>
+                    </div>
+
+                </div>
+                <div className='main-table'>
+                    <Table></Table>
                 </div>
             </div>
         </div>
     )
 }
 
-export default TableMain
+export default Main01

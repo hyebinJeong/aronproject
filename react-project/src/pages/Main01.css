@@ -1,3 +1,7 @@
+.space {
+  margin: 0 5vw 0 5vw;
+}
+
 .main-bar {
   width: 100%;
   height: 5vh;
@@ -7,6 +11,10 @@
   align-items: center;
 }
 
+hr {
+  width: 100%;
+}
+
 .status-main {
   display: flex;
   position: absolute;
@@ -14,7 +22,7 @@
   justify-content: space-between;
 }
 
-b1 {
+.class-status {
   width: 70px;
   height: 20px;
   font-family: Pretendard;
@@ -27,6 +35,10 @@ b1 {
   padding: 0 0 0 10vw;
   display: flex;
   position: absolute;
-  right: 10vw;
+  right: 5vw;
   align-items: center;
+}
+
+.main-table {
+  width: 100%;
 }

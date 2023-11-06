@@ -1,0 +1,202 @@
+[
+  {
+    "id": 1,
+    "name": "Wang Olifaunt",
+    "gender": "F",
+    "age": 37,
+    "record_time": "2022-11-04T00:57:29Z",
+    "HR": 38,
+    "O2Sat": 85,
+    "Temp": 58
+  },
+  {
+    "id": 2,
+    "name": "Virginia Bosche",
+    "gender": "F",
+    "age": 61,
+    "record_time": "2022-11-11T18:32:28Z",
+    "HR": 78,
+    "O2Sat": 34,
+    "Temp": 56
+  },
+  {
+    "id": 3,
+    "name": "Denys Griffey",
+    "gender": "F",
+    "age": 59,
+    "record_time": "2023-05-16T15:04:01Z",
+    "HR": 38,
+    "O2Sat": 95,
+    "Temp": 14
+  },
+  {
+    "id": 4,
+    "name": "Idell Henri",
+    "gender": "M",
+    "age": 36,
+    "record_time": "2023-10-06T13:33:10Z",
+    "HR": 11,
+    "O2Sat": 68,
+    "Temp": 35
+  },
+  {
+    "id": 5,
+    "name": "Jandy Pannett",
+    "gender": "F",
+    "age": 21,
+    "record_time": "2023-06-09T01:59:10Z",
+    "HR": 17,
+    "O2Sat": 35,
+    "Temp": 96
+  },
+  {
+    "id": 6,
+    "name": "Pembroke Kigelman",
+    "gender": "F",
+    "age": 31,
+    "record_time": "2022-12-28T07:22:42Z",
+    "HR": 54,
+    "O2Sat": 74,
+    "Temp": 48
+  },
+  {
+    "id": 7,
+    "name": "Davide Tunna",
+    "gender": "F",
+    "age": 70,
+    "record_time": "2023-06-04T22:38:49Z",
+    "HR": 50,
+    "O2Sat": 76,
+    "Temp": 54
+  },
+  {
+    "id": 8,
+    "name": "Haze Craft",
+    "gender": "F",
+    "age": 99,
+    "record_time": "2022-11-29T10:11:22Z",
+    "HR": 34,
+    "O2Sat": 46,
+    "Temp": 10
+  },
+  {
+    "id": 9,
+    "name": "Peria Blything",
+    "gender": "F",
+    "age": 27,
+    "record_time": "2022-11-30T07:43:58Z",
+    "HR": 33,
+    "O2Sat": 61,
+    "Temp": 58
+  },
+  {
+    "id": 10,
+    "name": "Fanechka Adamo",
+    "gender": "M",
+    "age": 96,
+    "record_time": "2022-12-04T05:14:51Z",
+    "HR": 73,
+    "O2Sat": 30,
+    "Temp": 97
+  },
+  {
+    "id": 11,
+    "name": "Dallon Stare",
+    "gender": "M",
+    "age": 22,
+    "record_time": "2023-10-16T21:04:31Z",
+    "HR": 92,
+    "O2Sat": 98,
+    "Temp": 57
+  },
+  {
+    "id": 12,
+    "name": "Hazel Rimer",
+    "gender": "M",
+    "age": 80,
+    "record_time": "2023-03-03T00:53:43Z",
+    "HR": 20,
+    "O2Sat": 89,
+    "Temp": 74
+  },
+  {
+    "id": 13,
+    "name": "Cthrine January",
+    "gender": "M",
+    "age": 19,
+    "record_time": "2023-01-30T19:45:27Z",
+    "HR": 94,
+    "O2Sat": 13,
+    "Temp": 86
+  },
+  {
+    "id": 14,
+    "name": "Olive Messier",
+    "gender": "M",
+    "age": 74,
+    "record_time": "2023-03-20T12:45:06Z",
+    "HR": 2,
+    "O2Sat": 81,
+    "Temp": 75
+  },
+  {
+    "id": 15,
+    "name": "Cecily Linzey",
+    "gender": "F",
+    "age": 12,
+    "record_time": "2023-04-17T08:36:09Z",
+    "HR": 36,
+    "O2Sat": 29,
+    "Temp": 98
+  },
+  {
+    "id": 16,
+    "name": "Anabal Stuart",
+    "gender": "F",
+    "age": 19,
+    "record_time": "2023-02-10T10:16:31Z",
+    "HR": 2,
+    "O2Sat": 53,
+    "Temp": 70
+  },
+  {
+    "id": 17,
+    "name": "Jesse Lie",
+    "gender": "M",
+    "age": 33,
+    "record_time": "2023-10-05T22:41:55Z",
+    "HR": 95,
+    "O2Sat": 43,
+    "Temp": 43
+  },
+  {
+    "id": 18,
+    "name": "Carmelle Pernell",
+    "gender": "F",
+    "age": 68,
+    "record_time": "2023-09-03T21:22:36Z",
+    "HR": 99,
+    "O2Sat": 61,
+    "Temp": 88
+  },
+  {
+    "id": 19,
+    "name": "Virgie Arnaez",
+    "gender": "F",
+    "age": 21,
+    "record_time": "2023-03-09T03:25:57Z",
+    "HR": 4,
+    "O2Sat": 33,
+    "Temp": 46
+  },
+  {
+    "id": 20,
+    "name": "Drusie Sweett",
+    "gender": "M",
+    "age": 58,
+    "record_time": "2023-06-16T10:49:20Z",
+    "HR": 59,
+    "O2Sat": 36,
+    "Temp": 24
+  }
+]
