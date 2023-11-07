@@ -22,14 +22,15 @@ hr {
   justify-content: space-between;
 }
 
-.class-status {
+/* .class-status {
   width: 70px;
   height: 20px;
   font-family: Pretendard;
   font-size: 15px;
   font-style: normal;
   font-weight: 700;
-}
+} */
+
 .class-status-tb {
   width: 70px;
   height: 20px;

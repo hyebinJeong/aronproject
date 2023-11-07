@@ -103,12 +103,12 @@ const PatientTable = () => {
     return (
         <div>
 
-            <table {...getTableProps()}>
-                <thead>
+            <table className='p-tb' {...getTableProps()}>
+                <thead className='p-tb-thead'>
                     {headerGroups.map((headerGroup, headerIndex) => (
                         <tr {...headerGroup.getHeaderGroupProps()}>
                             {headerGroup.headers.map((columns, columnsIndex) => (
-                                <th {...columns.getHeaderProps(columns.getSortByToggleProps())}>{columns.render('Header')}
+                                <th className='p-tb-column' {...columns.getHeaderProps(columns.getSortByToggleProps())}>{columns.render('Header')}
 
                                     {/* sort 버튼*/}
                                     {
