@@ -30,6 +30,14 @@ hr {
   font-style: normal;
   font-weight: 700;
 }
+.class-status-tb {
+  width: 70px;
+  height: 20px;
+  font-family: Pretendard;
+  font-size: 17px;
+  font-style: normal;
+  font-weight: 900;
+}
 
 .btn-main {
   padding: 0 0 0 10vw;
@@ -41,4 +49,58 @@ hr {
 
 .main-table {
   width: 100%;
+}
+
+.nav {
+  width: 100%;
+  height: 7vh;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+}
+.nav-front {
+  /* padding: 0 0 0 10vw; */
+  display: flex;
+  align-items: center;
+}
+.nav-back {
+  display: flex;
+  position: absolute;
+  right: 5vw;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.search-bar {
+  width: 150px;
+  height: 19px;
+  flex-shrink: 0;
+  border-radius: 9px;
+  background-color: rgba(217, 217, 217, 0.2);
+  stroke-width: 1px;
+  stroke: #000;
+}
+.btn-search {
+  width: 35px;
+  height: 26px;
+  flex-shrink: 0;
+  border: none;
+  background: rgba(217, 217, 217, 0);
+}
+.search-icon {
+  width: 30px;
+  height: 18px;
+  flex-shrink: 0;
+}
+.btn-re {
+  width: 35px;
+  height: 26px;
+  flex-shrink: 0;
+  border: none;
+  background: rgba(217, 217, 217, 0);
+}
+.re-icon {
+  width: 30px;
+  height: 20px;
+  flex-shrink: 0;
 }
