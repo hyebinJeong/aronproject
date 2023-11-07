@@ -5,11 +5,11 @@ import './Main01.css'
 import LiveClock from '../components/LiveClock'
 import iconRe from '../image/iconRe.svg'
 import iconSearch from '../image/iconSearch.svg'
-import '../components/NavBar.css'
 import List from '../components/button/List';
 import ChartLine from '../components/button/ChartLine';
 import Header from '../components/Header'
-import Table from '../components/Table'
+import PatientTable from '../components/PatientTable'
+import SuspiciousTable from '../components/SuspiciousTable'
 
 const Main01 = () => {
     function refreshPage() {
@@ -58,7 +58,11 @@ const Main01 = () => {
 
                 </div>
                 <div className='main-table'>
-                    <Table></Table>
+                    <b1 className='class-status-tb'>의심</b1>
+                    <SuspiciousTable></SuspiciousTable>
+                    <br />
+                    <b1 className='class-status-tb'>전체</b1>
+                    <PatientTable></PatientTable>
                 </div>
             </div>
         </div>
