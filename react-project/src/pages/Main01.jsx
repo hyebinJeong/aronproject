@@ -43,13 +43,13 @@ const Main01 = () => {
             <div className='space'>
                 <div className='main-bar'>
 
-                    <div className='status-main'>
+                    {/* <div className='status-main'>
                         <b1 className='class-status'>전체</b1>
 
                         <b1 className='class-status'>신규</b1>
 
                         <b1 className='class-status'>관찰중</b1>
-                    </div>
+                    </div> */}
 
                     <div className='btn-main'>
                         <Modify></Modify>
