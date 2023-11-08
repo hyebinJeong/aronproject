@@ -25,7 +25,7 @@ app.use(session({
     cookie: { maxAge: 50 * 60 * 1000 } // 50분
 }));
 
-// COPS 이슈 해결
+// CORS 이슈 해결
 app.use(express.json());
 const cors = require('cors');
 app.use(cors());
@@ -34,6 +34,8 @@ app.set('port', process.env.PORT || 3001);
 
 // 정적인 파일 관리
 app.use(express.static(path.join(__dirname, 'react-project', 'build')));
+
+
 
 // 라우터와 미들웨어
 app.use('/', indexRouter)

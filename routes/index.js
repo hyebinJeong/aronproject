@@ -3,15 +3,82 @@ const express = require('express');
 // 라우터 객체 생성
 const router = express.Router();
 const path = require('path');
+const conn = require('../config/database');
+const { off } = require('process');
 
-//경로로 GET 요청 들어오면
-// router.get('/', (req, res)=>{
-//    console.log('')
-//    // 해당 경로의 파일을 클라이언트에게 전송
-//    // 인자로 전달된 경로들을 결합하여 새로운 경로 생성
-//    // __dirname은 현재파일 위치한 디렉토리 경로
-//    // res.sendFile(path.join(__dirname,'..','','','index.html'))
-// })
+
+// 전체 데이터
+router.post('/patints', async (req, res) => {
+    const page = req.body.page || 1;
+    const limit = 10;
+    const offset = (page - 1) * limit;
+
+    const sql = `
+        SELECT 
+            p.patient_id, 
+            p.name,
+            p.gender,
+            p.age,
+            d.record_time,
+            d.HR,
+            d.O2Sat,
+            d.Temp,
+            d.SBP,
+            d.MAP,
+            d.DBP,
+            d.Resp
+        FROM 
+            patient AS p
+        JOIN 
+            data AS d ON p.patient_id = d.patient_id
+        LIMIT ? OFFSET ?
+    `;
+
+    try {
+        const results = await new Promise((resolve, reject) => {
+            conn.query(sql, [limit, offset], (err, results) => {
+                if (err) reject(err);
+                else resolve(results);
+            });
+        });
+        res.json(results);
+    } catch (err) {
+        console.log(err);
+        res.status(500).send('An error occurred, please try again.');
+    }
+});
+
+
+// 패혈증 의심 환자 테이블 불러오기 (패혈증 점수 70이상)
+// router.post('/suspicious', async (req, res) => {
+//     const sql = "SELECT * FROM patient WHERE sepsis_score >= 70";
+//     try {
+//         const results = await new Promise((resolve, reject) => {
+//             conn.query(sql, (err, results) => {
+//                 if (err) reject(err);
+//                 else resolve(results);
+//             });
+//         });
+//         res.json(results);
+//     } catch (err) {
+//         console.log(err);
+//         res.status(500).send('An error occurred, please try again.');
+//     }
+// });
+
+
 
 // 라우터 객체를 모듈로 내보냄
 module.exports = router;
+
+
+
+
+
+
+
+
+
+
+
+
