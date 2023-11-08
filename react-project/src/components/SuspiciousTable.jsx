@@ -7,10 +7,10 @@ import './SuspiciousTable.css'
 import iconSortUp from '../image/iconSortUp.svg'
 import iconSortDown from '../image/iconSortDown.svg'
 import { CheckBox } from './CheckBox'
+import axios from 'axios';
 
 
 const SuspiciousTable = () => {
-
 
     const columns = useMemo(() => GROUPED_COLUMNS, [])
     const data = useMemo(() => FAKE_DATA, [])
@@ -84,29 +84,26 @@ const SuspiciousTable = () => {
                     ))}
                 </thead>
 
+
+                <tbody  {...getTableBodyProps()}>
+                    {/* page를 나타낼 거면 rows를 page로 바꾼다. */}
+                    {rows.map((row) => {
+                        prepareRow(row)
+                        return (
+                            <tr  {...row.getRowProps()}>
+                                {row.cells.map((cell, columnIndex) => {
+                                    // console.log('row', row)
+                                    // console.log('cell', row.cells)
+                                    const cellClassName = columnIndex === 0 ? "row-checkbox" : "";
+                                    return <td {...cell.getCellProps()} className={cellClassName} sus-cell-td>{cell.render('Cell')}</td>
+                                })}
+                            </tr>
+                        )
+                    })}
+                </tbody>
+
             </table>
-            <div className='sus-tb-cell' style={{ overflowY: 'auto', maxHeight: '300px' }}>
-                <table className='sus-tb-cell'>
-                    <tbody  {...getTableBodyProps()}>
-                        {/* page를 나타낼 거면 rows를 page로 바꾼다. */}
-                        {rows.map((row) => {
-                            prepareRow(row)
-                            return (
-                                <tr  {...row.getRowProps()}>
-                                    {row.cells.map((cell, columnIndex) => {
-                                        // console.log('row', row)
-                                        // console.log('cell', row.cells)
-                                        const cellClassName = columnIndex === 0 ? "row-checkbox" : "";
-                                        return <td {...cell.getCellProps()} className={cellClassName} sus-cell-td>{cell.render('Cell')}</td>
-                                    })}
-                                </tr>
-                            )
-                        })}
-                    </tbody>
 
-                </table>
-
-            </div>
         </div >
     )
 }

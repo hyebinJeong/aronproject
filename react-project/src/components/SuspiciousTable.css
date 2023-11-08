@@ -57,3 +57,88 @@ table tr:hover {
   font-weight: 400;
   line-height: normal;
 }
+
+.sus-tb-hd thead {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+.sus-tb-hd tbody {
+  display: block;
+  width: 100%;
+  overflow-y: auto;
+  max-height: 159px;
+  position: relative;
+}
+
+.sus-tb-hd tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+  text-align: center;
+}
+
+/* thead 길이 조절 시작 */
+
+.sus-tb-hd thead tr th:first-child {
+  width: 1vw;
+}
+
+.sus-tb-hd thead tr:first-child th:nth-child(2) {
+  width: 4vw;
+}
+
+.sus-tb-hd thead tr:first-child th:nth-child(3) {
+  width: 31.7vw;
+}
+
+.sus-tb-hd thead tr:nth-child(2) th:nth-child(3) {
+  width: 10vw;
+}
+
+.sus-tb-hd thead tr:first-child th:nth-child(5) {
+  width: 10vw;
+}
+
+.sus-tb-hd thead tr:first-child th:nth-child(6) {
+  width: 10vw;
+}
+
+.sus-tb-hd thead tr:first-child th:nth-child(7) {
+  width: 10vw;
+}
+/* thead 길이 조절 끝 */
+
+/* tbody 길이 조절 시작 */
+
+.sus-tb-hd tbody tr td:first-child {
+  width: 1vw;
+}
+
+.sus-tb-hd tbody tr td:nth-child(2) {
+  width: 4.1vw;
+}
+
+.sus-tb-hd tbody tr td:nth-child(3) {
+  width: 10vw;
+}
+.sus-tb-hd tbody tr td:nth-child(4) {
+  width: 9.9vw;
+}
+.sus-tb-hd tbody tr td:nth-child(5) {
+  width: 10.4vw;
+}
+
+.sus-tb-hd tbody tr td:nth-child(7) {
+  width: 9.92vw;
+}
+.sus-tb-hd tbody tr td:nth-child(8) {
+  width: 11vw;
+}
+
+.sus-tb-hd tbody tr td:nth-child(9) {
+  width: 8.5vw;
+}
+
+/* tbody 길이 조절 끝 */

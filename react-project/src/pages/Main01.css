@@ -31,13 +31,21 @@ hr {
   font-weight: 700;
 } */
 
-.class-status-tb {
+.class-status-font {
   width: 70px;
   height: 20px;
   font-family: Pretendard;
   font-size: 17px;
   font-style: normal;
   font-weight: 900;
+}
+
+.sus-table-container {
+  margin: 5px 0 40px 0;
+}
+
+.p-table-container {
+  margin: 5px 0 40px 0;
 }
 
 .btn-main {

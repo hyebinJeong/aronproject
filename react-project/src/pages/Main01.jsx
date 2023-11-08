@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+
 import Modify from '../components/button/Modify'
 import Emr from '../components/button/Emr'
 import './Main01.css'
@@ -12,9 +13,13 @@ import PatientTable from '../components/PatientTable'
 import SuspiciousTable from '../components/SuspiciousTable'
 
 const Main01 = () => {
+
+
+    //페이지 새로고침
     function refreshPage() {
         window.location.reload();
     }
+
     return (
         <div>
             <Header></Header>
@@ -58,11 +63,14 @@ const Main01 = () => {
 
                 </div>
                 <div className='main-table'>
-                    <b1 className='class-status-tb'>의심</b1>
-                    <SuspiciousTable></SuspiciousTable>
-                    <br />
-                    <b1 className='class-status-tb'>전체</b1>
-                    <PatientTable></PatientTable>
+                    <b1 className='class-status-font'>의심</b1>
+                    <div className='sus-table-container'>
+                        <SuspiciousTable></SuspiciousTable>
+                    </div>
+                    <b1 className='class-status-font'>전체</b1>
+                    <div className='p-table-container'>
+                        <PatientTable></PatientTable>
+                    </div>
                 </div>
             </div>
         </div>
