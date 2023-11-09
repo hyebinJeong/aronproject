@@ -1,26 +1,31 @@
-import React, { useMemo, useState } from 'react'
+import React, { useMemo, useState, useEffect } from 'react'
 //import할 때 useGlobalFilter 훅을 넣음
 import { useTable, useGlobalFilter, useFilters, usePagination, useSortBy, useRowSelect } from 'react-table'
-import FAKE_DATA from '../FAKE_DATA.json'
-import { GROUPED_COLUMNS } from './columns'
+import { COLUMNS } from './columns'
 import './PatientTable.css'
-import { GlobalFilter } from './GlobalFilter'
 import iconSortUp from '../image/iconSortUp.svg'
 import iconSortDown from '../image/iconSortDown.svg'
 import { CheckBox } from './CheckBox'
-
+import axios from 'axios';
 
 const PatientTable = () => {
 
+    const [datas, setDatas] = useState([]);
+    const columns = useMemo(() => COLUMNS, [])
+    const data = useMemo(() => datas, [])
 
-    const columns = useMemo(() => GROUPED_COLUMNS, [])
-    const data = useMemo(() => FAKE_DATA, [])
 
-    // const defaultColumn = useMemo(() => {
-    //     return {
-    //         Filter: GlobalFilter
-    //     }
-    // }, [])
+    useEffect(() => {
+        axios.post('http://localhost:3001/patients', {
+            // front에서 back으로 보낼 값
+        }).then((res) => {
+            // back에서 front으로 보낼 값
+            console.log(...res.data)
+            setDatas(res.data)
+            //object형태로 데이터를 받아와야하기때문이다.
+        })
+    }, [data])
+
 
     const { getTableProps,
         getTableBodyProps,
