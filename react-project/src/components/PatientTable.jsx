@@ -7,25 +7,20 @@ import iconSortUp from '../image/iconSortUp.svg'
 import iconSortDown from '../image/iconSortDown.svg'
 import { CheckBox } from './CheckBox'
 import axios from 'axios';
+import ColumnFilter from './Columnfilter.jsx'
 
-const PatientTable = () => {
+const PatientTable = (props) => {
 
-    const [datas, setDatas] = useState([]);
-    const columns = useMemo(() => COLUMNS, [])
-    const data = useMemo(() => datas, [])
-
-
-    useEffect(() => {
-        axios.post('http://localhost:3001/patients', {
-            // front에서 back으로 보낼 값
-        }).then((res) => {
-            // back에서 front으로 보낼 값
-            console.log(...res.data)
-            setDatas(res.data)
-            //object형태로 데이터를 받아와야하기때문이다.
-        })
-    }, [data])
-
+    const columns = useMemo(() => {
+        return COLUMNS.map((column) => {
+            return {
+                ...column,
+                Filter: ColumnFilter,
+                // 나머지 컬럼 설정
+            };
+        });
+    }, []);
+    const data = useMemo(() => props.data, [props.data]);
 
     const { getTableProps,
         getTableBodyProps,
@@ -62,20 +57,14 @@ const PatientTable = () => {
         useRowSelect,
         // Checkbox
         (hooks) => {
-            hooks.visibleColumns.push((columns) => {
-                return [
-                    {
-                        id: 'selection',
-                        Header: ({ getToggleAllRowsSelectedProps }) => {
-                            <CheckBox {...getToggleAllRowsSelectedProps()} />
-                        },
-                        Cell: ({ row }) => (
-                            <CheckBox {...row.getToggleRowSelectedProps()} />
-                        )
-                    },
-                    ...columns
-                ]
-            })
+            hooks.visibleColumns.push((columns) => [
+                {
+                    id: 'selection',
+                    Header: ({ getToggleAllRowsSelectedProps }) => <CheckBox {...getToggleAllRowsSelectedProps()} />,
+                    Cell: ({ row }) => <CheckBox {...row.getToggleRowSelectedProps()} />,
+                },
+                ...columns,
+            ]);
         }
     );
 
@@ -119,6 +108,8 @@ const PatientTable = () => {
                                     {
                                         headerIndex === 1 && columnsIndex !== 0 ?
                                             (columns.isSortedDesc ? <img src={iconSortDown} /> : <img src={iconSortUp} />) : ''}
+                                    {/* 열 필터 컴포넌트를 추가합니다. */}
+                                    {columns.Filter ? <div>{columns.render('Filter')}</div> : null}
                                 </th>
                             ))}
                         </tr>
@@ -155,7 +146,7 @@ const PatientTable = () => {
                                 key={startPage + index}
                                 type="button"
                                 style={{
-                                    fontWeight: pageIndex === startPage ? "bold" : "normal",
+                                    fontWeight: pageIndex === index ? "bold" : "normal",
                                 }}
                                 onClick={() => gotoPage(startPage + index)}
                             >
