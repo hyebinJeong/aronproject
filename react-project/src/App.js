@@ -10,9 +10,8 @@ function App() {
       {/* <Header /> */}
       {/* <Login /> */}
       <Routes>
-        {/* <Route path='/login' element={<Login></Login>}></Route>
-          <Route path='/header' element={<Header></Header>}></Route> */}
-
+        <Route path='/login' element={<Login></Login>}></Route>
+        <Route path='/header' element={<Header></Header>}></Route>
         <Route path='/main01' element={<Main01 />}></Route>
       </Routes>
     </BrowserRouter>

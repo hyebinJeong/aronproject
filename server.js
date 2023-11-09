@@ -42,7 +42,6 @@ app.use('/', indexRouter)
 app.use('/user', userRouter)
 
 
-
 app.get('/', (req,res)=>{
     res.send('환영합니다.')
 })
