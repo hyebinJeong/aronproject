@@ -1,0 +1,36 @@
+.graph-result{
+    /* margin-left: 40%; */
+    width: 60%;
+}
+
+.graphbarone-size{
+    width: 450px;
+    height: 350px;
+    float: left;
+    /* margin-right: 80px; */
+}
+
+.graph-score-wrap{
+    float: left;
+    text-align: center;
+}
+
+.graph-srore{
+    width: 400px;
+    height: 250px;
+    margin-top: 60px;
+    background-color: #0D47A1;
+    color: #fff;
+    display: inline-block;
+    justify-content: center;
+    border-radius: 30px;
+    margin-right: 50px;
+}
+
+
+.graph-srore .score{
+    font-size: 100px;
+    /* text-align: center; */
+    margin-top: 10%;
+
+}
