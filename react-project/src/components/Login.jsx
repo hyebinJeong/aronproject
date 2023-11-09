@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import aronlogo from '../image/aronlogo.jpg'
+import axios from 'axios';
 
 // 아이디 비밀번호 입력에 따른 경고창을 위한 테스트 데이터 (추후 삭제 예정)
-const User = {
-    id: '20231031',
-    pw: 'test1031!'
-}
+// const User = {
+//     id: '20231031',
+//     pw: 'test1031!'
+// }
 
 const Login = () => {
 
@@ -33,7 +34,6 @@ const Login = () => {
         }
     }
 
-
     const handlePw = (e) => {
         const newPw = e.target.value;
         setPw(newPw);
@@ -48,13 +48,21 @@ const Login = () => {
     }
 
     // 임시로 설정한 User의 id, pw값이 id와 pw값과 같다면 -> 로그인 성공/ 같지 않다면 -> 로그인 실패 
-    const onClickconfirmButton = () => {
-        if(id === User.id && pw === User.pw){
-            alert('로그인에 성공했습니다')
-        }else{
-            alert('등록되지 않은 회원입니다')
+    const onClickconfirmButton = async () => {
+        try {
+          const response = await axios.post('http://localhost:3001/user/login', {
+            id: id,
+            pw: pw
+          });
+          if (response.data.msg === 'success') {
+            alert('로그인에 성공했습니다');
+          } else {
+            alert('등록되지 않은 회원입니다');
+          }
+        } catch (error) {
+          console.error(error);
         }
-    }
+      };
 
     // idValid와 pwValid가 유효하면 로그인 버튼 활성화 시킴
     // 그 전까지는 setNotAllow(true) 즉, 허락되지 않은 비활성화 상태로 둠
