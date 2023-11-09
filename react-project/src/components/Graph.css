@@ -1,0 +1,72 @@
+
+.graph-size {
+    width: 1500px;
+    height: 450px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .checkbox-wrap {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 120px;
+    height: 400px;
+    text-align: center;
+    margin-top: 50px;
+    margin-right: 50px;
+    border: 1px solid #D9D9D9;
+    border-radius: 10px;
+    padding-left: 120px;
+
+  }
+
+  .index-name{
+    justify-content: center;
+    text-align: left;
+    vertical-align: center;
+    width: 200px;
+    margin-bottom: 5px;
+  }
+
+  .date{
+    margin-top: 50px;
+    width: 160px;
+    margin-right: 120px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .date p{
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+
+  .date input[type="date"]:first-child {
+    /* margin-right: 100px; */
+    width: 180px;
+    height: 20px;
+    font-size: 9.5px;
+  }
+  
+  .date input[type="date"] {
+    width: 180px;
+    height: 20px;
+    font-size: 9.5px;
+  }
+  
+  .search-button {
+    margin-top: 30px;
+    width: 160px;
+    height: 30px;
+    border: none;
+    font-weight: 400;
+    /* border-radius: 64px; */
+    border-radius: 10px;
+    color: #fff;
+    cursor: pointer;
+    background-color: #0D47A1;
+    margin-right: 120px;
+}

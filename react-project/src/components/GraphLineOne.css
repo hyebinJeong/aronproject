@@ -1,0 +1,18 @@
+
+.graph-wrap{
+    width: 350px;
+    height: 250px;
+    clear: both;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.data-name{
+    text-align: center;
+    font-size: 30px;
+    margin-right: 40px;
+    font-weight: 600;
+    /* display: flex; */
+}

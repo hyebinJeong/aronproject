@@ -23,6 +23,7 @@ const Header = () => {
   // 자동 로그아웃을 위한 state ,초 단위로 60분 설정 (즉, 초기값을 3600초로 설정)
   // time은 로그아웃까지 남은시간을 저장하는 상태
   const [time, setTime] = useState(60 * 60);
+  // const [time, setTime] = useState(5);
   const navigate = useNavigate();
 
   // 컴포넌트 렌더링 될 때마다 특정 작업 수행
@@ -58,6 +59,7 @@ const Header = () => {
     if(time === 0){
       // time 상태가 0 이되면 로그아웃 처리되는 로직 작성하기
       alert('로그아웃 되었습니다');
+      navigate('/login')
     }
   },[time]);
 

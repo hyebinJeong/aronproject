@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import aronlogo from '../image/aronlogo.jpg'
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 // 아이디 비밀번호 입력에 따른 경고창을 위한 테스트 데이터 (추후 삭제 예정)
@@ -19,6 +20,7 @@ const Login = () => {
 
     // 허용하지 않는 상태 (버튼 비활성화 상태)
     const [notAllow, setNotAllow] = useState(true);
+    const navigate = useNavigate();
 
     const handleId = (e) => {
         // onchange 인터페이스 호출시마다 handleId가 실행되는거니까 e.target.value 사용
@@ -56,8 +58,9 @@ const Login = () => {
           });
           if (response.data.msg === 'success') {
             alert('로그인에 성공했습니다');
-          } else {
-            alert('등록되지 않은 회원입니다');
+              navigate('/main1')
+        } else {
+            alert('사번과 비밀번호를 확인해주세요');
           }
         } catch (error) {
           console.error(error);
@@ -82,7 +85,7 @@ const Login = () => {
 
         <div className="content-wrap">
             <div className="input-wrap">
-                <input type="text" className='input' placeholder='ID' value={id} onChange={handleId}/>
+                <input type="text" className='input' placeholder='사번' value={id} onChange={handleId}/>
             </div>
             <div className="error-message-wrap">
                 {!idValid && id.length > 0 && (
@@ -90,7 +93,7 @@ const Login = () => {
                 )}
             </div>
             <div className="input-wrap">
-                <input type="password" className='input' placeholder='PASSWORD' value={pw} onChange={handlePw}/>
+                <input type="password" className='input' placeholder='비밀번호' value={pw} onChange={handlePw}/>
             </div>
             <div className="error-message-wrap">
                 {!pwValid && pw.length > 0 && (
