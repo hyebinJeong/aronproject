@@ -81,26 +81,47 @@ hr {
 }
 
 .search-bar {
-  width: 150px;
+  display: flex;
+  justify-content: center;
+  width: 220px;
   height: 19px;
   flex-shrink: 0;
-  border-radius: 9px;
-  background-color: rgba(217, 217, 217, 0.2);
+  border: 2px solid;
+  border-radius: 5px;
+  border-color: #cfdaec;
   stroke-width: 1px;
   stroke: #000;
 }
-.btn-search {
+#select-column {
+  width: 35%;
+  padding-left: 2px;
+  border: none;
+  border-right: 2px solid;
+  border-color: rgba(217, 217, 217, 0.2);
+}
+.search-input {
+  border: none;
+  padding: 4px;
+}
+.search-input::placeholder {
+  font-style: italic;
+  margin-left: 2px;
+}
+
+/* .btn-search {
   width: 35px;
   height: 26px;
   flex-shrink: 0;
   border: none;
   background: rgba(217, 217, 217, 0);
-}
+} */
+
 .search-icon {
   width: 30px;
   height: 18px;
   flex-shrink: 0;
 }
+
 .btn-re {
   width: 35px;
   height: 26px;

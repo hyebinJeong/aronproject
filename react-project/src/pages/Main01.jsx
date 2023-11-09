@@ -32,10 +32,20 @@ const Main01 = () => {
                     </div>
 
                     <div className='nav-back'>
-                        <input className='search-bar'></input>
-                        <button className='btn-search'>
-                            <img className='search-icon' src={iconSearch} alt="" />
-                        </button>
+                        <div className='search-bar'>
+                            <select name="column" id="select-column">
+                                <option value="id">id</option>
+                                <option value="name">name</option>
+                                <option value="gender">gender</option>
+                                <option value="age">age</option>
+                                <option value="record time">record time</option>
+                                <option value="HR">HR</option>
+                                <option value="O2Sat">O2Sat</option>
+                                <option value="Temp">Temp</option>
+                            </select>
+                            <input className='search-input' placeholder='search'></input>
+                        </div>
+
                         <button className='btn-re' onClick={refreshPage}>
                             <img className='re-icon' src={iconRe} alt="" />
                         </button>
