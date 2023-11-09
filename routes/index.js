@@ -4,14 +4,11 @@ const express = require('express');
 const router = express.Router();
 const path = require('path');
 const conn = require('../config/database');
-const { off } = require('process');
+
 
 
 // 전체 데이터
-router.post('/patints', async (req, res) => {
-    const page = req.body.page || 1;
-    const limit = 10;
-    const offset = (page - 1) * limit;
+router.post('/patients', async (req, res) => {
 
     const sql = `
         SELECT 
@@ -28,20 +25,19 @@ router.post('/patints', async (req, res) => {
             d.DBP,
             d.Resp
         FROM 
-            patient AS p
-        JOIN 
-            data AS d ON p.patient_id = d.patient_id
-        LIMIT ? OFFSET ?
+        data as d inner join patient as p 
+         
+        ON p.patient_id = d.patient_id
+        
     `;
 
     try {
         const results = await new Promise((resolve, reject) => {
-            conn.query(sql, [limit, offset], (err, results) => {
-                if (err) reject(err);
-                else resolve(results);
+            conn.query(sql, (err, result) => {
+                if (err) throw(err);
+                else res.json(result);
             });
         });
-        res.json(results);
     } catch (err) {
         console.log(err);
         res.status(500).send('An error occurred, please try again.');
@@ -54,9 +50,9 @@ router.post('/patints', async (req, res) => {
 //     const sql = "SELECT * FROM patient WHERE sepsis_score >= 70";
 //     try {
 //         const results = await new Promise((resolve, reject) => {
-//             conn.query(sql, (err, results) => {
-//                 if (err) reject(err);
-//                 else resolve(results);
+//             conn.query(sql, (err, result) => {
+//                 if (err) throw(err);
+//                 else res.json(results);
 //             });
 //         });
 //         res.json(results);
