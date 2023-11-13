@@ -42,7 +42,7 @@ table tr:hover {
   display: flex;
   justify-content: center;
   text-align: center;
-  margin: 2% 0 5% 0;
+  margin: 2% 0 3% 0;
 }
 
 .btn-page,
@@ -67,8 +67,8 @@ table tr:hover {
 .sus-tb-hd tbody {
   display: block;
   width: 100%;
-  overflow-y: auto;
-  max-height: 159px;
+  overflow-y: scroll;
+  max-height: 100px;
   position: relative;
 }
 
@@ -85,84 +85,90 @@ table tr:hover {
   width: 1vw;
 }
 
-.sus-tb-hd thead tr:first-child th:nth-child(2) {
-  width: 3vw;
+.sus-tb-hd thead tr th:nth-child(2) {
+  width: 4vw;
 }
 
-.sus-tb-hd thead tr:first-child th:nth-child(3) {
-  width: 9vw;
-}
-
-.sus-tb-hd thead tr:first-child th:nth-child(4) {
-  width: 6.9vw;
-}
-
-.sus-tb-hd thead tr:first-child th:nth-child(5) {
-  width: 3vw;
-}
-
-.sus-tb-hd thead tr:first-child th:nth-child(6) {
-  width: 20vw;
-}
-
-.sus-tb-hd thead tr:first-child th:nth-child(7) {
-  width: 3vw;
-}
-.sus-tb-hd thead tr:first-child th:nth-child(8) {
+.sus-tb-hd thead tr th:nth-child(3) {
   width: 5vw;
 }
-.sus-tb-hd thead tr:first-child th:nth-child(9) {
-  width: 4vw;
+
+.sus-tb-hd thead tr th:nth-child(4) {
+  width: 5vw;
 }
-.sus-tb-hd thead tr:first-child th:nth-child(10) {
-  width: 4vw;
+
+.sus-tb-hd thead tr th:nth-child(5) {
+  width: 5vw;
 }
-.sus-tb-hd thead tr:first-child th:nth-child(11) {
-  width: 4vw;
+
+.sus-tb-hd thead tr th:nth-child(6) {
+  width: 12vw;
 }
-.sus-tb-hd thead tr:first-child th:nth-child(12) {
-  width: 4vw;
+
+.sus-tb-hd thead tr:first-child th:nth-child(8),
+.sus-tb-hd thead tr:first-child th:nth-child(9),
+.sus-tb-hd thead tr:first-child th:nth-child(10),
+.sus-tb-hd thead tr:first-child th:nth-child(11),
+.sus-tb-hd thead tr:first-child th:nth-child(12),
+.sus-tb-hd thead tr:first-child th:nth-child(13),
+.sus-tb-hd thead tr:first-child th:nth-child(14) {
+  width: 5vw;
 }
 /* thead 길이 조절 끝 */
 
 /* tbody 길이 조절 시작 */
 
 .sus-tb-hd tbody tr td:first-child {
-  width: 1.5vw;
+  width: 1.052vw;
 }
 
 .sus-tb-hd tbody tr td:nth-child(2) {
-  width: 3.5vw;
+  width: 4.052vw;
 }
 
 .sus-tb-hd tbody tr td:nth-child(3) {
-  width: 10.5vw;
+  width: 5.0525vw;
 }
 .sus-tb-hd tbody tr td:nth-child(4) {
-  width: 6.9vw;
+  width: 5.0525vw;
 }
 .sus-tb-hd tbody tr td:nth-child(5) {
-  width: 3.6vw;
+  width: 5.0525vw;
+}
+.sus-tb-hd tbody tr td:nth-child(6) {
+  width: 12vw;
 }
 
-.sus-tb-hd tbody tr td:nth-child(7) {
-  width: 3.6vw;
-}
 .sus-tb-hd tbody tr td:nth-child(8) {
-  width: 5.9vw;
+  width: 3.2vw;
+  padding-left: 1.05vw;
 }
-
 .sus-tb-hd tbody tr td:nth-child(9) {
-  width: 4.7vw;
+  width: 7vw;
 }
 .sus-tb-hd tbody tr td:nth-child(10) {
-  width: 4.8vw;
+  width: 3.1vw;
 }
 .sus-tb-hd tbody tr td:nth-child(11) {
-  width: 4.7vw;
+  width: 7vw;
 }
 .sus-tb-hd tbody tr td:nth-child(12) {
-  width: 3.9vw;
+  width: 3.2vw;
+}
+.sus-tb-hd tbody tr td:nth-child(13) {
+  width: 6.7vw;
+}
+.sus-tb-hd tbody tr td:nth-child(14) {
+  width: 3.4vw;
 }
 
 /* tbody 길이 조절 끝 */
+
+
+.sus-tb-hd thead tr {
+  height: 5vh;
+}
+
+tbody tr {
+  height: 2vh;
+}

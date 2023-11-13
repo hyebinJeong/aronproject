@@ -65,10 +65,6 @@ const Main01 = () => {
 
             <div className='space'>
                 <div className='nav'>
-                    <div className='nav-front'>
-                        <List />
-                        <ChartLine />
-                    </div>
 
                     <div className='nav-back'>
                         <div className='search-bar'>
@@ -76,45 +72,32 @@ const Main01 = () => {
                             value={selectedColumn} onChange={handleColumnChange}>
                                 <option value="patient_id">ID</option>
                                 <option value="name">Name</option>
-                                <option value="gender">Gender</option>
-                                <option value="age">Age</option>
-                                <option value="record_time">Record Time</option>
-                                <option value="HR">HR</option>
-                                <option value="O2Sat">O2Sat</option>
-                                <option value="Temp">Temp</option>
                             </select>
                             <input className='search-input' 
-                            placeholder='search'
+                            placeholder='검색어를 입력하세요.'
                             value={searchTerm}
                             onChange={handleSearchTermChange}></input>
                         </div>
 
-                        <button className='btn-re' onClick={refreshPage}>
-                            <img className='re-icon' src={iconRe} alt="" />
-                        </button>
                         <LiveClock />
+                        <Modify></Modify>
                     </div>
 
                 </div>
             </div>
             <hr />
             <div className='space'>
-                <div className='main-bar'>
+                {/* <div className='main-bar'>
 
-                    {/* <div className='status-main'>
+                    <div className='status-main'>
                         <b1 className='class-status'>전체</b1>
 
                         <b1 className='class-status'>신규</b1>
 
                         <b1 className='class-status'>관찰중</b1>
-                    </div> */}
-
-                    <div className='btn-main'>
-                        <Modify></Modify>
-                        <Emr></Emr>
                     </div>
 
-                </div>
+                </div> */}
                 <div className='main-table'>
                     <b1 className='class-status-font'>의심</b1>
                     <div className='sus-table-container'>

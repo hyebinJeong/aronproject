@@ -16,31 +16,39 @@ export const COLUMNS = [
     accessor: "age",
   },
   {
+    Header: "병동 위치",
+    accessor: "ward_room",
+  },
+  {
     Header: "Record Time",
     accessor: "record_time",
+  },
+  {
+    Header: "Sepsis",
+    accessor: "MAP",
   },
   {
     Header: "HR",
     accessor: "HR",
   },
   {
-    Header: "O2Sat",
-    accessor: "O2Sat",
-  },
-  {
     Header: "SBP",
     accessor: "SBP",
-  },
-  {
-    Header: "MAP",
-    accessor: "MAP",
   },
   {
     Header: "DBP",
     accessor: "DBP",
   },
   {
-    Header: "Resp",
+    Header: "BT",
+    accessor: "Temp",
+  },
+  {
+    Header: "O2Sat",
+    accessor: "O2Sat",
+  },
+  {
+    Header: "Page",
     accessor: "Resp",
   },
 ];

@@ -26,6 +26,10 @@ table tr:hover {
   text-align: center;
 }
 
+.p-tb-thead .row-checkbox:first-child {
+  display: none;
+}
+
 .p-tb-column {
   padding-top: 12px;
   padding-bottom: 12px;
@@ -58,45 +62,50 @@ table tr:hover {
 
 /* thead 길이 조절 시작 */
 
-.p-tb thead tr th:first-child {
+.p-tb-thead tr th:first-child {
   width: 1vw;
 }
 
-.p-tb thead tr th:nth-child(2) {
+.p-tb-thead tr th:nth-child(2) {
   width: 4vw;
 }
 
-/* .p-tb thead tr:first-child th:nth-child(3) {
-  width: 30vw;
-} */
-
-.p-tb thead tr:nth-child(2) th:nth-child(3) {
-  width: 10vw;
+.p-tb-thead tr th:nth-child(3) {
+  width: 5vw;
 }
 
-.p-tb thead tr:nth-child(2) th:nth-child(4) {
-  width: 10vw;
+.p-tb-thead tr th:nth-child(4) {
+  width: 5vw;
 }
 
-.p-tb thead tr:nth-child(2) th:nth-child(5) {
-  width: 10vw;
+.p-tb-thead tr th:nth-child(5) {
+  width: 5vw;
 }
 
-.p-tb thead tr:nth-child(2) th:nth-child(7) {
-  width: 10vw;
+.p-tb-thead tr th:nth-child(6) {
+  width: 12vw;
 }
 
-.p-tb thead tr:nth-child(2) th:nth-child(8) {
-  width: 10vw;
-}
 
-.p-tb thead tr:nth-child(2) th:nth-child(9) {
-  width: 10vw;
+.p-tb-thead tr th:nth-child(8),
+.p-tb-thead tr th:nth-child(9),
+.p-tb-thead tr th:nth-child(10),
+.p-tb-thead tr th:nth-child(11),
+.p-tb-thead tr th:nth-child(12),
+.p-tb-thead tr th:nth-child(13),
+.p-tb-thead tr th:nth-child(14) {
+  width: 5vw;
 }
 /* thead 길이 조절 끝 */
 
+
 /* tbody 길이 조절 시작 */
 
-.p-tb tbody tr td {
+.p-tb {
   text-align: center;
+  max-height: 100px;
+}
+
+.p-tb-thead tr th:first-child .row-checkBox{
+  display: none;
 }
