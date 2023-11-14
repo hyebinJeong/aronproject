@@ -96,7 +96,7 @@ router.post('/adminpage', async(req,res)=>{
 });
 
 // 관리자 페이지 user 추가
-router.post('/adminpage', async (req,res)=>{
+router.post('/adminpage/add', async (req,res)=>{
   const {id, pw, name, classvalue} = req.body;
   const sql = "insert into user (id, pw, name, class) values (?,?,?,?)";
   try {
@@ -117,7 +117,7 @@ router.post('/adminpage', async (req,res)=>{
 });
 
 // 관리자 페이지 user 삭제
-router.post('/adminpage', async (req,res)=>{
+router.post('/adminpage/deleted', async (req,res)=>{
   const {id} = req.body;
   const sql = "delete from user where id=?";
   try {
