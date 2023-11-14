@@ -57,7 +57,6 @@ const PatientTable = ({ selectedColumn, searchTerm, setting }) => {
         // selectedFlatRows,
         //filter함수 props
         state,
-        setGlobalFilter,
     } = useTable({
         columns,
         data,
@@ -81,15 +80,8 @@ const PatientTable = ({ selectedColumn, searchTerm, setting }) => {
         }
     );
 
-    //파싱한 globalFilter값
-    const { globalFilter } = state
-
-    // row-selection
-    // const firstPageRows = rows.slice(0, 10)
-
     // pagination
     const { pageIndex } = state;
-    const [pageSize, setPageSize] = useState(10);
 
     const pageRange = 10;
     const startPage = Math.max(0, pageIndex - pageIndex % pageRange);
@@ -106,8 +98,6 @@ const PatientTable = ({ selectedColumn, searchTerm, setting }) => {
             gotoPage(Math.max(pageIndex - 10, 0));
         }
     };
-
-    // console.log(selectedColumn)
 
     return (
         <div>
@@ -127,9 +117,10 @@ const PatientTable = ({ selectedColumn, searchTerm, setting }) => {
                                     {columns.Filter ? <div>{columns.render('Filter')}</div> : null}
                                 </th>
                                 
-                                
                             ))}
-                            <th className='p-tb-column'>Comment</th>
+                            <th className='p-tb-column'>Comment
+                            
+                            </th>
                         </tr>
                     ))}
                 </thead>
@@ -145,7 +136,7 @@ const PatientTable = ({ selectedColumn, searchTerm, setting }) => {
                                 })}
                                 <td><button 
                                 className='table-page-col'
-                                style={{color: idx == 0 ? 'blue' : ''}} // comment 존재 유무에 따른 색상 변화
+                                style={{color: rows[idx].original.patient_id == 9891 ? 'blue' : ''}} // comment 존재 유무에 따른 색상 변화
                                 onClick={()=> {
                                     alert('hi') // 넣을 기능 준비
                                 }}>pages</button></td>

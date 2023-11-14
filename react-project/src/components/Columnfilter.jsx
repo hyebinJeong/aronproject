@@ -14,10 +14,6 @@ useEffect(() => {
   }
 }, [selectedColumn, column.id, searchTerm]);
 
-// console.log('id :', column.id)
-// console.log('col :', selectedColumn)
-// console.log('term :', searchTerm)
-console.log(filterValue)
 
   return (
       <input 

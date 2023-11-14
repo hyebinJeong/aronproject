@@ -1,7 +1,6 @@
 import React, { useMemo, useState, useEffect } from 'react'
 //import할 때 useGlobalFilter 훅을 넣음
 import { useTable, useGlobalFilter, useFilters, useSortBy, useRowSelect } from 'react-table'
-import FAKE_DATA from '../FAKE_DATA.json'
 import { COLUMNS } from './columns'
 import './SuspiciousTable.css'
 import iconSortUp from '../image/iconSortUp.svg'
@@ -9,7 +8,6 @@ import iconSortDown from '../image/iconSortDown.svg'
 import { CheckBox } from './CheckBox'
 import axios from 'axios';
 import ColumnFilter from './Columnfilter'
-
 
 const SuspiciousTable = ({ selectedColumn, searchTerm, setting }) => {
 
@@ -27,12 +25,10 @@ const SuspiciousTable = ({ selectedColumn, searchTerm, setting }) => {
     useEffect(() => {
         axios.post('http://localhost:3001/patients', {})
             .then((res) => {
-                // console.log('API로부터 받은 데이터:', res.data);
                 setDatas(res.data);
                 setting(res.data.length)
             })
             .catch((error) => {
-                console.error('Error fetching data:', error);
             });
     }, []);
 
@@ -45,8 +41,6 @@ const SuspiciousTable = ({ selectedColumn, searchTerm, setting }) => {
         prepareRow,
         // selectedFlatRows,
         //filter함수 props
-        state,
-
     } = useTable({
         columns,
         data,
@@ -76,12 +70,6 @@ const SuspiciousTable = ({ selectedColumn, searchTerm, setting }) => {
         }
     );
 
-
-    // pagination
-    const { pageIndex } = state;
-
-    console.log(rows)
-
     return (
         <div>
             <table className='sus-tb-hd' {...getTableProps()}>
@@ -103,8 +91,6 @@ const SuspiciousTable = ({ selectedColumn, searchTerm, setting }) => {
                         </tr>
                     ))}
                 </thead>
-
-
                 <tbody  {...getTableBodyProps()}>
                     {/* page를 나타낼 거면 rows를 page로 바꾼다. */}
                     {rows.map((row, idx) => {
@@ -112,14 +98,12 @@ const SuspiciousTable = ({ selectedColumn, searchTerm, setting }) => {
                         return (
                             <tr  {...row.getRowProps()}>
                                 {row.cells.map((cell, columnIndex) => {
-                                    // console.log('row', row)
-                                    // console.log('cell', row.cells)
                                     const cellClassName = columnIndex === 0 ? "row-checkbox" : "";
                                     return <td {...cell.getCellProps()} className={cellClassName}>{cell.render('Cell')}</td>
                                 })}
                                 <td><button 
                                 className='table-page-col'
-                                style={{color: idx == 0 ? 'blue' : ''}} // comment 존재 유무에 따른 색상 변화
+                                style={{color: rows[idx].original.patient_id == 9891 ? 'blue' : ''}} // comment 존재 유무에 따른 색상 변화
                                 onClick={()=> {
                                     alert('hi') // 넣을 기능 준비
                                 }}>pages</button></td>
@@ -127,9 +111,7 @@ const SuspiciousTable = ({ selectedColumn, searchTerm, setting }) => {
                         )
                     })}
                 </tbody>
-
             </table>
-
         </div >
     )
 }

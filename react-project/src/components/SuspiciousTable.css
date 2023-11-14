@@ -169,10 +169,6 @@ table tr:hover {
   height: 5vh;
 }
 
-tbody tr {
-  height: 2vh;
-}
-
 .table-page-col {
   border: 0;
   background-color: transparent;
