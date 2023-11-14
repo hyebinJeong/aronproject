@@ -4,6 +4,7 @@ const express = require("express");
 const router = express.Router();
 const path = require("path");
 const conn = require("../config/database");
+const { rejects } = require("assert");
 
 // 전체 데이터
 router.post("/patients", async (req, res) => {
@@ -73,8 +74,72 @@ router.post('/suspicious', async (req, res) => {
 });
 
 
+// 관리자 페이지 user 데이터
+router.post('/adminpage', async(req,res)=>{
+  const sql = "select * from user";
+  try {
+    const results = await new Promise((resolve, reject)=>{
+      conn.query(sql,(err, rows)=>{
+        if(err){
+          reject(err);
+        } else {
+          resolve(rows);
+        }
+      });
+    });
+    res.json(results);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('An error occurred, please try again.');
+  }
+
+});
+
+// 관리자 페이지 user 추가
+router.post('/adminpage', async (req,res)=>{
+  const {id, pw, name, classvalue} = req.body;
+  const sql = "insert into user (id, pw, name, class) values (?,?,?,?)";
+  try {
+    await new Promise((resolve, reject)=>{
+      conn.query(sql, [id, pw, name, classvalue], (err, rows)=>{
+        if(err){
+          reject(err);
+        } else {
+          resolve(rows)
+        }
+      });
+    });
+    res.status(200).send('user add');
+  } catch(err) {
+    console.error(err);
+    res.status(500).send('An error occurred, please try again.');
+  }
+});
+
+// 관리자 페이지 user 삭제
+router.post('/adminpage', async (req,res)=>{
+  const {id} = req.body;
+  const sql = "delete from user where id=?";
+  try {
+    await new Promise((resolve, reject)=>{
+      conn.query(sql, [id], (err, rows)=>{
+        if(err){
+          reject(err);
+        } else {
+          resolve(rows)
+        }
+      });
+    });
+    res.status(200).send('user deleted');
+  } catch(err) {
+    console.error(err);
+    res.status(500).send('An error occurred, please try again.');
+  }
+});
+
 // 라우터 객체를 모듈로 내보냄
 module.exports = router;
+
 
 
 
