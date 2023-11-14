@@ -21,6 +21,7 @@ router.post('/login', (req, res) => {
 
         if (rows.length > 0) {
             // 로그인 성공
+            req.session.user = rows[0];  // 세션에 사용자 정보 저장
             res.json({ msg: 'success', user: rows[0] })
         } else {
             // 로그인 실패
@@ -28,6 +29,20 @@ router.post('/login', (req, res) => {
         }
     })
 })
+
+// 로그아웃 라우터
+router.post('/logout', (req, res) => {
+    // 세션을 삭제합니다. 
+    req.session.destroy((err) => {
+        if (err) {
+            // 세션 삭제 중 에러가 발생했을 경우
+            return res.json({ msg: 'failed', detail: '세션 삭제 중 에러가 발생했습니다.' });
+        }
+        res.clearCookie('connect.sid'); // 세션을 저장하는 쿠키를 삭제합니다. 쿠키 이름은 세션 설정에 따라 다를 수 있습니다.
+        // 로그아웃 성공
+        return res.json({ msg: 'success' });
+    });
+});
 
 
 module.exports = router;

@@ -81,10 +81,10 @@ const Header = () => {
       // axios.post --> 서버에 POST 요청을 보내는 함수
       // '/logout'은 요청을 보낼 주소
 
-      const response = await axios.post('/logout');
+      const response = await axios.post('http://localhost:3001/user/logout');
 
       //  HTTP 상태코드 200은 요청이 성공적으로 처리되었음을 의미
-      if (response.status === 200) {
+      if (response.data.msg === 'success') {
         alert('로그아웃 되었습니다')
         navigate('/login') // 로그인 창으로 이동
       } else {
