@@ -9,18 +9,31 @@ import { CheckBox } from './CheckBox'
 import axios from 'axios';
 import ColumnFilter from './Columnfilter.jsx'
 
-const PatientTable = (props) => {
+const PatientTable = ({ selectedColumn, searchTerm, setting }) => {
 
     const columns = useMemo(() => {
         return COLUMNS.map((column) => {
             return {
                 ...column,
-                Filter: ColumnFilter,
+                Filter: ({ column }) => <ColumnFilter column={column} selectedColumn={selectedColumn} searchTerm={searchTerm} />,
                 // 나머지 컬럼 설정
             };
         });
+    }, [selectedColumn, searchTerm]);
+    const [datas, setDatas] = useState([]);
+    const data = useMemo(() => datas, [datas]);
+
+    useEffect(() => {
+        axios.post('http://localhost:3001/patients', {})
+            .then((res) => {
+                setDatas(res.data);
+                setting(res.data.length)
+            })
+            .catch((error) => {
+            });
     }, []);
-    const data = useMemo(() => props.data, [props.data]);
+
+    // 
 
     const { getTableProps,
         getTableBodyProps,
@@ -94,6 +107,8 @@ const PatientTable = (props) => {
         }
     };
 
+    // console.log(selectedColumn)
+
     return (
         <div>
 
@@ -111,22 +126,30 @@ const PatientTable = (props) => {
                                     {/* 열 필터 컴포넌트를 추가합니다. */}
                                     {columns.Filter ? <div>{columns.render('Filter')}</div> : null}
                                 </th>
+                                
+                                
                             ))}
+                            <th className='p-tb-column'>Comment</th>
                         </tr>
                     ))}
                 </thead>
                 <tbody {...getTableBodyProps()}>
                     {/* page를 나타낼 거면 rows를 page로 바꾼다. */}
-                    {page.map((row) => {
+                    {page.map((row, idx) => {
                         prepareRow(row)
                         return (
                             <tr {...row.getRowProps()}>
                                 {row.cells.map((cell, columnIndex) => {
-                                    // console.log('row', row)
-                                    // console.log('cell', row.cells)
                                     const cellClassName = columnIndex === 0 ? "row-checkbox" : "";
                                     return <td {...cell.getCellProps()} className={cellClassName}>{cell.render('Cell')}</td>
                                 })}
+                                <td><button 
+                                className='table-page-col'
+                                style={{color: idx == 0 ? 'blue' : ''}} // comment 존재 유무에 따른 색상 변화
+                                onClick={()=> {
+                                    alert('hi') // 넣을 기능 준비
+                                }}>pages</button></td>
+                                
                             </tr>
                         )
                     })}
@@ -146,7 +169,8 @@ const PatientTable = (props) => {
                                 key={startPage + index}
                                 type="button"
                                 style={{
-                                    fontWeight: pageIndex === index ? "bold" : "normal",
+                                    backgroundColor: pageIndex === index ? "#0d47a1" : "white",
+                                    color: pageIndex === index ? "white" : 'black'
                                 }}
                                 onClick={() => gotoPage(startPage + index)}
                             >

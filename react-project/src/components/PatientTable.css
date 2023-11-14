@@ -109,3 +109,11 @@ table tr:hover {
 .p-tb-thead tr th:first-child .row-checkBox{
   display: none;
 }
+
+.btn-page-container .btn-num-page {
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  border: 1px solid #0d47a1;
+  
+}

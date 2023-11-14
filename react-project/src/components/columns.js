@@ -47,10 +47,6 @@ export const COLUMNS = [
     Header: "O2Sat",
     accessor: "O2Sat",
   },
-  {
-    Header: "Page",
-    accessor: "Resp",
-  },
 ];
 
 // 헤더 컬럼 그룹화 한 데이터.

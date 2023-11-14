@@ -11,18 +11,30 @@ import axios from 'axios';
 import ColumnFilter from './Columnfilter'
 
 
-const SuspiciousTable = (props) => {
+const SuspiciousTable = ({ selectedColumn, searchTerm, setting }) => {
 
     const columns = useMemo(() => {
         return COLUMNS.map((column) => {
             return {
                 ...column,
-                Filter: ColumnFilter,
-                // 나머지 컬럼 설정
+                Filter: ({ column }) => <ColumnFilter column={column} selectedColumn={selectedColumn} searchTerm={searchTerm} />,
             };
         });
+    }, [selectedColumn, searchTerm]);
+    const [datas, setDatas] = useState([]);
+    const data = useMemo(() => datas, [datas]);
+
+    useEffect(() => {
+        axios.post('http://localhost:3001/patients', {})
+            .then((res) => {
+                // console.log('API로부터 받은 데이터:', res.data);
+                setDatas(res.data);
+                setting(res.data.length)
+            })
+            .catch((error) => {
+                console.error('Error fetching data:', error);
+            });
     }, []);
-    const data = useMemo(() => props.data, [props.data]);
 
     const { getTableProps,
         getTableBodyProps,
@@ -68,6 +80,8 @@ const SuspiciousTable = (props) => {
     // pagination
     const { pageIndex } = state;
 
+    console.log(rows)
+
     return (
         <div>
             <table className='sus-tb-hd' {...getTableProps()}>
@@ -85,6 +99,7 @@ const SuspiciousTable = (props) => {
                                     {columns.Filter ? <div>{columns.render('Filter')}</div> : null}
                                 </th>
                             ))}
+                            <th className='p-tb-column'>Comment</th>
                         </tr>
                     ))}
                 </thead>
@@ -92,7 +107,7 @@ const SuspiciousTable = (props) => {
 
                 <tbody  {...getTableBodyProps()}>
                     {/* page를 나타낼 거면 rows를 page로 바꾼다. */}
-                    {rows.map((row) => {
+                    {rows.map((row, idx) => {
                         prepareRow(row)
                         return (
                             <tr  {...row.getRowProps()}>
@@ -100,8 +115,14 @@ const SuspiciousTable = (props) => {
                                     // console.log('row', row)
                                     // console.log('cell', row.cells)
                                     const cellClassName = columnIndex === 0 ? "row-checkbox" : "";
-                                    return <td {...cell.getCellProps()} className={cellClassName} sus-cell-td>{cell.render('Cell')}</td>
+                                    return <td {...cell.getCellProps()} className={cellClassName}>{cell.render('Cell')}</td>
                                 })}
+                                <td><button 
+                                className='table-page-col'
+                                style={{color: idx == 0 ? 'blue' : ''}} // comment 존재 유무에 따른 색상 변화
+                                onClick={()=> {
+                                    alert('hi') // 넣을 기능 준비
+                                }}>pages</button></td>
                             </tr>
                         )
                     })}

@@ -15,25 +15,44 @@ import axios from 'axios';
 
 const Main01 = () => {
 
-    const [datas, setDatas] = useState([]);
-    //페이지 새로고침
-    function refreshPage() {
-        window.location.reload();
-    } 
-
-    useEffect(() => {
-        axios.post('http://localhost:3001/patients', {
-            // front에서 back으로 보낼 값
-        }).then((res) => {
-            // back에서 front으로 보낼 값
-            setDatas(res.data)
-            //object형태로 데이터를 받아와야하기때문이다.
-        })
-    }, [])
-    
-
+    // const [datas, setDatas] = useState([]);
     const [selectedColumn, setSelectedColumn] = useState('id'); // Default column
     const [searchTerm, setSearchTerm] = useState('');
+
+    const [susNum, setSusNum] = useState(0)
+    const [patNum, setPatNum] = useState(0)
+
+    // // localStorage에서 데이터를 가져오는 함수
+    // const getStoredData = () => {
+    //     const storedData = localStorage.getItem('filteredData');
+    //     return storedData ? JSON.parse(storedData) : [];
+    // };
+
+    // // localStorage에 데이터를 설정하는 함수
+    // const setStoredData = (data) => {
+    //     localStorage.setItem('filteredData', JSON.stringify(data));
+    // };
+
+
+    // useEffect(() => {
+    //     // localStorage에서 데이터를 가져와서 업데이트
+    //     const storedData = getStoredData();
+    //     if (storedData.length > 0) {
+    //         setDatas(storedData);
+    //     }
+    // }, []); // 두 번째 매개변수로 빈 배열을 전달하여 한 번만 실행되도록 함
+    
+    // useEffect(() => {
+    //     axios.post('http://localhost:3001/patients', {})
+    //         .then((res) => {
+    //             console.log('API로부터 받은 데이터:', res.data);
+    //             setDatas(res.data);
+    //             setStoredData(res.data);
+    //         })
+    //         .catch((error) => {
+    //             console.error('Error fetching data:', error);
+    //         });
+    // }, []);
 
     // Handle search term change
     const handleSearchTermChange = (e) => {
@@ -45,19 +64,23 @@ const Main01 = () => {
         setSelectedColumn(e.target.value);
     };
 
-    const filteredData = useMemo(() => {
-        const filteredData = datas.filter((item) => {
-            const columnValue = item[selectedColumn];
-            if (columnValue === undefined || columnValue === null) {
-                return false; // undefined 또는 null인 경우 필터링에서 제외
-            }
-            const stringValue = columnValue.toString().toLowerCase();
-            return stringValue.includes(searchTerm.toLowerCase()) && stringValue !== '';
-        });
-        return filteredData;
-    }, [selectedColumn, searchTerm, datas]);
+    // const filteredData = useMemo(() => {
+    //     const newData = datas.length > 0 ? datas : getStoredData();
+    
+    //     const filteredData = newData.filter((item) => {
+    //         const columnValue = item[selectedColumn];
+    //         if (columnValue === undefined || columnValue === null) {
+    //             return false;
+    //         }
+    //         const stringValue = columnValue.toString().toLowerCase();
+    //         return stringValue.includes(searchTerm.toLowerCase()) && stringValue !== '';
+    //     });
+    
+    //     console.log('filteredData:', filteredData);
+    
+    //     return filteredData;
+    // }, [selectedColumn, searchTerm, datas]);
 
-    console.log(datas)
 
     return (
         <div>
@@ -69,7 +92,9 @@ const Main01 = () => {
                     <div className='nav-back'>
                         <div className='search-bar'>
                             <select name="column" id="select-column"
-                            value={selectedColumn} onChange={handleColumnChange}>
+                            value={selectedColumn} 
+                            onChange={handleColumnChange}
+                            >
                                 <option value="patient_id">ID</option>
                                 <option value="name">Name</option>
                             </select>
@@ -80,36 +105,23 @@ const Main01 = () => {
                         </div>
 
                         <LiveClock />
-                        <Modify></Modify>
+                        {/* <Modify></Modify> */}
                     </div>
 
                 </div>
             </div>
             <hr />
             <div className='space'>
-                {/* <div className='main-bar'>
-
-                    <div className='status-main'>
-                        <b1 className='class-status'>전체</b1>
-
-                        <b1 className='class-status'>신규</b1>
-
-                        <b1 className='class-status'>관찰중</b1>
-                    </div>
-
-                </div> */}
                 <div className='main-table'>
-                    <b1 className='class-status-font'>의심</b1>
+                    <p className='class-status-font'>의심({susNum})</p>
                     <div className='sus-table-container'>
-                        {filteredData && 
-                            <SuspiciousTable data={filteredData}></SuspiciousTable>
-                        }
+                        <SuspiciousTable selectedColumn={selectedColumn} searchTerm={searchTerm} setting={setSusNum}></SuspiciousTable>
+                        
                     </div>
-                    <b1 className='class-status-font'>전체</b1>
+                    <p className='class-status-font'>전체({patNum})</p>
                     <div className='p-table-container'>
-                        {filteredData &&
-                            <PatientTable data={filteredData}></PatientTable>
-                        }
+                        <PatientTable selectedColumn={selectedColumn} searchTerm={searchTerm} setting={setPatNum} ></PatientTable>
+                        
                     </div>
                 </div>
             </div>
