@@ -4,6 +4,7 @@ const app = express();
 const userRouter = require('./routes/user');
 const indexRouter= require('./routes');
 const commentRouter = require('./routes/comment');
+const detailRouter = require('./routes/detail');
 
 const path = require('path');
 
@@ -42,7 +43,7 @@ app.use(express.static(path.join(__dirname, 'react-project', 'build')));
 app.use('/', indexRouter)
 app.use('/user', userRouter)
 app.use('/comment', commentRouter)
-
+app.use('/detail', detailRouter)
 
 app.get('/', (req,res)=>{
     res.send('환영합니다.')
