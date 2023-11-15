@@ -5,10 +5,11 @@ const conn = require('../config/database');
 
 // 코멘트 조회
 router.post('/comment/read', async(req, res) => {
-    const sql = 'select * from comments';
+    const {patient_id} = req.body;
+    const sql = 'select * from comments where patient_id=?';
 
     try {
-        const result = await conn.query(sql);
+        const result = await conn.query(sql, [patient_id]);
         res.json(result);
     } catch (err) {
         console.error(err);
@@ -18,11 +19,11 @@ router.post('/comment/read', async(req, res) => {
 
 // 코멘트 추가
 router.post('/comment/add', async(req, res) => {
-    const { patient_id, comment, created_by } = req.body;
-    const sql = 'insert into comments (patient_id, comment, created_by ) values (?,?,?)';
+    const { patient_id, comment } = req.body;
+    const sql = 'insert into comments (patient_id, comment) values (?,?)';
 
     try {
-        const result = await conn.query(sql, [patient_id, comment, created_by ]);
+        const result = await conn.query(sql, [patient_id, comment]);
         res.json({ success: true, message: 'Comment add' });
     } catch (err) {
         console.error(err);

@@ -64,29 +64,34 @@ router.post("/patients", async (req, res) => {
 router.post('/suspicious', async (req, res) => {
   // const {sepsis_score} = req.body;
   const sql = `
-    select  
-      p.patient_id, 
-      p.name,
-      p.gender,
-      p.age,
-      p.ward_room,
-      p.sepsis_score,
-      d.record_time,
-      d.HR,
-      d.O2Sat,
-      d.Temp,
-      d.SBP,
-      d.MAP,
-      d.DBP,
-      d.Resp,
-      c.comment,
-      c.created_at
-    from patient p 
-    inner join data d 
-    on p.patient_id=d.patient_id 
-    left join comments c
-    on p.patient_id = c.patient_id
-    where p.sepsis_score >= 70
+  select  
+    p.patient_id, 
+    p.name,
+    p.gender,
+    p.age,
+    p.ward_room,
+    p.sepsis_score,
+    d.record_time,
+    d.HR,
+    d.O2Sat,
+    d.Temp,
+    d.SBP,
+    d.MAP,
+    d.DBP,
+    d.Resp,
+    c.comment,
+    c.created_at
+  from patient p 
+  inner join data d 
+  on p.patient_id=d.patient_id 
+  left join comments c
+  on p.patient_id = c.patient_id
+  where p.sepsis_score >= 70
+  and d.record_time = (
+    select max(record_time)
+    from data
+    where patient_id = p.patient_id
+  )
     `;
   try {
       const results = await new Promise((resolve, reject) => {
