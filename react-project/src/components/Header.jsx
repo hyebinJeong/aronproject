@@ -103,9 +103,6 @@ const Header = () => {
               <button className="icon-logout-wrap"><img src={iconLogout} className="icon-logout"></img></button>
             </div>
           </li>
-          {/* <li>
-            <button className="icon-logout-wrap"><img src={iconLogout} className="icon-logout"></img></button>
-          </li> */}
         </ul>
       </div>
     </div>

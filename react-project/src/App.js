@@ -26,6 +26,9 @@ import GraphDetailMAP from './components/GraphDetailMAP.jsx';
 import GraphDetailDBP from './components/GraphDetailDBP.jsx';
 import GraphDetailResp from './components/GraphDetailResp.jsx';
 import DetailLeft from './components/DetailLeft.jsx';
+import Adminpage from './pages/Adminpage.jsx';
+import AdminScoreModal from './components/AdminScoreModal.jsx';
+import AdminAddModal from './components/AdminAddModal.jsx';
 
 function App() {
   const [user, setUser] = useState(null);
