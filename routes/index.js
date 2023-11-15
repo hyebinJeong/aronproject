@@ -9,42 +9,36 @@ const conn = require("../config/database");
 // 전체 데이터
 router.post("/patients", async (req, res) => {
   const sql = `
-    SELECT 
-        p.patient_id, 
-        p.name,
-        p.gender,
-        p.age,
-        p.ward_room,
-        p.sepsis_score,
-        d.record_time,
-        d.HR,
-        d.O2Sat,
-        d.Temp,
-        d.SBP,
-        d.MAP,
-        d.DBP,
-        d.Resp,
-        c.comment,
-        c.created_at
-    FROM 
-        patient AS p 
-    INNER JOIN 
-        data AS d
-    ON 
-        p.patient_id = d.patient_id
-    LEFT JOIN 
-        comments as c
-    ON 
-        p.patient_id = c.patient_id
-    WHERE
-        d.record_time = (
-            SELECT 
-                MAX(record_time)
-            FROM 
-                data
-            WHERE 
-                patient_id = p.patient_id
-        )
+  SELECT 
+    p.patient_id, 
+    p.name,
+    p.gender,
+    p.age,
+    p.ward_room,
+    p.sepsis_score,
+    d.record_time,
+    d.HR,
+    d.O2Sat,
+    d.Temp,
+    d.SBP,
+    d.MAP,
+    d.DBP,
+    d.Resp
+  FROM 
+    patient AS p 
+  INNER JOIN 
+    data AS d
+  ON 
+    p.patient_id = d.patient_id
+  WHERE p.sepsis_score < 70
+    and d.record_time = (
+        SELECT 
+            MAX(record_time)
+        FROM 
+            data
+        WHERE 
+            patient_id = p.patient_id
+    )
 `;
 
   try {
@@ -78,14 +72,10 @@ router.post('/suspicious', async (req, res) => {
     d.SBP,
     d.MAP,
     d.DBP,
-    d.Resp,
-    c.comment,
-    c.created_at
+    d.Resp
   from patient p 
   inner join data d 
-  on p.patient_id=d.patient_id 
-  left join comments c
-  on p.patient_id = c.patient_id
+  on p.patient_id=d.patient_id
   where p.sepsis_score >= 70
   and d.record_time = (
     select max(record_time)
@@ -136,6 +126,7 @@ router.post('/adminpage', async(req,res)=>{
 router.post('/adminpage/add', async (req,res)=>{
   const {id, pw, name, classvalue} = req.body;
   const sql = "insert into user (id, pw, name, class) values (?,?,?,?)";
+  console.log(req.body.id)
   try {
     await new Promise((resolve, reject)=>{
       conn.query(sql, [id, pw, name, classvalue], (err, rows)=>{

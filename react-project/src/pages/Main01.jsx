@@ -1,10 +1,12 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import './Main01.css'
 import LiveClock from '../components/LiveClock'
 import Header from '../components/Header'
 import PatientTable from '../components/PatientTable'
 import SuspiciousTable from '../components/SuspiciousTable'
+import axios from 'axios';
+import Modal from '../components/CommentModal'
 
 const Main01 = () => {
 
@@ -12,6 +14,9 @@ const Main01 = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [susNum, setSusNum] = useState(0)
     const [patNum, setPatNum] = useState(0)
+
+    const [modal, setModal] = useState(false)
+    const [pid, setPid] = useState()
 
     const handleSearchTermChange = (e) => {
         setSearchTerm(e.target.value);
@@ -22,7 +27,10 @@ const Main01 = () => {
     };
 
     return (
-        <div>
+        <div style={{position: 'relative'}}>
+            { modal
+            ? <Modal setModal={setModal} pid={pid}></Modal>
+            : null}
             <Header></Header>
 
             <div className='space'>
@@ -54,12 +62,22 @@ const Main01 = () => {
                 <div className='main-table'>
                     <p className='class-status-font'>의심({susNum})</p>
                     <div className='sus-table-container'>
-                        <SuspiciousTable selectedColumn={selectedColumn} searchTerm={searchTerm} setting={setSusNum}></SuspiciousTable>
+                        <SuspiciousTable 
+                        selectedColumn={selectedColumn} 
+                        searchTerm={searchTerm} 
+                        setting={setSusNum}
+                        setModal = {setModal}
+                        setPid = {setPid}></SuspiciousTable>
                         
                     </div>
                     <p className='class-status-font'>전체({patNum})</p>
                     <div className='p-table-container'>
-                        <PatientTable selectedColumn={selectedColumn} searchTerm={searchTerm} setting={setPatNum} ></PatientTable>
+                        <PatientTable 
+                        selectedColumn={selectedColumn} 
+                        searchTerm={searchTerm} 
+                        setting={setPatNum}
+                        setModal = {setModal}
+                        setPid = {setPid} ></PatientTable>
                         
                     </div>
                 </div>

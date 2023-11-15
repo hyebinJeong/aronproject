@@ -8,8 +8,9 @@ import iconSortDown from '../image/iconSortDown.svg'
 import { CheckBox } from './CheckBox'
 import axios from 'axios';
 import ColumnFilter from './Columnfilter'
+import Modal from './CommentModal'
 
-const SuspiciousTable = ({ selectedColumn, searchTerm, setting }) => {
+const SuspiciousTable = ({ selectedColumn, searchTerm, setting, setModal, setPid}) => {
 
     const columns = useMemo(() => {
         return COLUMNS.map((column) => {
@@ -23,7 +24,7 @@ const SuspiciousTable = ({ selectedColumn, searchTerm, setting }) => {
     const data = useMemo(() => datas, [datas]);
 
     useEffect(() => {
-        axios.post('http://localhost:3001/patients', {})
+        axios.post('http://localhost:3001/suspicious', {})
             .then((res) => {
                 setDatas(res.data);
                 setting(res.data.length)
@@ -105,7 +106,9 @@ const SuspiciousTable = ({ selectedColumn, searchTerm, setting }) => {
                                 className='table-page-col'
                                 style={{color: rows[idx].original.patient_id == 9891 ? 'blue' : ''}} // comment 존재 유무에 따른 색상 변화
                                 onClick={()=> {
-                                    alert('hi') // 넣을 기능 준비
+                                     // 넣을 기능 준비
+                                     setPid(rows[idx].original.patient_id)
+                                     setModal(true)
                                 }}>pages</button></td>
                             </tr>
                         )

@@ -25,7 +25,7 @@ export const COLUMNS = [
   },
   {
     Header: "Sepsis",
-    accessor: "MAP",
+    accessor: "sepsis_score",
   },
   {
     Header: "HR",

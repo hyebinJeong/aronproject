@@ -32,7 +32,6 @@ hr {
 } */
 
 .class-status-font {
-  width: 70px;
   height: 20px;
   font-family: Pretendard;
   font-size: 17px;
@@ -76,7 +75,7 @@ hr {
 .nav-back {
   display: flex;
   position: absolute;
-  right: 5vw;
+  right: 2vw;
   align-items: center;
   justify-content: flex-end;
 }

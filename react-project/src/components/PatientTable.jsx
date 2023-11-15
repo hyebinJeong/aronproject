@@ -9,7 +9,7 @@ import { CheckBox } from './CheckBox'
 import axios from 'axios';
 import ColumnFilter from './Columnfilter.jsx'
 
-const PatientTable = ({ selectedColumn, searchTerm, setting }) => {
+const PatientTable = ({ selectedColumn, searchTerm, setting, setModal, setPid }) => {
 
     const columns = useMemo(() => {
         return COLUMNS.map((column) => {
@@ -138,7 +138,9 @@ const PatientTable = ({ selectedColumn, searchTerm, setting }) => {
                                 className='table-page-col'
                                 style={{color: rows[idx].original.patient_id == 9891 ? 'blue' : ''}} // comment 존재 유무에 따른 색상 변화
                                 onClick={()=> {
-                                    alert('hi') // 넣을 기능 준비
+                                     // 넣을 기능 준비
+                                     setPid(rows[idx].original.patient_id)
+                                     setModal(true)
                                 }}>pages</button></td>
                                 
                             </tr>
@@ -160,7 +162,7 @@ const PatientTable = ({ selectedColumn, searchTerm, setting }) => {
                                 key={startPage + index}
                                 type="button"
                                 style={{
-                                    backgroundColor: pageIndex === index ? "#0d47a1" : "white",
+                                    backgroundColor: pageIndex === index ? "#0d47a1" : "transparent",
                                     color: pageIndex === index ? "white" : 'black'
                                 }}
                                 onClick={() => gotoPage(startPage + index)}
