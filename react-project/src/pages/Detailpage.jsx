@@ -9,7 +9,7 @@ const Detailpage = () => {
 
   return (
     <div>
-      <Header />
+      <Header></Header>
       <div className='space'>
       {/* GraphLine 컴포넌트에 데이터를 전달합니다. */}
       <GraphLine data={data} />
