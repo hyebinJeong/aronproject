@@ -4,7 +4,7 @@ const express = require("express");
 const router = express.Router();
 const path = require("path");
 const conn = require("../config/database");
-const { rejects } = require("assert");
+
 
 // 전체 데이터
 router.post("/patients", async (req, res) => {
@@ -15,6 +15,7 @@ router.post("/patients", async (req, res) => {
         p.gender,
         p.age,
         p.ward_room,
+        p.sepsis_score,
         d.record_time,
         d.HR,
         d.O2Sat,
@@ -22,13 +23,19 @@ router.post("/patients", async (req, res) => {
         d.SBP,
         d.MAP,
         d.DBP,
-        d.Resp
+        d.Resp,
+        c.comment,
+        c.created_at
     FROM 
         patient AS p 
     INNER JOIN 
         data AS d
     ON 
         p.patient_id = d.patient_id
+    LEFT JOIN 
+        comments as c
+    ON 
+        p.patient_id = c.patient_id
     WHERE
         d.record_time = (
             SELECT 
@@ -55,10 +62,35 @@ router.post("/patients", async (req, res) => {
 
 // 패혈증 의심 환자 테이블 불러오기 (패혈증 점수 70이상)
 router.post('/suspicious', async (req, res) => {
-  const sql = "SELECT * FROM patient WHERE sepsis_score >= 70";
+  // const {sepsis_score} = req.body;
+  const sql = `
+    select  
+      p.patient_id, 
+      p.name,
+      p.gender,
+      p.age,
+      p.ward_room,
+      p.sepsis_score,
+      d.record_time,
+      d.HR,
+      d.O2Sat,
+      d.Temp,
+      d.SBP,
+      d.MAP,
+      d.DBP,
+      d.Resp,
+      c.comment,
+      c.created_at
+    from patient p 
+    inner join data d 
+    on p.patient_id=d.patient_id 
+    left join comments c
+    on p.patient_id = c.patient_id
+    where p.sepsis_score >= 70
+    `;
   try {
       const results = await new Promise((resolve, reject) => {
-          conn.query(sql, (err, rows) => {
+          conn.query(sql,(err, rows) => {
               if (err) {
                   reject(err);
               } else {
