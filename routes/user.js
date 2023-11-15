@@ -1,7 +1,7 @@
-/* user와 관련된 Router 모음 
-- DB와 연결 기능
+/* 서버 측에서 user와 관련된 Router 처리하는 부분
+- DB와 연결
 - 기능 : 로그인, 로그아웃 등
-- 작성자 : 서혜림 (23.10.31)
+- 작성자 : 서혜림 (23.11.14) ver.2
 */
 
 const express = require('express');
@@ -22,7 +22,7 @@ router.post('/login', (req, res) => {
         if (rows.length > 0) {
             // 로그인 성공
             req.session.user = rows[0];  // 세션에 사용자 정보 저장
-            res.json({ msg: 'success', user: rows[0] })
+            res.json({ msg: 'success', user: rows[0] }) // 사용자 정보 반환
         } else {
             // 로그인 실패
             res.json({ msg: 'failed' })

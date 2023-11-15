@@ -1,52 +1,39 @@
-import { useState, useEffect } from "react";
-import {Routes, Route, Link, useNavigate} from 'react-router-dom';
+/* 헤더 컴포넌트 정의 
+: 로그인한 사용자 정보 보여주고, 로그아웃 기능 제공
+*/
+import React, { useState, useEffect, useContext } from "react";
+import { Routes, Route, Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import React from "react";
 import "../components/Header.css";
 import aronWhite from "../image/aronWhite.png";
 import iconLogout from "../image/iconLogout.svg"
-
-// 임시 데이터 (axios 후 삭제 예정)
-const User = {
-  id: '20231031',
-  pw: 'test1031!',
-  name: '정혜빈',
-  job: '의사'
-}
+import UserContext from '../contexts/UserContext';  // UserContext import
 
 const Header = () => {
-
-  // job, name 상태 업데이트하는 state
-  const [job, setJob] = useState('');
-  const [name, setName] = useState('');
+  const { user } = useContext(UserContext);
 
   // 자동 로그아웃을 위한 state ,초 단위로 60분 설정 (즉, 초기값을 3600초로 설정)
   // time은 로그아웃까지 남은시간을 저장하는 상태
   const [time, setTime] = useState(60 * 60);
-  // const [time, setTime] = useState(5);
   const navigate = useNavigate();
 
   // 컴포넌트 렌더링 될 때마다 특정 작업 수행
-  useEffect(()=>{
+  useEffect(() => {
     const fetchData = async () => {
       try {
-        // const response = await axios.get('/api/user(API요청임시주소)');
-        // setJob(response.data.job);
-        // setName(response.data.name);
-        setJob(User.job);
-        setName(User.name);
+        const response = await axios.get('/user');
       } catch (error) {
         console.error('데이터 불러오기 실패', error)
       }
     };
     fetchData();
     // 빈 배열 --> 처음 렌더링 될 때만 실행
-  },[])
+  }, [])
 
   // setInterval --> 첫 번째 인자로 전달된 함수를 두 번째 인자로 전달된 시간 간격마다 반복 실행
   // 1초마다 남은 시간 감소 
-  useEffect(()=>{
-    const timerId = setInterval(()=>{
+  useEffect(() => {
+    const timerId = setInterval(() => {
       setTime(prevTime => prevTime - 1);
     }, 1000);
 
@@ -55,17 +42,17 @@ const Header = () => {
     }
   }, []);
 
-  useEffect(()=>{
-    if(time === 0){
+  useEffect(() => {
+    if (time === 0) {
       // time 상태가 0 이되면 로그아웃 처리되는 로직 작성하기
       alert('로그아웃 되었습니다');
       navigate('/login')
     }
-  },[time]);
+  }, [time]);
 
   // formatTime --> 초 단위로 표현된 시간을 mm:ss형식의 문자열로 변환하는 함수
   const formatTime = (time) => {
-    const minutes = Math.floor(time/60);
+    const minutes = Math.floor(time / 60);
     const seconds = time % 60;
     // minutes가 10보다 작으면 앞에 0을 붙여서 '01', '02' 이런식으로 표기, 10보다 크면 그대로 표기
     // seconds도 마찬가지
@@ -104,7 +91,7 @@ const Header = () => {
         <img src={aronWhite} alt="로고" className="header-logo" />
         <ul>
           <li>
-            <span>담당{job} [{name}]</span>
+          {user ? <span>담당{user.job === 0 ? '의사' : '간호사'} [{user.name}]</span> : <span>로그인 정보가 없습니다</span>}
           </li>
           <li>
             <span className="login-time">{formatTime(time)}</span>
