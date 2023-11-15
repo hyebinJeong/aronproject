@@ -4,57 +4,86 @@ const path = require('path');
 const conn = require('../config/database');
 
 // 코멘트 조회
-router.post('/comment/read', async(req, res) => {
+router.post('/read', async(req,res)=>{
     const {patient_id} = req.body;
     const sql = 'select * from comments where patient_id=?';
-
     try {
-        const result = await conn.query(sql, [patient_id]);
-        res.json(result);
-    } catch (err) {
+        const results = await new Promise((resolve, reject)=>{
+            conn.query(sql,[patient_id],(err,rows)=>{
+                if(err){
+                    reject(err);
+                } else {
+                    resolve(rows);
+                }
+            });
+        });
+        res.json(results);
+    } catch(err) {
         console.error(err);
         res.status(500).send('An error occurred, please try again.');
     }
 });
 
 // 코멘트 추가
-router.post('/comment/add', async(req, res) => {
-    const { patient_id, comment } = req.body;
+router.post('/add', async(req,res)=>{
+    const {patient_id, comment} = req.body;
     const sql = 'insert into comments (patient_id, comment) values (?,?)';
-
-    try {
-        const result = await conn.query(sql, [patient_id, comment]);
-        res.json({ success: true, message: 'Comment add' });
-    } catch (err) {
+    try{
+        await new Promise((resolve, reject)=>{
+            conn.query(sql, [patient_id, comment] ,(err, rows)=>{
+                if(err){
+                    reject(err);
+                } else {
+                    resolve(rows);
+                }
+            });
+        });
+        res.status(200).send('comment add');
+    } catch(err) {
         console.error(err);
-        res.status(500).json({ success: false, message: 'comment add error' });
+        res.status(500).send('An error occurred, please try again.');
     }
 });
 
 // 코멘트 수정
-router.post('/comment/update', async(req, res) => {
-    const { comment, comment_id } = req.body;
-    const sql = 'UPDATE comments SET comment = ? WHERE comment_id = ?';
-
-    try {
-        const result = await conn.query(sql, [comment, comment_id]);
-        res.json({ success: true, message: 'comment updated' });
-    } catch (err) {
+router.post('/update', async(req,res)=>{
+    const {comment, comment_id} = req.body;
+    const sql = 'update comments set comment=? where comment_id=?';
+    try{
+        await new Promise((resolve, reject)=>{
+            conn.query(sql, [comment, comment_id] ,(err, rows)=>{
+                if(err){
+                    reject(err);
+                } else {
+                    resolve(rows);
+                }
+            });
+        });
+        res.status(200).send('comment update');
+    } catch(err) {
         console.error(err);
-        res.status(500).json({ success: false, message: 'comment updated error' });
+        res.status(500).send('An error occurred, please try again.');
     }
 });
 
 // 코멘트 삭제
-router.post('/comment/delete', async(req,res)=>{
+router.post('/delete', async(req,res)=>{
     const {comment_id} = req.body;
     const sql = 'delete from comments where comment_id=?';
-    try {
-        const result = await conn.query(sql, [comment_id]);
-        res.json({success: true, message : 'comment deleted'});
+    try{
+        await new Promise((resolve, reject)=>{
+            conn.query(sql, [comment_id] ,(err, rows)=>{
+                if(err){
+                    reject(err);
+                } else {
+                    resolve(rows);
+                }
+            });
+        });
+        res.status(200).send('comment delete');
     } catch(err) {
         console.error(err);
-        res.status(500).json({success: false, message : 'comment deleted error'});
+        res.status(500).send('An error occurred, please try again.');
     }
 });
 
