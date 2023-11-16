@@ -1,7 +1,8 @@
 
 .modal-container {
-    position: absolute;
+    position: fixed;
     z-index: 100;
+    top: 0
 }
 
 .modal-overlay {
@@ -98,9 +99,9 @@
 }
 
 .modal-comment-box {
-    width: 80%;
+    width: 90%;
     height: 8vh;
-    font-size: 2.2rem;
+    font-size: 1.4rem;
     background-color: whitesmoke;
     margin-left: 3vh;
     margin-top: 2vh;
@@ -116,7 +117,7 @@
 .modal-comment-box button {
     background-color: transparent;
     border: 0;
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     right: 2%;
     position: absolute;
 }

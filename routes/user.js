@@ -20,6 +20,7 @@ router.post('/login', (req, res) => {
         if (rows.length > 0) {
             // 로그인 성공
             req.session.user = rows[0];  // 세션에 사용자 정보 저장
+            console.log(req.session.is_logined)
             res.json({ msg: 'success', user: rows[0] }) // 사용자 정보 반환
         } else {
             // 로그인 실패

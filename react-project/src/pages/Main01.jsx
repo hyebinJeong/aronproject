@@ -28,9 +28,6 @@ const Main01 = () => {
 
     return (
         <div style={{position: 'relative'}}>
-            { modal
-            ? <Modal setModal={setModal} pid={pid}></Modal>
-            : null}
 
             <div className='space'>
                 <div className='nav'>
@@ -82,6 +79,9 @@ const Main01 = () => {
                     </div>
                 </div>
             </div>
+            { modal
+            ? <Modal setModal={setModal} pid={pid}></Modal>
+            : null}
         </div>
     )
 }

@@ -167,7 +167,7 @@ const PatientTable = ({ modal, selectedColumn, searchTerm, setting, setModal, se
                                      console.log('row.original.patient_id:', row.original.patient_id); // 추가된 부분
                                      setPid(row.original.patient_id)
                                      setModal(true)
-                                }}>{
+                                }}>{ commentArr &&
                                     commentArr.includes(row.original.patient_id) ? 'pages' : 'none'
                                 }</button></td>
                                 
