@@ -56,7 +56,7 @@ router.post("/patients", async (req, res) => {
 
 // 패혈증 의심 환자 테이블 불러오기 (패혈증 점수 70이상)
 router.post('/suspicious', async (req, res) => {
-  // const {sepsis_score} = req.body;
+  const {sepsis_score} = req.body;
   const sql = `
   select  
     p.patient_id, 
@@ -76,7 +76,7 @@ router.post('/suspicious', async (req, res) => {
   from patient p 
   inner join data d 
   on p.patient_id=d.patient_id
-  where p.sepsis_score >= 70
+  where p.sepsis_score >= ?
   and d.record_time = (
     select max(record_time)
     from data
@@ -85,7 +85,7 @@ router.post('/suspicious', async (req, res) => {
     `;
   try {
       const results = await new Promise((resolve, reject) => {
-          conn.query(sql,(err, rows) => {
+          conn.query(sql,[sepsis_score],(err, rows) => {
               if (err) {
                   reject(err);
               } else {
