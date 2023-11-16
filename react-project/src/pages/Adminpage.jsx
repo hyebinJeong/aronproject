@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import './Adminpage.css'
-import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import iconSet from "../image/iconSet.svg"
@@ -13,12 +12,16 @@ const Adminpage = () => {
   const [userData, setUserData] = useState([]);
   const [addModal, setAddModal] = useState(false );
   const [clickedRow, setClickedRow] = useState(null); // 현재 클릭된 행
-  const navigate = useNavigate();
 
   // 설정 버튼 클릭
   const adminSetIconClick = () => {
     setScoreModal(true);
-    console.log('clicked')
+  };
+
+  // 모달 닫기 함수
+  const closeModal = () => {
+      setScoreModal(false);
+      setAddModal(false);
   };
 
   // 추가 버튼 클릭
@@ -101,13 +104,10 @@ const Adminpage = () => {
       </div>
 
       </div>
-      {
-        scoreModal == true ? <AdminScoreModal></AdminScoreModal>: null
-      }
 
-      {
-        addModal == true ? <AdminAddModal onUserAdded={handleUserAdded}></AdminAddModal> : null
-      }
+      {scoreModal && <AdminScoreModal closeModal={closeModal} />}
+
+      {addModal && <AdminAddModal closeModal={closeModal} onUserAdded={handleUserAdded} />}
 
     </div>
     )

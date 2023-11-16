@@ -4,19 +4,14 @@ import X from '../image/X.png'
 import { useState } from 'react'
 import axios from 'axios'
 
-const AdminScoreModal = () => {
+const AdminScoreModal = ({closeModal}) => {
 
-  const [scoreModal, setScoreModal] = useState(true);
   const [sepsis_score, setSepsis_score] = useState("");
 
   const xIconClick = () => {
-    setScoreModal(false);
+    closeModal(); // 부모 컴포넌트에서 전달 받은 closModal함수 호출
     console.log('clicked')
   };
-
-  if(!scoreModal) {
-    return null;
-  }
 
   const scoreModalConfirmClick = async () => {
     try {
@@ -24,6 +19,7 @@ const AdminScoreModal = () => {
         sepsis_score: sepsis_score
       });
       console.log(response.data);
+      closeModal(); // 패혈증 점수 설정 후 모달 닫기
     } catch (error) {
         console.log('패혈증 점수 설정 실패, error')
     }

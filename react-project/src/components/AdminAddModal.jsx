@@ -1,26 +1,20 @@
 import React from 'react'
 import './AdminAddModal.css'
-import { useSearchParams } from 'react-router-dom'
 import X from '../image/X.png'
 import { useState } from 'react'
 import axios from 'axios'
 
 
-const AdminAddModal = ({onUserAdded, onClose}) => {
+const AdminAddModal = ({onUserAdded, closeModal}) => {
     
-    const [addModal, setAddModal] = useState(true);
     const [id, setId] = useState("");
     const [pw, setPw] = useState("");
     const [name, setName] = useState("");
     const [classValue, setClassValue] = useState("");
 
     const xIconClick2 = () => {
-        setAddModal(false);
+        closeModal(); // 부모 컴포에서 전달받은 closeModal함수 호출
     };
-
-    if(!addModal) {
-        return null;
-    }
 
     const addModalConfirmClick = async () => {
         try {
@@ -31,9 +25,8 @@ const AdminAddModal = ({onUserAdded, onClose}) => {
                 classvalue: classValue
         });
         console.log(response.data);
-        // xIconClick2(); // 데이터 성공적으로 추가한 뒤 모달 닫음
-        onUserAdded(); //데이터 성공적으로 추가한 뒤 사용자 목록 다시 불러옴
-        // onClose(); // 모달을 닫음
+        onUserAdded(); // 데이터 성공적으로 추가한 뒤 사용자 목록 다시 불러옴
+        closeModal(); // 데이터 성공적으로 추가한 뒤 모달 닫음 
         } catch (error) {
             console.log('데이터 추가 실패, error')
         }

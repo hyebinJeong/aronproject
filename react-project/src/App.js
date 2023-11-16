@@ -5,7 +5,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import UserContext from './contexts/UserContext';
-import SepsisScoreContext from './components/SepsisScoreContext.jsx';
+import SepsisScoreContext from './contexts/SepsisScoreContext.jsx';
 import './App.css';
 import Login from './components/Login';
 import Header from './components/Header';
@@ -26,7 +26,6 @@ import GraphDetailSBP from './components/GraphDetailSBP.jsx'
 import GraphDetailMAP from './components/GraphDetailMAP.jsx';
 import GraphDetailDBP from './components/GraphDetailDBP.jsx';
 import GraphDetailResp from './components/GraphDetailResp.jsx';
-import DetailLeft from './components/DetailLeft.jsx';
 import Adminpage from './pages/Adminpage.jsx';
 import AdminScoreModal from './components/AdminScoreModal.jsx'
 import AdminAddModal from './components/AdminAddModal.jsx';
