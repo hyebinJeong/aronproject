@@ -24,6 +24,7 @@ router.post('/read', async(req,res)=>{
     }
 });
 
+
 // 코멘트 추가
 router.post('/add', async(req,res)=>{
     const {patient_id, comment} = req.body;
@@ -44,6 +45,7 @@ router.post('/add', async(req,res)=>{
         res.status(500).send('An error occurred, please try again.');
     }
 });
+
 
 // 코멘트 수정
 router.post('/update', async(req,res)=>{
@@ -66,6 +68,7 @@ router.post('/update', async(req,res)=>{
     }
 });
 
+
 // 코멘트 삭제
 router.post('/delete', async(req,res)=>{
     const {comment_id} = req.body;
@@ -81,6 +84,28 @@ router.post('/delete', async(req,res)=>{
             });
         });
         res.status(200).send('comment delete');
+    } catch(err) {
+        console.error(err);
+        res.status(500).send('An error occurred, please try again.');
+    }
+});
+
+
+// 코멘트 확인
+router.post('/classify', async(req,res)=>{
+    const {patient_id} = req.body;
+    const sql = 'select patient_id, comment from comments where patient_id=?';
+    try {
+        const results = await new Promise((resolve, reject)=>{
+            conn.query(sql,[patient_id],(err,rows)=>{
+                if(err){
+                    reject(err);
+                } else {
+                    resolve(rows);
+                }
+            });
+        });
+        res.json(results);
     } catch(err) {
         console.error(err);
         res.status(500).send('An error occurred, please try again.');
