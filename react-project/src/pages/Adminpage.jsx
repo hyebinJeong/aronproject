@@ -67,8 +67,6 @@ const Adminpage = () => {
       }
     };
 
-    
-
   return (
     <div className='admin-page'>
       <div className="admin-content">

@@ -1,6 +1,7 @@
 import React, { useMemo, useState, useEffect } from 'react'
 //import할 때 useGlobalFilter 훅을 넣음
 import { useTable, useGlobalFilter, useFilters, usePagination, useSortBy, useRowSelect } from 'react-table'
+import { useNavigate } from 'react-router-dom'
 import { COLUMNS } from './columns'
 import './PatientTable.css'
 import iconSortUp from '../image/iconSortUp.svg'
@@ -9,7 +10,7 @@ import { CheckBox } from './CheckBox'
 import axios from 'axios';
 import ColumnFilter from './Columnfilter.jsx'
 
-const PatientTable = ({ selectedColumn, searchTerm, setting, setModal, setPid }) => {
+const PatientTable = ({ modal, selectedColumn, searchTerm, setting, setModal, setPid , pid}) => {
 
     const columns = useMemo(() => {
         return COLUMNS.map((column) => {
@@ -22,6 +23,9 @@ const PatientTable = ({ selectedColumn, searchTerm, setting, setModal, setPid })
     }, [selectedColumn, searchTerm]);
     const [datas, setDatas] = useState([]);
     const data = useMemo(() => datas, [datas]);
+    const [commentArr, setCommentArr] = useState();
+
+    const nav = useNavigate();
 
     useEffect(() => {
         axios.post('http://localhost:3001/patients', {})
@@ -99,6 +103,25 @@ const PatientTable = ({ selectedColumn, searchTerm, setting, setModal, setPid })
         }
     };
 
+    const classifyComment = async () => {
+        await axios.post('http://localhost:3001/comment/classify').then((res) => {
+            setCommentArr(res.data.map((d) => d.patient_id))
+            console.log('res', res.data)
+        })
+    }
+
+    useEffect(() => {
+        classifyComment()
+    }, [pid])
+
+    useEffect(() => {
+        if (modal == false) {
+            classifyComment()
+            console.log('modal state is modify')
+        }
+        
+    }, [modal, commentArr])
+
     return (
         <div>
 
@@ -129,19 +152,24 @@ const PatientTable = ({ selectedColumn, searchTerm, setting, setModal, setPid })
                     {page.map((row, idx) => {
                         prepareRow(row)
                         return (
-                            <tr {...row.getRowProps()}>
+                            <tr {...row.getRowProps()} onDoubleClick={() => {
+                                nav('/detailpage')
+                            }}>
                                 {row.cells.map((cell, columnIndex) => {
                                     const cellClassName = columnIndex === 0 ? "row-checkbox" : "";
                                     return <td {...cell.getCellProps()} className={cellClassName}>{cell.render('Cell')}</td>
                                 })}
                                 <td><button 
                                 className='table-page-col'
-                                style={{color: rows[idx].original.patient_id == 9891 ? 'blue' : ''}} // comment 존재 유무에 따른 색상 변화
                                 onClick={()=> {
                                      // 넣을 기능 준비
-                                     setPid(rows[idx].original.patient_id)
+                                     console.log('commentArr:', commentArr); // 추가된 부분
+                                     console.log('row.original.patient_id:', row.original.patient_id); // 추가된 부분
+                                     setPid(row.original.patient_id)
                                      setModal(true)
-                                }}>pages</button></td>
+                                }}>{
+                                    commentArr.includes(row.original.patient_id) ? 'pages' : 'none'
+                                }</button></td>
                                 
                             </tr>
                         )

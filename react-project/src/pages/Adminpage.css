@@ -4,7 +4,6 @@
     /* background-color: #0d47a1; */
 }
 
-
 .admin-logout-wrapper {
     display: flex;
     align-items: center;
@@ -54,7 +53,7 @@
     width: 100%;
     height: 30vh;
     overflow: scroll;
-    
+    border-collapse: collapse;
 }
 
 .admin-user-data-thead{
@@ -72,7 +71,6 @@
 .admin-icon-set{
     width: 20px;
     height: 20px;
-
     padding-top: 2px;
 }
 
@@ -98,7 +96,6 @@
     position: sticky;
 }
 
-
 .admin-user-data-td {
     padding-left: 1em;
 }
@@ -106,6 +103,7 @@
 .admin-user-data-td{
     background-color: none;
 }
-.clicked {
+
+ .clicked {
     border: 2px solid red;
 }

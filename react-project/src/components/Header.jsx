@@ -88,7 +88,9 @@ const Header = () => {
   return (
     <div className="header-page">
       <div className="header-content">
-        <img src={aronWhite} alt="로고" className="header-logo" />
+        <Link to = '/main1'>
+          <img src={aronWhite} alt="로고" className="header-logo" />
+        </Link>
         <ul>
           <li>
           {user ? <span>담당{user.job === 0 ? '의사' : '간호사'} [{user.name}]</span> : <span>로그인 정보가 없습니다</span>}

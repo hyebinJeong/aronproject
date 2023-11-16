@@ -11,15 +11,16 @@
   height: 11vh;
 }
 
-table td {
+.sus-tb-hd td,
+.p-tb td {
   padding: 8px;
 }
 
-table tr:nth-child(even) {
+.sus-tb-hd tr:nth-child(even) {
   background-color: #f2f2f2;
 }
 
-table tr:hover {
+.sus-tb-hd tr:hover {
   background-color: #ddd;
 }
 

@@ -26,7 +26,6 @@ const Detailpage = () => {
 
   return (
     <div>
-      <Header></Header>
       <div className='space'>
         {/* GraphLine 컴포넌트에 데이터를 전달합니다. */}
         <SingleTable data={datas} />

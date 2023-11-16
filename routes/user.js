@@ -11,13 +11,11 @@ const conn = require('../config/database');
 
 // 로그인 라우터
 router.post('/login', (req, res) => {
-    console.log('login router!', req.body)
     let { id, pw } = req.body;
 
     let sql = "select id, name, class from user where id=? and pw=? ";
 
     conn.query(sql, [id, pw], (err, rows) => {
-        console.log('rows', rows);
 
         if (rows.length > 0) {
             // 로그인 성공
