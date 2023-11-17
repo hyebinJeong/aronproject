@@ -76,7 +76,7 @@ const Header = () => {
   useEffect(() => {
     if (time === 0) {
       // time 상태가 0 이되면 로그아웃 처리되는 로직 작성하기
-      alert('로그아웃 되었습니다');
+      logout()
     }
   }, [time]);
 

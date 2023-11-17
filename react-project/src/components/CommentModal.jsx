@@ -13,7 +13,6 @@ const Modal = ({setModal, pid, classifyComment}) => {
       patient_id : pid
     }).then((res) => {
       setData(res.data)
-      console.log('selectData')
     })
   }
   
@@ -23,7 +22,6 @@ const Modal = ({setModal, pid, classifyComment}) => {
       patient_id : pid,
       comment : word
     }).then((res) => {
-      console.log('insertComment')
       classifyComment()
     })
 
@@ -34,7 +32,6 @@ const Modal = ({setModal, pid, classifyComment}) => {
     await axios.post('http://localhost:3001/comment/delete', {
       comment_id : id
     }).then((res) => {
-      console.log('deleteComment')
       classifyComment()
     })
 
@@ -46,15 +43,14 @@ const Modal = ({setModal, pid, classifyComment}) => {
       comment : comment,
       comment_id : comment_id
     }).then((res) => {
-      console.log('modifyComment')
     })
 
     await selectComment()
   }
 
-  const modifyFunc = () => {
-    modifyComment()
-    selectComment()
+  const modifyFunc = async() => {
+    await modifyComment()
+    await selectComment()
   }
 
   useState(() => {
@@ -74,11 +70,9 @@ const Modal = ({setModal, pid, classifyComment}) => {
           {data.map((d) => {
             return ( <div className ='modal-comment-box'>{d.comment}
             <button className = 'comment-modify-btn'onClick = {() => {
-              console.log('modify')
             }}>modify</button>
             
             <button onClick = {() => {
-              console.log('delete')
               deleteComment(d.comment_id)
             }}>delete</button>
             </div> )
@@ -89,7 +83,6 @@ const Modal = ({setModal, pid, classifyComment}) => {
             <textarea maxLength='300' ref={commentRef}></textarea>
             <button onClick={() => {
               const word = commentRef.current.value;
-              console.log('insert')
               insertComment(word);
               commentRef.current.value = '';
             }}>입력</button>
