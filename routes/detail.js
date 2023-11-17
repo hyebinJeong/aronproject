@@ -5,49 +5,36 @@ const conn = require("../config/database");
 
 // 전체 데이터
 router.post("/detail", async (req, res) => {
-    const sql = `
+  const { patient_id } = req.body;  // 프론트엔드에서 전달된 patient_id를 가져옵니다.
+  const sql = `
       SELECT 
-          p.patient_id, 
-          p.name,
-          p.gender,
-          p.age,
-          p.ward_room,
-          d.record_time,
-          d.HR,
-          d.O2Sat,
-          d.Temp,
-          d.SBP,
-          d.MAP,
-          d.DBP,
-          d.Resp
+      name, 
+      gender, 
+      age, 
+      blood_type, 
+      admission_date, 
+      medical_department, 
+      ward_room, 
+      sepsis_score 
       FROM 
-          patient AS p 
-      INNER JOIN 
-          data AS d
-      ON 
-          p.patient_id = d.patient_id
+      patient 
       WHERE
-          d.record_time = (
-              SELECT 
-                  MAX(record_time)
-              FROM 
-                  data
-              WHERE 
-                  patient_id = p.patient_id
-          )
+      patient_id =?;
   `;
-  
-    try {
-      const results = await new Promise((resolve, reject) => {
-        conn.query(sql, (err, result) => {
-          if (err) throw err;
-          else res.json(result);
-        });
+
+  try {
+    const results = await new Promise((resolve, reject) => {
+      
+      conn.query(sql, [patient_id], (err, result) => {  // patient_id를 SQL 쿼리에 바인딩합니다.
+        if (err) throw err;
+        else res.json(result);
       });
-    } catch (err) {
-      console.log(err);
-      res.status(500).send("An error occurred, please try again.");
-    }
-  });
+    });
+    res.json(results);  // 결과를 json 형태로 반환합니다.
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("An error occurred, please try again.");
+  }
+});
 
 module.exports = router;
