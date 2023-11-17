@@ -11,7 +11,6 @@ const conn = require('../config/database');
 
 // 로그인 라우터
 router.post('/login', (req, res) => {
-    console.log('login router!', req.body)
     let { id, pw } = req.body;
 
     // ID 또는 비밀번호가 입력되지 않은 경우 에러 메시지 반환
@@ -23,18 +22,15 @@ router.post('/login', (req, res) => {
     const sql = "SELECT id, name, class FROM user WHERE id=? AND pw=?";
 
     conn.query(sql, [id, pw], (err, rows) => {
-        // DB 조회 중 에러 발생 시 에러 메시지 반환
-        if (err) {
-            console.error('로그인 에러:', err);
-            return res.status(500).json({ msg: 'failed', detail: '로그인 중 에러가 발생했습니다.' });
-        }
+        console.log('rows', rows);
 
-        // 일치하는 사용자가 있을 경우 세션에 사용자 정보 저장 후 로그인 성공 메시지와 사용자 정보 반환
         if (rows.length > 0) {
-            req.session.user = rows[0];
-            res.json({ msg: 'success', user: rows[0] });
-        } else { // 일치하는 사용자가 없을 경우 로그인 실패 메시지 반환
-            res.status(401).json({ msg: 'failed', detail: 'ID 또는 비밀번호가 잘못되었습니다.' });
+            // 로그인 성공
+            req.session.user = rows[0];  // 세션에 사용자 정보 저장
+            res.json({ msg: 'success', user: rows[0] }) // 사용자 정보 반환
+        } else {
+            // 로그인 실패
+            res.json({ msg: 'failed' })
         }
     })
 });

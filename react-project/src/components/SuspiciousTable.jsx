@@ -24,7 +24,9 @@ const SuspiciousTable = ({ selectedColumn, searchTerm, setting, setModal, setPid
     const data = useMemo(() => datas, [datas]);
 
     useEffect(() => {
-        axios.post('http://localhost:3001/suspicious', {})
+        axios.post('http://localhost:3001/suspicious', {
+            sepsis_score : 70
+        })
             .then((res) => {
                 setDatas(res.data);
                 setting(res.data.length)
