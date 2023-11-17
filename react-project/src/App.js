@@ -46,6 +46,8 @@ function App() {
   const [user, setUser] = useState(null);
   const [sepsisScore, setSepsisScore] = useState("");
 
+  const auth = localStorage.getItem('user')
+
   useEffect(() => {
     const checkLoginStatus = async () => {
       try {
@@ -61,12 +63,14 @@ function App() {
     checkLoginStatus();
   }, []);
 
+  console.log(auth)
+
   return (
     <SepsisScoreContext.Provider value={{ sepsisScore, setSepsisScore }}>
       <UserContext.Provider value={{ user, setUser }}>
         <BrowserRouter>
           <div>
-            <Header></Header>
+           {auth ? <Header></Header> : null}
             <Routes>
               <Route path='/graphline' element={<GraphLine></GraphLine>}></Route>
               <Route path='/graphlineone' element={<GraphLineOne></GraphLineOne>}></Route>
@@ -75,8 +79,8 @@ function App() {
               <Route path='/graphbar' element={<GraphBar></GraphBar>}></Route>
               <Route path='/graphbarone' element={<GraphBarOne></GraphBarOne>}></Route>
               <Route path='/header' element={<Header></Header>}></Route>
-              <Route path='/login' element={<Login></Login>}></Route>
-              <Route path='/main1' element={<Main01></Main01>}></Route>
+              { auth ? <Route path='/' element={<Main01></Main01>}></Route>
+              : <Route path='/' element={<Login></Login>}></Route>}
               <Route path='/detailpage' element={<Detailpage></Detailpage>}></Route>
               <Route path='/main2right' element={<Main02Right></Main02Right>}></Route>
               <Route path='/detailhr' element={<GraphDetailHR></GraphDetailHR>}></Route>

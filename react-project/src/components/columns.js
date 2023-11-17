@@ -4,15 +4,15 @@ export const COLUMNS = [
     accessor: "patient_id",
   },
   {
-    Header: "Name",
+    Header: "이름",
     accessor: "name",
   },
   {
-    Header: "Gender",
+    Header: "성별",
     accessor: "gender",
   },
   {
-    Header: "Age",
+    Header: "나이",
     accessor: "age",
   },
   {
@@ -20,7 +20,7 @@ export const COLUMNS = [
     accessor: "ward_room",
   },
   {
-    Header: "Record Time",
+    Header: "기록 시간",
     accessor: "record_time",
   },
   {

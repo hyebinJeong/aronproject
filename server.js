@@ -56,6 +56,7 @@ app.use(express.static(path.join(__dirname, 'react-project', 'build')));
 app.use('/', indexRouter)
 app.use('/user', userRouter)
 app.use('/detail', detailRouter)
+app.use('/comment', commentRouter)
 
 // 미들웨어 정의
 function ensureAuthenticated(req, res, next) {

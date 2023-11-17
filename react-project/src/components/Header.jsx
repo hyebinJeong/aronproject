@@ -59,7 +59,8 @@ const Header = () => {
         alert('로그아웃 되었습니다');
         localStorage.removeItem('user');
         document.cookie = 'user=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-        navigate('/login');
+        // navigate('/login');
+        window.location.href = '/';
         // 현재 페이지를 히스토리 스택에 추가
       window.history.pushState(null, document.title, window.location.href);
       } else {
@@ -76,7 +77,6 @@ const Header = () => {
     if (time === 0) {
       // time 상태가 0 이되면 로그아웃 처리되는 로직 작성하기
       alert('로그아웃 되었습니다');
-      navigate('/login')
     }
   }, [time]);
 
@@ -92,7 +92,7 @@ const Header = () => {
   return (
     <div className="header-page">
       <div className="header-content">
-        <Link to = '/main1'>
+        <Link to = '/'>
           <img src={aronWhite} alt="로고" className="header-logo" />
         </Link>
         <ul>
@@ -104,7 +104,6 @@ const Header = () => {
         </li>
         <li>
           <div className="logout-wrapper" onClick={onClickLogout}>
-            {/* <span className="logout-content" onClick={onClickalertLogout}>로그아웃</span> */}
             <span className="logout-content">로그아웃</span>
             <button className="icon-logout-wrap"><img src={iconLogout} className="icon-logout" alt="로그아웃 아이콘" /></button>
           </div>

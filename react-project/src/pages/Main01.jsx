@@ -1,10 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import './Main01.css'
 import LiveClock from '../components/LiveClock'
 import PatientTable from '../components/PatientTable'
 import SuspiciousTable from '../components/SuspiciousTable'
 import Modal from '../components/CommentModal'
+import axios from 'axios'
 
 const Main01 = () => {
 
@@ -15,6 +16,7 @@ const Main01 = () => {
 
     const [modal, setModal] = useState(false)
     const [pid, setPid] = useState()
+    const [commentArr, setCommentArr] = useState();
 
 
     const handleSearchTermChange = (e) => {
@@ -25,6 +27,23 @@ const Main01 = () => {
         setSelectedColumn(e.target.value);
     };
 
+    const classifyComment = async () => {
+        await axios.post('http://localhost:3001/comment/classify').then((res) => {
+            setCommentArr(res.data.map((d) => d.patient_id))
+        })
+    }
+
+
+    useEffect(() => {
+        classifyComment()
+    }, [])
+
+    useEffect(() => {
+        if (modal == false) {
+            classifyComment()
+        }
+        
+    }, [])
 
     return (
         <div style={{position: 'relative'}}>
@@ -64,7 +83,9 @@ const Main01 = () => {
                         setting={setSusNum}
                         setModal = {setModal}
                         setPid = {setPid}
-                        pid = {pid}></SuspiciousTable>
+                        pid = {pid}
+                        classifyComment = {classifyComment}
+                        commentArr = { commentArr}></SuspiciousTable>
                         
                     </div>
                     <p className='class-status-font'>전체({patNum})</p>
@@ -74,13 +95,16 @@ const Main01 = () => {
                         searchTerm={searchTerm} 
                         setting={setPatNum}
                         setModal = {setModal}
-                        setPid = {setPid}></PatientTable>
+                        setPid = {setPid}
+                        pid = {pid}
+                        classifyComment = {classifyComment}
+                        commentArr = { commentArr}></PatientTable>
                         
                     </div>
                 </div>
             </div>
             { modal
-            ? <Modal setModal={setModal} pid={pid}></Modal>
+            ? <Modal setModal={setModal} pid={pid} classifyComment={classifyComment}></Modal>
             : null}
         </div>
     )

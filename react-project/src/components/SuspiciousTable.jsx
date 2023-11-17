@@ -8,9 +8,9 @@ import iconSortDown from '../image/iconSortDown.svg'
 import { CheckBox } from './CheckBox'
 import axios from 'axios';
 import ColumnFilter from './Columnfilter'
-import Modal from './CommentModal'
+import { useNavigate } from 'react-router-dom'
 
-const SuspiciousTable = ({ selectedColumn, searchTerm, setting, setModal, setPid}) => {
+const SuspiciousTable = ({ modal, selectedColumn, searchTerm, setting, setModal, setPid , pid, commentArr, classifyComment }) => {
 
     const columns = useMemo(() => {
         return COLUMNS.map((column) => {
@@ -23,6 +23,7 @@ const SuspiciousTable = ({ selectedColumn, searchTerm, setting, setModal, setPid
     const [datas, setDatas] = useState([]);
     const data = useMemo(() => datas, [datas]);
 
+    const nav = useNavigate()
     useEffect(() => {
         axios.post('http://localhost:3001/suspicious', {
             sepsis_score : 70
@@ -73,6 +74,8 @@ const SuspiciousTable = ({ selectedColumn, searchTerm, setting, setModal, setPid
         }
     );
 
+
+
     return (
         <div>
             <table className='sus-tb-hd' {...getTableProps()}>
@@ -99,7 +102,9 @@ const SuspiciousTable = ({ selectedColumn, searchTerm, setting, setModal, setPid
                     {rows.map((row, idx) => {
                         prepareRow(row)
                         return (
-                            <tr  {...row.getRowProps()}>
+                            <tr  {...row.getRowProps()} onDoubleClick={() => {
+                                nav(`/detailpage?pid=${row.original.patient_id}`)
+                            }}>
                                 {row.cells.map((cell, columnIndex) => {
                                     const cellClassName = columnIndex === 0 ? "row-checkbox" : "";
                                     return <td {...cell.getCellProps()} className={cellClassName}>{cell.render('Cell')}</td>
@@ -108,10 +113,11 @@ const SuspiciousTable = ({ selectedColumn, searchTerm, setting, setModal, setPid
                                 className='table-page-col'
                                 style={{color: rows[idx].original.patient_id == 9891 ? 'blue' : ''}} // comment 존재 유무에 따른 색상 변화
                                 onClick={()=> {
-                                     // 넣을 기능 준비
                                      setPid(rows[idx].original.patient_id)
                                      setModal(true)
-                                }}>pages</button></td>
+                                }}>{ commentArr &&
+                                    commentArr.includes(row.original.patient_id) ? 'pages' : 'none'
+                                }</button></td>
                             </tr>
                         )
                     })}

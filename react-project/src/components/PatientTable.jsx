@@ -10,7 +10,7 @@ import { CheckBox } from './CheckBox'
 import axios from 'axios';
 import ColumnFilter from './Columnfilter.jsx'
 
-const PatientTable = ({ modal, selectedColumn, searchTerm, setting, setModal, setPid , pid}) => {
+const PatientTable = ({ modal, selectedColumn, searchTerm, setting, setModal, setPid , pid, commentArr, classifyComment}) => {
 
     const columns = useMemo(() => {
         return COLUMNS.map((column) => {
@@ -23,12 +23,12 @@ const PatientTable = ({ modal, selectedColumn, searchTerm, setting, setModal, se
     }, [selectedColumn, searchTerm]);
     const [datas, setDatas] = useState([]);
     const data = useMemo(() => datas, [datas]);
-    const [commentArr, setCommentArr] = useState();
 
     const nav = useNavigate();
 
     useEffect(() => {
-        axios.post('http://localhost:3001/patients', {})
+        axios.post('http://localhost:3001/patients', {
+        })
             .then((res) => {
                 setDatas(res.data);
                 setting(res.data.length)
@@ -103,24 +103,6 @@ const PatientTable = ({ modal, selectedColumn, searchTerm, setting, setModal, se
         }
     };
 
-    const classifyComment = async () => {
-        await axios.post('http://localhost:3001/comment/classify').then((res) => {
-            setCommentArr(res.data.map((d) => d.patient_id))
-            console.log('res', res.data)
-        })
-    }
-
-    useEffect(() => {
-        classifyComment()
-    }, [pid])
-
-    useEffect(() => {
-        if (modal == false) {
-            classifyComment()
-            console.log('modal state is modify')
-        }
-        
-    }, [modal, commentArr])
 
     return (
         <div>
@@ -153,7 +135,7 @@ const PatientTable = ({ modal, selectedColumn, searchTerm, setting, setModal, se
                         prepareRow(row)
                         return (
                             <tr {...row.getRowProps()} onDoubleClick={() => {
-                                nav('/detailpage')
+                                nav(`/detailpage?pid=${row.original.patient_id}`)
                             }}>
                                 {row.cells.map((cell, columnIndex) => {
                                     const cellClassName = columnIndex === 0 ? "row-checkbox" : "";
@@ -162,9 +144,6 @@ const PatientTable = ({ modal, selectedColumn, searchTerm, setting, setModal, se
                                 <td><button 
                                 className='table-page-col'
                                 onClick={()=> {
-                                     // 넣을 기능 준비
-                                     console.log('commentArr:', commentArr); // 추가된 부분
-                                     console.log('row.original.patient_id:', row.original.patient_id); // 추가된 부분
                                      setPid(row.original.patient_id)
                                      setModal(true)
                                 }}>{ commentArr &&

@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import './CommentModal.css'
 import axios from 'axios'
 
-const Modal = ({setModal, pid}) => {
+const Modal = ({setModal, pid, classifyComment}) => {
 
   const commentRef = useRef();
   const [data, setData] = useState([]);
@@ -24,6 +24,7 @@ const Modal = ({setModal, pid}) => {
       comment : word
     }).then((res) => {
       console.log('insertComment')
+      classifyComment()
     })
 
     await selectComment()
@@ -34,6 +35,7 @@ const Modal = ({setModal, pid}) => {
       comment_id : id
     }).then((res) => {
       console.log('deleteComment')
+      classifyComment()
     })
 
     await selectComment()

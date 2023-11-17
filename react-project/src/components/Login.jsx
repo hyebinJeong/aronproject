@@ -78,7 +78,7 @@ const Login = () => {
                 localStorage.setItem('user', JSON.stringify(user)); // 로컬 스토리지에도 사용자 정보 저장
                 localStorage.setItem('loginTime', Math.floor(Date.now() / 1000)); // 현재 시간을 초 단위로 저장
                 alert('로그인에 성공했습니다');
-                navigate('/main1')
+                // navigate('/main1')
             } else {
                 alert('사번과 비밀번호를 확인해주세요');
             }
@@ -96,7 +96,7 @@ const Login = () => {
             axios.get('/check-login')
                 .then(response => {
                     if (response.data.loggedIn) {
-                        navigate('/main1');
+                        // navigate('/main1');
                     }
                 })
                 .catch(error => {

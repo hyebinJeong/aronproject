@@ -1,0 +1,21 @@
+{
+  "files": {
+    "main.css": "/static/css/main.06892091.css",
+    "main.js": "/static/js/main.a2621133.js",
+    "static/js/787.a2bf511c.chunk.js": "/static/js/787.a2bf511c.chunk.js",
+    "static/media/aronlogo.jpg": "/static/media/aronlogo.0defbedec7c11dfd26f4.jpg",
+    "static/media/aronWhite.png": "/static/media/aronWhite.4f43e8c0fb3a92239b3b.png",
+    "static/media/iconSet.svg": "/static/media/iconSet.4ffd33336363e47a5d526d7d8ac29c7b.svg",
+    "static/media/iconLogout.svg": "/static/media/iconLogout.f06dcb4c016469326d850604af3fdefa.svg",
+    "static/media/iconSortDown.svg": "/static/media/iconSortDown.8449534ff912a1920540aeb6b5b6f302.svg",
+    "static/media/iconSortUp.svg": "/static/media/iconSortUp.381243866b2abf8385e6262ad88c4f59.svg",
+    "index.html": "/index.html",
+    "main.06892091.css.map": "/static/css/main.06892091.css.map",
+    "main.a2621133.js.map": "/static/js/main.a2621133.js.map",
+    "787.a2bf511c.chunk.js.map": "/static/js/787.a2bf511c.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.06892091.css",
+    "static/js/main.a2621133.js"
+  ]
+}
