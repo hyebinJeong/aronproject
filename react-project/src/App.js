@@ -2,16 +2,28 @@
 (사용자가 어떤 URL 방문했을 때 어떤 화면 보여줄지 결정하는 역할) 
 사용자 로그인 상태 체크 로직 추가
 */
+
+// React 라이브러리와 React의 상태 관리 함수인 useState, 
+// 라이프사이클을 관리하는 useEffect 훅을 임포트
 import React, { useState, useEffect } from 'react';
+// HTTP 요청을 보내기 위한 axios 라이브러리를 임포트
 import axios from 'axios';
+// UserContext를 임포트. \
+// 이 컴포넌트는 사용자의 로그인 정보를 저장하고 이를 하위 컴포넌트에 전달하는 역할
 import UserContext from './contexts/UserContext';
 import SepsisScoreContext from './contexts/SepsisScoreContext.jsx';
 import './App.css';
+// 로그인 컴포넌트를 임포트
 import Login from './components/Login';
+// 헤더 컴포넌트를 임포트
 import Header from './components/Header';
+// Main01 페이지 컴포넌트를 임포트
 import Main01 from './pages/Main01.jsx'
+// 라우팅을 위한 BrowserRouter, Routes, Route 컴포넌트를 임포트
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+// Detailpage 페이지 컴포넌트를 임포트
 import Detailpage from './pages/Detailpage.jsx';
+// 각각의 그래프와 상세 페이지 컴포넌트를 임포트
 import GraphLine from './components/GraphLine.jsx';
 import GraphLineOne from './components/GraphLineOne.jsx';
 import GraphBar from './components/GraphBar.jsx';
