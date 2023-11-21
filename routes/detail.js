@@ -9,7 +9,7 @@ router.post("/info", async (req, res) => {
   const sql = `
   SELECT 
   p.name, 
-  p.admission_date, 
+  DATE_FORMAT(record_time, '%H:%i:%s') as record_time FROM data
   TIMESTAMPDIFF(DAY, p.admission_date, CURDATE()) AS admission_duration,
   p.age, 
   p.gender, 
@@ -80,7 +80,7 @@ router.post("/alldata", async (req, res) => {
   const { patient_id } = req.body; // 프론트엔드에서 전달된 patient_id를 가져옵니다.
   const sql = `
   SELECT 
-  record_time,
+  DATE_FORMAT(record_time, '%H:%i:%s') as record_time FROM data,
   sepsis_score, 
   HR, 
   SBP, 
