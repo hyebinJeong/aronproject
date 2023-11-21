@@ -46,7 +46,7 @@ router.post("/graph", async (req, res) => {
 
   const sql = `
     SELECT
-      record_time,
+    DATE_FORMAT(record_time, '%H:%i') as record_time,
       sepsis_score,
       HR,
       Temp,
