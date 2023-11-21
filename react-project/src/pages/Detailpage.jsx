@@ -38,7 +38,6 @@ const Detailpage = () => {
   }, [])
 
 
-
   //Graph 데이터 
   const [data, setData] = useState(null);
 
