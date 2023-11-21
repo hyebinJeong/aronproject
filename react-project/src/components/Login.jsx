@@ -24,6 +24,9 @@ const Login = () => {
     const [notAllow, setNotAllow] = useState(true);
     const navigate = useNavigate();
 
+    // useEffect사용해서 조건에 따라 보여줄 컴포넌트를 설정해준다
+    // usenavigate사용해서 버튼 클릭시 이동시켜주기
+
     // 'touched' state 추가
     const [idTouched, setIdTouched] = useState(false);
     const [pwTouched, setPwTouched] = useState(false);
@@ -78,6 +81,11 @@ const Login = () => {
                 localStorage.setItem('user', JSON.stringify(user)); // 로컬 스토리지에도 사용자 정보 저장
                 localStorage.setItem('loginTime', Math.floor(Date.now() / 1000)); // 현재 시간을 초 단위로 저장
                 alert('로그인에 성공했습니다');
+                if (user.job === 0 || user.job === 1) {
+                    navigate('/');
+                }else if (user.job === 9) {
+                    navigate('/adminpage')
+                }
                 // navigate('/main1')
             } else {
                 alert('사번과 비밀번호를 확인해주세요');
