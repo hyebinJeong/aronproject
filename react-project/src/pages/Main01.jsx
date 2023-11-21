@@ -45,6 +45,16 @@ const Main01 = () => {
 
     }, [])
 
+    // useEffect(() => {
+    //     axios.post('http://localhost:5000/model', {}, { withCredentials: true })
+    //         .then((res) => {
+    //             console.log(res.data);
+    //         })
+    //         .catch((error) => {
+    //             console.error('Axios 오류:', error);
+    //         });
+    // }, [])
+
     return (
         <div style={{ position: 'relative' }}>
 

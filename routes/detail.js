@@ -55,7 +55,6 @@ router.post("/graph", async (req, res) => {
       O2Sat,
       MAP,
       DBP,
-      Resp
     FROM
       data
     WHERE

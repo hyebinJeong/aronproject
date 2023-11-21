@@ -113,7 +113,7 @@ function GraphLine() {
   useEffect(() => {
     console.log('useeffect')
 
-    axios.post("http://localhost:3001/detail/graph", {
+    axios.post("http://localhost:3001/detail/alldata", {
       patient_id: pid
     }).then((res) => {
       console.log('res', res)
@@ -155,8 +155,7 @@ function GraphLine() {
       data: DBdata.map((d) => ({ x: d.record_time.slice(11,16), y: d.DBP })),
     },
   ];
-
-
+  
   // let minY = Infinity;
   // let maxY = -Infinity;
 
