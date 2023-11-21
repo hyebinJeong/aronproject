@@ -5,7 +5,7 @@ const conn = require("../config/database");
 
 // 환자 info
 router.post("/info", async (req, res) => {
-  const { patient_id } = req.body;  // 프론트엔드에서 전달된 patient_id를 가져옵니다.
+  const { patient_id } = req.body; // 프론트엔드에서 전달된 patient_id를 가져옵니다.
   const sql = `
   SELECT 
   p.name, 
@@ -27,13 +27,13 @@ WHERE
 
   try {
     const results = await new Promise((resolve, reject) => {
-
-      conn.query(sql, [patient_id], (err, result) => {  // patient_id를 SQL 쿼리에 바인딩합니다.
+      conn.query(sql, [patient_id], (err, result) => {
+        // patient_id를 SQL 쿼리에 바인딩합니다.
         if (err) throw err;
         else res.json(result);
       });
     });
-    res.json(results);  // 결과를 json 형태로 반환합니다.
+    res.json(results); // 결과를 json 형태로 반환합니다.
   } catch (err) {
     console.log(err);
     res.status(500).send("An error occurred, please try again.");
@@ -75,9 +75,9 @@ router.post("/graph", async (req, res) => {
   }
 });
 
-// 환자 all data detail 
+// 환자 all data detail
 router.post("/alldata", async (req, res) => {
-  const { patient_id } = req.body;  // 프론트엔드에서 전달된 patient_id를 가져옵니다.
+  const { patient_id } = req.body; // 프론트엔드에서 전달된 patient_id를 가져옵니다.
   const sql = `
   SELECT 
   record_time,
@@ -95,13 +95,13 @@ WHERE
 
   try {
     const results = await new Promise((resolve, reject) => {
-
-      conn.query(sql, [patient_id], (err, result) => {  // patient_id를 SQL 쿼리에 바인딩합니다.
+      conn.query(sql, [patient_id], (err, result) => {
+        // patient_id를 SQL 쿼리에 바인딩합니다.
         if (err) throw err;
         else res.json(result);
       });
     });
-    res.json(results);  // 결과를 json 형태로 반환합니다.
+    res.json(results); // 결과를 json 형태로 반환합니다.
   } catch (err) {
     console.log(err);
     res.status(500).send("An error occurred, please try again.");
