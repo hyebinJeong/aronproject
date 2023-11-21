@@ -9,6 +9,7 @@ router.post("/info", async (req, res) => {
   const sql = `
   SELECT 
   p.name, 
+  DATE_FORMAT(p.admission_date, '%Y-%m-%d') as admission_date,
   DATE_FORMAT(d.record_time, '%Y-%m-%d %H:%i') as record_time, 
   TIMESTAMPDIFF(DAY, p.admission_date, CURDATE()) AS admission_duration,
   p.age, 
