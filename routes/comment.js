@@ -19,7 +19,6 @@ router.post('/read', async(req,res)=>{
         });
         res.json(results);
     } catch(err) {
-        console.error(err);
         res.status(500).send('An error occurred, please try again.');
     }
 });
@@ -41,7 +40,6 @@ router.post('/add', async(req,res)=>{
         });
         res.status(200).send('comment add');
     } catch(err) {
-        console.error(err);
         res.status(500).send('An error occurred, please try again.');
     }
 });
@@ -63,7 +61,6 @@ router.post('/update', async(req,res)=>{
         });
         res.status(200).send('comment update');
     } catch(err) {
-        console.error(err);
         res.status(500).send('An error occurred, please try again.');
     }
 });
@@ -85,7 +82,6 @@ router.post('/delete', async(req,res)=>{
         });
         res.status(200).send('comment delete');
     } catch(err) {
-        console.error(err);
         res.status(500).send('An error occurred, please try again.');
     }
 });
@@ -106,7 +102,6 @@ router.post('/classify', async(req,res)=>{
         });
         res.json(results);
     } catch(err) {
-        console.error(err);
         res.status(500).send('An error occurred, please try again.');
     }
 });

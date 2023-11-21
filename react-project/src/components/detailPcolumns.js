@@ -9,7 +9,7 @@ export const COLUMNS = [
   },
   {
     Header: "경과일",
-    accessor: "",
+    accessor: "admission_duration",
   },
   {
     Header: "나이",

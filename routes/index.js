@@ -15,8 +15,8 @@ router.post("/patients", async (req, res) => {
     p.gender,
     p.age,
     p.ward_room,
-    p.sepsis_score,
-    d.record_time,
+    d.sepsis_score,
+    DATE_FORMAT(d.record_time, '%Y-%m-%d %H:%i') as record_time,
     d.HR,
     d.O2Sat,
     d.Temp,
@@ -49,7 +49,6 @@ router.post("/patients", async (req, res) => {
       });
     });
   } catch (err) {
-    console.log(err);
     res.status(500).send("An error occurred, please try again.");
   }
 });
@@ -64,8 +63,8 @@ router.post('/suspicious', async (req, res) => {
     p.gender,
     p.age,
     p.ward_room,
-    p.sepsis_score,
-    d.record_time,
+    d.sepsis_score,
+    DATE_FORMAT(d.record_time, '%Y-%m-%d %H:%i') as record_time,
     d.HR,
     d.O2Sat,
     d.Temp,
@@ -76,7 +75,7 @@ router.post('/suspicious', async (req, res) => {
   from patient p 
   inner join data d 
   on p.patient_id=d.patient_id
-  where p.sepsis_score >= ?
+  where d.sepsis_score >= ?
   and d.record_time = (
     select max(record_time)
     from data
@@ -95,7 +94,6 @@ router.post('/suspicious', async (req, res) => {
       });
       res.json(results);
   } catch (err) {
-      console.error(err);
       res.status(500).send('An error occurred, please try again.');
   }
 });
@@ -116,7 +114,6 @@ router.post('/adminpage', async(req,res)=>{
     });
     res.json(results);
   } catch (err) {
-    console.error(err);
     res.status(500).send('An error occurred, please try again.');
   }
 
@@ -139,7 +136,6 @@ router.post('/adminpage/add', async (req,res)=>{
     });
     res.status(200).send('user add');
   } catch(err) {
-    console.error(err);
     res.status(500).send('An error occurred, please try again.');
   }
 });
@@ -160,7 +156,6 @@ router.post('/adminpage/deleted', async (req,res)=>{
     });
     res.status(200).send('user deleted');
   } catch(err) {
-    console.error(err);
     res.status(500).send('An error occurred, please try again.');
   }
 });

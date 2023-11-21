@@ -110,20 +110,19 @@ function GraphLine() {
 
   // 데이터 받아옴
 
-  useEffect(()=>{
+  useEffect(() => {
     console.log('useeffect')
 
-    axios
-      .post("http://localhost:3001/detail/graph", {
-        patient_id: pid,
-      })
-      .then((res) => {
-        console.log("res", res);
-        setDBdata(res.data);
-      });
+    axios.post("http://localhost:3001/detail/graph", {
+      patient_id: pid
+    }).then((res) => {
+      console.log('res', res)
+      setDBdata(res.data);
+    })
+      ;
   }, [])
 
-  const originalData = [  
+  const originalData = [
     // DB에서 받아온 정보를 map함수로 반복처리
     {
       id: "HR",
