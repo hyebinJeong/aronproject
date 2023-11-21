@@ -13,7 +13,7 @@ const Detailpage = () => {
   //SingleTable 데이터
   const [datas, setDatas] = useState([]);
   useEffect(() => {
-    axios.post('http://localhost:3001/detail/Info', {
+    axios.post('http://localhost:3001/detail/info', {
       // front에서 back으로 보낼 값
       patient_id: pid
     }).then((res) => {
