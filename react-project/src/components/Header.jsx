@@ -89,6 +89,19 @@ const Header = () => {
     logout();
   }
 
+  const getJobTitle = (job) => {
+    switch (job) {
+      case 0:
+        return '간호사';
+      case 1:
+        return '의사';
+      case 9:
+        return '관리자';
+      default:
+        return '';
+    }
+  }
+
   return (
     <div className="header-page">
       <div className="header-content">
@@ -97,9 +110,10 @@ const Header = () => {
         </Link>
         <ul>
           <li>
-          {user ? <span>담당{user.job === 0 ? '의사' : '간호사'} [{user.name}]</span> : <span>로그인 정보가 없습니다</span>}
+          {/* {user ? <span>담당{user.job === 0 ? '의사' : '간호사'} [{user.name}]</span> : <span>로그인 정보가 없습니다</span>} */}
+          {user ? <span>담당{getJobTitle(user.job)} [{user.name}]</span> : <span>로그인 정보가 없습니다</span>}
         </li>
-        <li>
+        <li className="login-time-li">
           <span className="login-time">{formatTime(time)}</span>
         </li>
         <li>

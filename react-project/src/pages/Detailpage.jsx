@@ -14,7 +14,7 @@ const Detailpage = () => {
 
 
   useEffect(() => {
-    axios.post('http://localhost:3001/detail/detail', {
+    axios.post('http://localhost:3001/detail/info', {
       // front에서 back으로 보낼 값
 
     }).then((res) => {

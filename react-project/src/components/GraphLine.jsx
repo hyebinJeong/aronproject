@@ -113,12 +113,14 @@ function GraphLine() {
   useEffect(()=>{
     console.log('useeffect')
 
-    axios.post("http://localhost:3001/detail/data", {
-      patient_id : pid
-    }).then((res)=>{console.log('res', res)
-  setDBdata(res.data);
-})   
-    ;
+    axios
+      .post("http://localhost:3001/detail/graph", {
+        patient_id: pid,
+      })
+      .then((res) => {
+        console.log("res", res);
+        setDBdata(res.data);
+      });
   }, [])
 
   const originalData = [  
@@ -126,32 +128,32 @@ function GraphLine() {
     {
       id: "HR",
       color: "hsl(211, 70%, 50%)",
-      data: DBdata.map((d) => ({ x: d.record_time, y: d.HR })),
+      data: DBdata.map((d) => ({ x: d.record_time.slice(11,16), y: d.HR })),
     },
     {
       id: "sepsis_score",
       color: "hsl(211, 70%, 50%)",
-      data: DBdata.map((d) => ({ x: d.record_time, y: d.sepsis_score })),
+      data: DBdata.map((d) => ({ x: d.record_time.slice(11,16), y: d.sepsis_score })),
     },
     {
       id: "O2Sat",
       color: "hsl(211, 70%, 50%)",
-      data: DBdata.map((d) => ({ x: d.record_time, y: d.O2Sat })),
+      data: DBdata.map((d) => ({ x: d.record_time.slice(11,16), y: d.O2Sat })),
     },
     {
       id: "BT",
       color: "hsl(211, 70%, 50%)",
-      data: DBdata.map((d) => ({ x: d.record_time, y: d.Temp })),
+      data: DBdata.map((d) => ({ x: d.record_time.slice(11,16), y: d.Temp })),
     },
     {
       id: "SBP",
       color: "hsl(211, 70%, 50%)",
-      data: DBdata.map((d) => ({ x: d.record_time, y: d.SBP })),
+      data: DBdata.map((d) => ({ x: d.record_time.slice(11,16), y: d.SBP })),
     },
     {
       id: "DBP",
       color: "hsl(211, 70%, 50%)",
-      data: DBdata.map((d) => ({ x: d.record_time, y: d.DBP })),
+      data: DBdata.map((d) => ({ x: d.record_time.slice(11,16), y: d.DBP })),
     },
   ];
 
@@ -181,7 +183,7 @@ function GraphLine() {
   const MyResponsiveLine = ({ data }) => (
     <ResponsiveLine
       data={data}
-      margin={{ top: 50, right: 10, bottom: 50, left: 60 }}
+      margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
       xScale={{ type: "point" }}
       yScale={{
         type: "linear",

@@ -83,7 +83,7 @@ const Adminpage = () => {
             <thead className='admin-user-data-thead'>
               <tr className='admin-user-data-tr'>
                 <th className='admin-th-name'>ID</th>
-                <th className='admin-th-name'>PW</th>
+                {/* <th className='admin-th-name'>PW</th> */}
                 <th className='admin-th-name'>Name</th>
                 <th className='admin-th-name'>Class</th>
               </tr>
@@ -92,7 +92,7 @@ const Adminpage = () => {
               {userData.map((user, index) => (
                 <tr key={index} className={`admin-user-data-tr ${user === clickedRow ? 'clicked' : ''}`} onClick={() => handleRowClick(user)}>
                   <td className='admin-user-data-td'>{user.id}</td>
-                  <td className='admin-user-data-td'>{user.pw}</td>
+                  {/* <td className='admin-user-data-td'>{user.pw}</td> */}
                   <td className='admin-user-data-td'>{user.name}</td>
                   <td className='admin-user-data-td'>{user.class}</td>
                 </tr>

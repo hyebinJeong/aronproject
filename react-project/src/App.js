@@ -47,56 +47,108 @@ function App() {
   const [sepsisScore, setSepsisScore] = useState("");
 
   const auth = localStorage.getItem('user')
+  // const auth = JSON.parse(localStorage.getItem("user")); 
 
   useEffect(() => {
     const checkLoginStatus = async () => {
       try {
-        const response = await axios.get('/check-login');
+        const response = await axios.get("/check-login");
         if (response.data.loggedIn) {
           setUser(response.data.user);
         }
       } catch (error) {
-        console.error('로그인 상태 확인 실패', error);
+        console.error("로그인 상태 확인 실패", error);
       }
     };
 
     checkLoginStatus();
   }, []);
 
-  console.log(auth)
+  console.log(auth);
 
   return (
     <SepsisScoreContext.Provider value={{ sepsisScore, setSepsisScore }}>
       <UserContext.Provider value={{ user, setUser }}>
         <BrowserRouter>
           <div>
-           {auth ? <Header></Header> : null}
+            {auth ? <Header></Header> : null}
             <Routes>
-              <Route path='/graphline' element={<GraphLine></GraphLine>}></Route>
-              <Route path='/graphlineone' element={<GraphLineOne></GraphLineOne>}></Route>
-              <Route path='/graphlinetwo' element={<GraphLineTwo></GraphLineTwo>}></Route>
-              <Route path='/graphlinethree' element={<GraphLineThree></GraphLineThree>}></Route>
-              <Route path='/graphbar' element={<GraphBar></GraphBar>}></Route>
-              <Route path='/graphbarone' element={<GraphBarOne></GraphBarOne>}></Route>
-              <Route path='/header' element={<Header></Header>}></Route>
+              <Route
+                path="/graphline"
+                element={<GraphLine></GraphLine>}
+              ></Route>
+              <Route
+                path="/graphlineone"
+                element={<GraphLineOne></GraphLineOne>}
+              ></Route>
+              <Route
+                path="/graphlinetwo"
+                element={<GraphLineTwo></GraphLineTwo>}
+              ></Route>
+              <Route
+                path="/graphlinethree"
+                element={<GraphLineThree></GraphLineThree>}
+              ></Route>
+              <Route path="/graphbar" element={<GraphBar></GraphBar>}></Route>
+              <Route
+                path="/graphbarone"
+                element={<GraphBarOne></GraphBarOne>}
+              ></Route>
+              <Route path="/header" element={<Header></Header>}></Route>
               { auth ? <Route path='/' element={<Main01></Main01>}></Route>
               : <Route path='/' element={<Login></Login>}></Route>}
-              <Route path='/detailpage' element={<Detailpage></Detailpage>}></Route>
-              <Route path='/main2right' element={<Main02Right></Main02Right>}></Route>
-              <Route path='/detailhr' element={<GraphDetailHR></GraphDetailHR>}></Route>
-              <Route path='/detailo2sat' element={<GraphDetailO2Sat></GraphDetailO2Sat>}></Route>
-              <Route path='/detailtemp' element={<GraphDetailTemp></GraphDetailTemp>}></Route>
-              <Route path='/detailmap' element={<GraphDetailMAP></GraphDetailMAP>}></Route>
-              <Route path='/detailsbp' element={<GraphDetailSBP></GraphDetailSBP>}></Route>
-              <Route path='/detaildbp' element={<GraphDetailDBP></GraphDetailDBP>}></Route>
-              <Route path='/detailresp' element={<GraphDetailResp></GraphDetailResp>}></Route>
-              <Route path='/adminpage' element={<Adminpage></Adminpage>}></Route>
-              <Route path='/adminscoremodal' element={<AdminScoreModal></AdminScoreModal>}></Route>
-              <Route path='/adminaddemodal' element={<AdminAddModal></AdminAddModal>}></Route>
+              <Route
+                path="/detailpage"
+                element={<Detailpage></Detailpage>}
+              ></Route>
+              <Route
+                path="/main2right"
+                element={<Main02Right></Main02Right>}
+              ></Route>
+              <Route
+                path="/detailhr"
+                element={<GraphDetailHR></GraphDetailHR>}
+              ></Route>
+              <Route
+                path="/detailo2sat"
+                element={<GraphDetailO2Sat></GraphDetailO2Sat>}
+              ></Route>
+              <Route
+                path="/detailtemp"
+                element={<GraphDetailTemp></GraphDetailTemp>}
+              ></Route>
+              <Route
+                path="/detailmap"
+                element={<GraphDetailMAP></GraphDetailMAP>}
+              ></Route>
+              <Route
+                path="/detailsbp"
+                element={<GraphDetailSBP></GraphDetailSBP>}
+              ></Route>
+              <Route
+                path="/detaildbp"
+                element={<GraphDetailDBP></GraphDetailDBP>}
+              ></Route>
+              <Route
+                path="/detailresp"
+                element={<GraphDetailResp></GraphDetailResp>}
+              ></Route>
+              <Route
+                path="/adminpage"
+                element={<Adminpage></Adminpage>}
+              ></Route>
+              <Route
+                path="/adminscoremodal"
+                element={<AdminScoreModal></AdminScoreModal>}
+              ></Route>
+              <Route
+                path="/adminaddemodal"
+                element={<AdminAddModal></AdminAddModal>}
+              ></Route>
             </Routes>
           </div>
         </BrowserRouter>
-      </UserContext.Provider >
+      </UserContext.Provider>
     </SepsisScoreContext.Provider>
   );
 }
