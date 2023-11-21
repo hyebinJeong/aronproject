@@ -42,11 +42,11 @@ const Main01 = () => {
         if (modal == false) {
             classifyComment()
         }
-        
+
     }, [])
 
     return (
-        <div style={{position: 'relative'}}>
+        <div style={{ position: 'relative' }}>
 
             <div className='space'>
                 <div className='nav'>
@@ -54,16 +54,16 @@ const Main01 = () => {
                     <div className='nav-back'>
                         <div className='search-bar'>
                             <select name="column" id="select-column"
-                            value={selectedColumn} 
-                            onChange={handleColumnChange}
+                                value={selectedColumn}
+                                onChange={handleColumnChange}
                             >
                                 <option value="patient_id">ID</option>
                                 <option value="name">Name</option>
                             </select>
-                            <input className='search-input' 
-                            placeholder='검색어를 입력하세요.'
-                            value={searchTerm}
-                            onChange={handleSearchTermChange}></input>
+                            <input className='search-input'
+                                placeholder='검색어를 입력하세요.'
+                                value={searchTerm}
+                                onChange={handleSearchTermChange}></input>
                         </div>
 
                         <LiveClock />
@@ -77,35 +77,35 @@ const Main01 = () => {
                 <div className='main-table'>
                     <p className='class-status-font'>의심({susNum})</p>
                     <div className='sus-table-container'>
-                        <SuspiciousTable 
-                        selectedColumn={selectedColumn} 
-                        searchTerm={searchTerm} 
-                        setting={setSusNum}
-                        setModal = {setModal}
-                        setPid = {setPid}
-                        pid = {pid}
-                        classifyComment = {classifyComment}
-                        commentArr = { commentArr}></SuspiciousTable>
-                        
+                        <SuspiciousTable
+                            selectedColumn={selectedColumn}
+                            searchTerm={searchTerm}
+                            setting={setSusNum}
+                            setModal={setModal}
+                            setPid={setPid}
+                            pid={pid}
+                            classifyComment={classifyComment}
+                            commentArr={commentArr}></SuspiciousTable>
+
                     </div>
                     <p className='class-status-font'>전체({patNum})</p>
                     <div className='p-table-container'>
-                        <PatientTable 
-                        selectedColumn={selectedColumn} 
-                        searchTerm={searchTerm} 
-                        setting={setPatNum}
-                        setModal = {setModal}
-                        setPid = {setPid}
-                        pid = {pid}
-                        classifyComment = {classifyComment}
-                        commentArr = { commentArr}></PatientTable>
-                        
+                        <PatientTable
+                            selectedColumn={selectedColumn}
+                            searchTerm={searchTerm}
+                            setting={setPatNum}
+                            setModal={setModal}
+                            setPid={setPid}
+                            pid={pid}
+                            classifyComment={classifyComment}
+                            commentArr={commentArr}></PatientTable>
+
                     </div>
                 </div>
             </div>
-            { modal
-            ? <Modal setModal={setModal} pid={pid} classifyComment={classifyComment}></Modal>
-            : null}
+            {modal
+                ? <Modal setModal={setModal} pid={pid} classifyComment={classifyComment}></Modal>
+                : null}
         </div>
     )
 }

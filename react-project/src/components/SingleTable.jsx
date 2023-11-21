@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 import { useTable } from "react-table";
-import { COLUMNS } from "./columns";
+import { COLUMNS } from "./detailPcolumns";
 import '../components/SingleTable.css';
 
 export const SingleTable = (props) => {

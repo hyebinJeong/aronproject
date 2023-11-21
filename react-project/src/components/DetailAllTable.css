@@ -1,0 +1,73 @@
+.detail-all-table {
+  margin: 15px 0 0 0;
+  border: none;
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+}
+
+.detail-all-tbody {
+  width: 100vw;
+  border: none;
+}
+
+.detail-all-th {
+  border: none;
+  background-color: #0d47a1;
+}
+
+.left-align-header-th {
+  font-family: Arial, Helvetica, sans-serif;
+  border: none;
+  background-color: #0d47a1;
+  position: sticky;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  color: white;
+  padding: 8px;
+}
+
+.detail-all-data-div {
+  border: none;
+  width: 85vw;
+  overflow-x: scroll;
+}
+
+.detail-all-data {
+  border: none;
+}
+
+.detail-all-data-tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.detail-all-data-tr:hover {
+  background-color: #ddd;
+}
+.detail-all-data-th {
+  border: 0.5px solid #ddd;
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  padding: 8px;
+}
+
+.datail-all-tr:nth-child(1) {
+  height: 40px;
+}
+
+.datail-all-tr:nth-child(2) {
+  height: 36px;
+}
+
+.datail-all-tr:nth-child(3) {
+  height: 35px;
+}
+.datail-all-tr:nth-child(4) {
+  height: 0px;
+}
+.datail-all-tr:nth-child(5) {
+  height: 0px;
+}
+.datail-all-tr:nth-child(6) {
+  height: 0px;
+}
