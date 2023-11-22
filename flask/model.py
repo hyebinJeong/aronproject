@@ -63,28 +63,36 @@ vital_cols=['HR', 'O2Sat', 'Temp', 'SBP', 'MAP', 'DBP', 'Resp', 'EtCO2',
    'Glucose', 'Lactate', 'Magnesium', 'Phosphate', 'Potassium',
    'Hct', 'Hgb', 'PTT', 'WBC', 'Age', 'Platelets']
 
-col_stat = pkl.load(open('col_stat.pkl', 'rb'))
+col_stat = pkl.load(open('./col_stat.pkl', 'rb'))
 model = ARON(len(vital_cols)*2, 128)
 model.load_state_dict(torch.load('model/trained_model_epoch9.pth', map_location=torch.device('cpu')))
 model.eval()
 
-@app.route('/test', methods = ['GET', 'POST'])
-def chicken() :
-    sql = 'select * from data where patient_id = %s'
-    patient_id = 9891
+
+# @app.route('/test', methods = ['GET', 'POST'])
+# def chicken() :
     
-    cursor.execute(sql, (patient_id,))
+#     if not db.open:
+#         db.connect()
     
-    data = cursor.fetchall()
     
-    column_names = [i[0] for i in cursor.description]
-    df = pd.DataFrame(data, columns=column_names)
+#     patient_id = 9891
+#     sql = 'select * from data where patient_id = %s'
     
-    db.close()
+#     cursor.execute(sql, (patient_id,))
     
-    return jsonify(data)
+#     data = cursor.fetchall()
+    
+#     column_names = [i[0] for i in cursor.description]
+#     df = pd.DataFrame(data, columns=column_names)
+    
+#     db.close()
+    
+#     return jsonify(data)
 
 @app.route('/model', methods=['GET', 'POST'])
+
+
 
 def predict() :
     def make_window(df, feature_columns, sequence_length=30):
@@ -118,12 +126,18 @@ def predict() :
 
 
     def predict_sepsis(df):
-        return model(
+        result_tensor = model(
             preprocess(df)
         )
+        result_np = result_tensor.detach().numpy().tolist()
+        return result_np
         
-    sql = 'select * from data where patient_id = %s'
+    if not db.open:
+        db.connect()
+        
     patient_id = 9891
+    # sql = 'select * from data where patient_id = %s'
+    sql = 'select * from data as d inner join patient as p on d.patient_id = p.patient_id and p.patient_id = %s'
     
     cursor.execute(sql, (patient_id,))
     
@@ -131,15 +145,12 @@ def predict() :
     
     column_names = [i[0] for i in cursor.description]
     df = pd.DataFrame(data, columns=column_names)
+    df.rename(columns = {'age' : 'Age'}, inplace=True)
     
     db.close()
     
-    return predict_sepsis(df)
-
-
-
-
-
+    prediction_result = predict_sepsis(df)
+    return jsonify(prediction_result)
 
 
 
@@ -151,4 +162,4 @@ def handle_options():
 
 
 if __name__ == '__main__' :
-    app.run(debug=True)
+    app.run(debug=True, use_reloader=False)

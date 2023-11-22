@@ -7,6 +7,8 @@ export const SingleTable = (props) => {
     const columns = useMemo(() => COLUMNS, []);
     const data = useMemo(() => props.data, [props.data]);
 
+    console.log(props.data)
+
     const {
         getTableProps,
         getTableBodyProps,

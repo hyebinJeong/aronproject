@@ -15,7 +15,7 @@ router.post("/patients", async (req, res) => {
     p.gender,
     p.age,
     p.ward_room,
-    d.sepsis_score,
+    p.sepsis_score,
     DATE_FORMAT(d.record_time, '%Y-%m-%d %H:%i') as record_time,
     d.HR,
     d.O2Sat,

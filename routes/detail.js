@@ -17,13 +17,15 @@ router.post("/info", async (req, res) => {
   p.blood_type, 
   p.ward_room,
   p.medical_department, 
-  d.sepsis_score 
-FROM 
-  patient AS p
-JOIN
-  data AS d ON p.patient_id = d.patient_id
-WHERE
-  p.patient_id = ?;
+  d.sepsis_score
+  FROM 
+    patient AS p
+  JOIN
+    data AS d ON p.patient_id = d.patient_id
+  WHERE
+    p.patient_id = ?
+  order by record_time desc
+  limit 1;
   `;
 
   try {
