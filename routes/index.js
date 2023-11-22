@@ -15,7 +15,7 @@ router.post("/patients", async (req, res) => {
     p.gender,
     p.age,
     p.ward_room,
-    p.sepsis_score,
+    d.sepsis_score,
     DATE_FORMAT(d.record_time, '%Y-%m-%d %H:%i') as record_time,
     d.HR,
     d.O2Sat,
@@ -30,7 +30,7 @@ router.post("/patients", async (req, res) => {
     data AS d
   ON 
     p.patient_id = d.patient_id
-  WHERE p.sepsis_score < 70
+  WHERE d.sepsis_score < 70
     and d.record_time = (
         SELECT 
             MAX(record_time)
