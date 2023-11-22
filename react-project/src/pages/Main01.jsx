@@ -62,18 +62,9 @@ const Main01 = () => {
             });
     }, [])
 
-    console.log(patAxios)
 
     return (
         <div style={{ position: 'relative' }}>
-            <button onClick={() => {
-                axios.post('http://localhost:5000/model', {}, { withCredentials: true })
-                .then((res) => {
-                    axiosAlert()
-                })
-                .catch((error) => {
-                });
-            }}>button</button>
             <div className='space'>
                 <div className='nav'>
 

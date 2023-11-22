@@ -64,8 +64,6 @@ function App() {
     checkLoginStatus();
   }, []);
 
-  console.log(auth);
-
   return (
     <SepsisScoreContext.Provider value={{ sepsisScore, setSepsisScore }}>
       <UserContext.Provider value={{ user, setUser }}>
