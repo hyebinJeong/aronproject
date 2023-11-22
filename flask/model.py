@@ -130,7 +130,7 @@ def predict() :
             preprocess(df)
         )
         result_np = result_tensor.detach().numpy().tolist()
-        return result_np
+        return result_np[0]
         
     if not db.open:
         db.connect()
@@ -147,9 +147,16 @@ def predict() :
     df = pd.DataFrame(data, columns=column_names)
     df.rename(columns = {'age' : 'Age'}, inplace=True)
     
+    prediction_result = predict_sepsis(df)
+    
+    update_sql = 'update data set sepsis_score = %s where patient_id = %s order by record_time desc limit 1'
+    
+    cursor.execute(update_sql, (int(float(prediction_result) * 100), patient_id,))
+    
+    db.commit()
+
     db.close()
     
-    prediction_result = predict_sepsis(df)
     return jsonify(prediction_result)
 
 

@@ -18,6 +18,9 @@ const Main01 = () => {
     const [pid, setPid] = useState()
     const [commentArr, setCommentArr] = useState();
 
+    const [susAxios, setSusAxios] = useState(false);
+    const [patAxios, setPatAxios] = useState(false);
+
 
     const handleSearchTermChange = (e) => {
         setSearchTerm(e.target.value);
@@ -33,6 +36,11 @@ const Main01 = () => {
         })
     }
 
+    const axiosAlert = async () => {
+        await setSusAxios(true)
+        await setPatAxios(true)
+    }
+
 
     useEffect(() => {
         classifyComment()
@@ -45,19 +53,27 @@ const Main01 = () => {
 
     }, [])
 
-    // useEffect(() => {
-    //     axios.post('http://localhost:5000/model', {}, { withCredentials: true })
-    //         .then((res) => {
-    //             console.log(res.data);
-    //         })
-    //         .catch((error) => {
-    //             console.error('Axios 오류:', error);
-    //         });
-    // }, [])
+    useEffect(() => {
+        axios.post('http://localhost:5000/model', {}, { withCredentials: true })
+            .then((res) => {
+                axiosAlert()
+            })
+            .catch((error) => {
+            });
+    }, [])
+
+    console.log(patAxios)
 
     return (
         <div style={{ position: 'relative' }}>
-
+            <button onClick={() => {
+                axios.post('http://localhost:5000/model', {}, { withCredentials: true })
+                .then((res) => {
+                    axiosAlert()
+                })
+                .catch((error) => {
+                });
+            }}>button</button>
             <div className='space'>
                 <div className='nav'>
 
@@ -95,7 +111,9 @@ const Main01 = () => {
                             setPid={setPid}
                             pid={pid}
                             classifyComment={classifyComment}
-                            commentArr={commentArr}></SuspiciousTable>
+                            commentArr={commentArr}
+                            susAxios = {susAxios}
+                            setSusAxios = {setSusAxios}></SuspiciousTable>
 
                     </div>
                     <p className='class-status-font'>전체({patNum})</p>
@@ -108,7 +126,9 @@ const Main01 = () => {
                             setPid={setPid}
                             pid={pid}
                             classifyComment={classifyComment}
-                            commentArr={commentArr}></PatientTable>
+                            commentArr={commentArr}
+                            patAxios = {patAxios}
+                            setPatAxios = {setPatAxios}></PatientTable>
 
                     </div>
                 </div>

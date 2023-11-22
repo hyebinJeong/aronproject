@@ -10,7 +10,7 @@ import { CheckBox } from './CheckBox'
 import axios from 'axios';
 import ColumnFilter from './Columnfilter.jsx'
 
-const PatientTable = ({ modal, selectedColumn, searchTerm, setting, setModal, setPid , pid, commentArr, classifyComment}) => {
+const PatientTable = ({ modal, selectedColumn, searchTerm, setting, setModal, setPid , pid, commentArr, classifyComment, patAxios, setPatAxios}) => {
 
     const columns = useMemo(() => {
         return COLUMNS.map((column) => {
@@ -28,8 +28,8 @@ const PatientTable = ({ modal, selectedColumn, searchTerm, setting, setModal, se
 
     const nav = useNavigate();
 
-    useEffect(() => {
-        axios.post('http://localhost:3001/patients', {
+    const loadPatient = async () => {
+        await axios.post('http://localhost:3001/patients', {
         })
             .then((res) => {
                 setDatas(res.data);
@@ -37,6 +37,9 @@ const PatientTable = ({ modal, selectedColumn, searchTerm, setting, setModal, se
             })
             .catch((error) => {
             });
+    }
+    useEffect(() => {
+        loadPatient();
     }, []);
 
     const { getTableProps,
@@ -103,6 +106,10 @@ const PatientTable = ({ modal, selectedColumn, searchTerm, setting, setModal, se
         }
     };
 
+    useEffect(() => {
+        loadPatient()
+        setPatAxios(false)
+    }, [patAxios])
 
     return (
         <div>
