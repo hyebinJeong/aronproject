@@ -1,56 +1,150 @@
-import React, { useEffect, useState } from 'react'
-import './Detailpage.css'
-import { SingleTable } from '../components/SingleTable'
+import React, { useEffect, useState, useRef } from 'react';
+import './Detailpage.css';
 import axios from 'axios';
-import GraphLine from '../components/GraphLine'
+import { useSearchParams } from 'react-router-dom';
+import html2pdf from 'html2pdf.js';
+
+import GraphLine from '../components/GraphLine';
 import DetailAllTable from '../components/DetailAllTable';
-import { useSearchParams } from 'react-router-dom'
+import { SingleTable } from '../components/SingleTable';
+import PdfFile from '../components/PdfFile';
+
 
 const Detailpage = () => {
-  const [searchParams] = useSearchParams();
-  const pid = searchParams.get("pid"); // 환자 id가져오기
-
-  //SingleTable 데이터
+  const ref = useRef();
+  const [modalVisible, setModalVisible] = useState(false);
   const [datas, setDatas] = useState([]);
+  const [datum, setDatum] = useState([]);
+  const [data, setData] = useState(null);
+  const [searchParams] = useSearchParams();
+  const pid = searchParams.get('pid');
+
   useEffect(() => {
     axios.post('http://localhost:3001/detail/info', {
-      // front에서 back으로 보낼 값
       patient_id: pid
     }).then((res) => {
-      // back에서 front으로 보낼 값
-      setDatas(res.data)
-      //object형태로 데이터를 받아와야하기때문이다.
-    })
-  }, [])
+      setDatas(res.data);
+    });
+  }, [pid]);
 
-
-  //DetailAllTable 데이터
-  const [datum, setDatum] = useState([]);
   useEffect(() => {
     axios.post('http://localhost:3001/detail/alldata', {
-      // front에서 back으로 보낼 값
       patient_id: pid
     }).then((res) => {
-      // back에서 front으로 보낼 값
-      setDatum(res.data)
-      //object형태로 데이터를 받아와야하기때문이다.
-    })
-  }, [])
+      setDatum(res.data);
+    });
+  }, [pid]);
 
+  const handleOpenModal = () => {
+    setModalVisible(true);
+  };
 
-  //Graph 데이터 
-  const [data, setData] = useState(null);
+  const handleCloseModal = () => {
+    setModalVisible(false);
+  };
+
+  const handleDownload = () => {
+    const element = ref.current;
+    const opt = {
+      margin: 10,
+      filename: 'download.pdf',
+      image: { type: 'jpeg', quality: 1.0 },
+      html2canvas: { scale: 3 },
+      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+    };
+
+    html2pdf().set(opt).from(element).save();
+  };
 
   return (
     <div>
       <div className='space'>
-        {/* GraphLine 컴포넌트에 데이터를 전달합니다. */}
         <SingleTable data={datas} />
+
+        <div>
+          <button
+            onClick={handleOpenModal}
+            style={{
+              float: 'right',
+              margin: '5px',
+              backgroundColor: '#0d47a1',
+              width: '50px',
+              height: '30px',
+              color: 'white',
+              border: 'none',
+              borderRadius: '5px',
+              fontFamily: 'Arial, Helvetica, sans-serif'
+            }}
+          >
+            PDF
+          </button>
+        </div>
+
         <GraphLine data={data} />
         <DetailAllTable data={datum} />
-      </div>
-    </div>
-  )
-}
 
-export default Detailpage
+        <div style={{ display: 'none' }}>
+          <div ref={ref}>
+            <PdfFile pid={pid} />
+          </div>
+        </div>
+      </div>
+
+      {modalVisible && (
+        <div
+          style={{
+            position: 'fixed',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            width: '60%',
+            height: '90%',
+            backgroundColor: 'white',
+            padding: '20px',
+            border: '1px solid black',
+            overflow: 'auto',
+            zIndex: 1
+          }}
+        >
+          <div className="pdf-content" ref={ref}>
+            <PdfFile pid={pid} />
+          </div>
+          <button
+            onClick={handleDownload}
+            style={{
+              margin: '5px',
+              backgroundColor: '#0d47a1',
+              width: '100px',
+              height: '30px',
+              color: 'white',
+              border: 'none',
+              borderRadius: '5px',
+              fontFamily: 'Arial, Helvetica, sans-serif'
+            }}
+          >
+            Download PDF
+          </button>
+
+          <button
+            onClick={handleCloseModal}
+            style={{
+              float: 'right',
+              margin: '5px',
+              backgroundColor: '#0d47a1',
+              width: '50px',
+              height: '30px',
+              color: 'white',
+              border: 'none',
+              borderRadius: '5px',
+              fontFamily: 'Arial, Helvetica, sans-serif'
+            }}
+          >
+            Close
+          </button>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default Detailpage;
