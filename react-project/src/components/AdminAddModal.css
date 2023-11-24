@@ -1,11 +1,11 @@
 .admin-add-modal{
-    border: 1px solid #000;
+    border: 1px solid grey;
     position: absolute;
     width: 100%;
-    max-width: 25vw;
-    height: 70vh;
+    max-width: 16vw;
+    height: 60vh;
     border-radius: 1em;
-    top: 50%;
+    top: 40%;
     left: 50%;
     transform: translate(-50%, -50%);
     display: flex;
@@ -79,20 +79,28 @@
     font-size: 1em;
 }
 
-.modal-info-long{
+/* .modal-info-long{
     margin-right: 1.3em;
-}
+} */
 
 .modal-info-id {
-    margin-left: 0.4em;
+    margin-left: 0.6em;
 }
 
 .moda-info-pw {
     margin-left: 0;
 }
+
+.modal-info-name {
+    margin-right: 1.2em;
+}
+
+.modal-info-class {
+    margin-right: 1.6em;
+}
 .admin-add-modal-confirm {
     margin-top: 3em;
-    width: 60%;
+    width: 70%;
     height: 3em;
     border: none;
     font-weight: 700;

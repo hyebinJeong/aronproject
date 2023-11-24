@@ -1,11 +1,16 @@
-import React from 'react'
+// import React from 'react'
 import './AdminScoreModal.css'
 import X from '../image/X.png'
 import { useState } from 'react'
 import axios from 'axios'
+// 추가한 코드
+import React, { useContext } from "react";
+import { SepsisScoreContext } from '../contexts/SepsisScoreContext'
 
 const AdminScoreModal = ({closeModal}) => {
 
+  // 추가한 코드
+  const { sepsisScores, setSepsisScores } = useContext(SepsisScoreContext);
   const [sepsis_score, setSepsis_score] = useState("");
 
   const xIconClick = () => {

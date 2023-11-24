@@ -11,7 +11,9 @@ import axios from 'axios';
 // UserContext를 임포트. \
 // 이 컴포넌트는 사용자의 로그인 정보를 저장하고 이를 하위 컴포넌트에 전달하는 역할
 import UserContext from './contexts/UserContext';
-import SepsisScoreContext from './contexts/SepsisScoreContext.jsx';
+import { SepsisScoreContext } from "./contexts/SepsisScoreContext.jsx";
+import { SepsisScoreProvider } from "./contexts/SepsisScoreContext";
+
 import './App.css';
 // 로그인 컴포넌트를 임포트
 import Login from './components/Login';
@@ -65,89 +67,95 @@ function App() {
   }, []);
 
   return (
-    <SepsisScoreContext.Provider value={{ sepsisScore, setSepsisScore }}>
-      <UserContext.Provider value={{ user, setUser }}>
-        <BrowserRouter>
-          <div>
-            {auth ? <Header></Header> : null}
-            <Routes>
-              <Route
-                path="/graphline"
-                element={<GraphLine></GraphLine>}
-              ></Route>
-              <Route
-                path="/graphlineone"
-                element={<GraphLineOne></GraphLineOne>}
-              ></Route>
-              <Route
-                path="/graphlinetwo"
-                element={<GraphLineTwo></GraphLineTwo>}
-              ></Route>
-              <Route
-                path="/graphlinethree"
-                element={<GraphLineThree></GraphLineThree>}
-              ></Route>
-              <Route path="/graphbar" element={<GraphBar></GraphBar>}></Route>
-              <Route
-                path="/graphbarone"
-                element={<GraphBarOne></GraphBarOne>}
-              ></Route>
-              <Route path="/header" element={<Header></Header>}></Route>
-              { auth ? <Route path='/' element={<Main01></Main01>}></Route>
-              : <Route path='/' element={<Login></Login>}></Route>}
-              <Route
-                path="/detailpage"
-                element={<Detailpage></Detailpage>}
-              ></Route>
-              <Route
-                path="/main2right"
-                element={<Main02Right></Main02Right>}
-              ></Route>
-              <Route
-                path="/detailhr"
-                element={<GraphDetailHR></GraphDetailHR>}
-              ></Route>
-              <Route
-                path="/detailo2sat"
-                element={<GraphDetailO2Sat></GraphDetailO2Sat>}
-              ></Route>
-              <Route
-                path="/detailtemp"
-                element={<GraphDetailTemp></GraphDetailTemp>}
-              ></Route>
-              <Route
-                path="/detailmap"
-                element={<GraphDetailMAP></GraphDetailMAP>}
-              ></Route>
-              <Route
-                path="/detailsbp"
-                element={<GraphDetailSBP></GraphDetailSBP>}
-              ></Route>
-              <Route
-                path="/detaildbp"
-                element={<GraphDetailDBP></GraphDetailDBP>}
-              ></Route>
-              <Route
-                path="/detailresp"
-                element={<GraphDetailResp></GraphDetailResp>}
-              ></Route>
-              <Route
-                path="/adminpage"
-                element={<Adminpage></Adminpage>}
-              ></Route>
-              <Route
-                path="/adminscoremodal"
-                element={<AdminScoreModal></AdminScoreModal>}
-              ></Route>
-              <Route
-                path="/adminaddemodal"
-                element={<AdminAddModal></AdminAddModal>}
-              ></Route>
-            </Routes>
-          </div>
-        </BrowserRouter>
-      </UserContext.Provider>
-    </SepsisScoreContext.Provider>
+    // 추가한 코드
+    <SepsisScoreProvider>
+      {/* <SepsisScoreContext.Provider value={{ sepsisScore, setSepsisScore }}> */}
+        <UserContext.Provider value={{ user, setUser }}>
+          <BrowserRouter>
+            <div>
+              {auth ? <Header></Header> : null}
+              <Routes>
+                <Route
+                  path="/graphline"
+                  element={<GraphLine></GraphLine>}
+                ></Route>
+                <Route
+                  path="/graphlineone"
+                  element={<GraphLineOne></GraphLineOne>}
+                ></Route>
+                <Route
+                  path="/graphlinetwo"
+                  element={<GraphLineTwo></GraphLineTwo>}
+                ></Route>
+                <Route
+                  path="/graphlinethree"
+                  element={<GraphLineThree></GraphLineThree>}
+                ></Route>
+                <Route path="/graphbar" element={<GraphBar></GraphBar>}></Route>
+                <Route
+                  path="/graphbarone"
+                  element={<GraphBarOne></GraphBarOne>}
+                ></Route>
+                <Route path="/header" element={<Header></Header>}></Route>
+                {auth ? (
+                  <Route path="/" element={<Main01></Main01>}></Route>
+                ) : (
+                  <Route path="/" element={<Login></Login>}></Route>
+                )}
+                <Route
+                  path="/detailpage"
+                  element={<Detailpage></Detailpage>}
+                ></Route>
+                <Route
+                  path="/main2right"
+                  element={<Main02Right></Main02Right>}
+                ></Route>
+                <Route
+                  path="/detailhr"
+                  element={<GraphDetailHR></GraphDetailHR>}
+                ></Route>
+                <Route
+                  path="/detailo2sat"
+                  element={<GraphDetailO2Sat></GraphDetailO2Sat>}
+                ></Route>
+                <Route
+                  path="/detailtemp"
+                  element={<GraphDetailTemp></GraphDetailTemp>}
+                ></Route>
+                <Route
+                  path="/detailmap"
+                  element={<GraphDetailMAP></GraphDetailMAP>}
+                ></Route>
+                <Route
+                  path="/detailsbp"
+                  element={<GraphDetailSBP></GraphDetailSBP>}
+                ></Route>
+                <Route
+                  path="/detaildbp"
+                  element={<GraphDetailDBP></GraphDetailDBP>}
+                ></Route>
+                <Route
+                  path="/detailresp"
+                  element={<GraphDetailResp></GraphDetailResp>}
+                ></Route>
+                <Route
+                  path="/adminpage"
+                  element={<Adminpage></Adminpage>}
+                ></Route>
+                <Route
+                  path="/adminscoremodal"
+                  element={<AdminScoreModal></AdminScoreModal>}
+                ></Route>
+                <Route
+                  path="/adminaddemodal"
+                  element={<AdminAddModal></AdminAddModal>}
+                ></Route>
+              </Routes>
+            </div>
+          </BrowserRouter>
+        </UserContext.Provider>
+      {/* </SepsisScoreContext.Provider> */}
+    </SepsisScoreProvider>
   );
 }
 
