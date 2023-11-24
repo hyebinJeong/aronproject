@@ -105,6 +105,7 @@ useEffect(() => {
               pid={pid}
               classifyComment={classifyComment}
               commentArr={commentArr}
+              susAxios = {susAxios}
               setSusAxios={setSusAxios}
             ></SuspiciousTable>
           </div>
@@ -119,6 +120,7 @@ useEffect(() => {
               pid={pid}
               classifyComment={classifyComment}
               commentArr={commentArr}
+              patAxios = {patAxios}
               setPatAxios={setPatAxios}
             ></PatientTable>
           </div>
