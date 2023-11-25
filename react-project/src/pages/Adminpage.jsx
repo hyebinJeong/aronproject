@@ -12,6 +12,7 @@ const Adminpage = () => {
   const [userData, setUserData] = useState([]);
   const [addModal, setAddModal] = useState(false );
   const [clickedRow, setClickedRow] = useState(null); // 현재 클릭된 행
+  const [selectedRows, setSelectedRows] = useState([]); // 선택된 행들
 
   // 설정 버튼 클릭
   const adminSetIconClick = () => {
@@ -50,17 +51,41 @@ const Adminpage = () => {
     }
   };
 
-    // 삭제버튼을 누르기 전, 삭제할 Row를 click하기 위해 만듬
+    // // 삭제버튼을 누르기 전, 삭제할 Row를 click하기 위해 만듬
+    // const handleRowClick = (user) => {
+    //   setClickedRow(user);
+    // };
+
+    // // 삭제버튼을 클릭했을 때, 데이터를 DB에서 삭제시킨 후, 갱신된 데이터를 다시 불러옴
+    // const handleDeleteClick = async () => {
+    //   if (clickedRow) {
+    //     try {
+    //       await axios.post('http://localhost:3001/adminpage/deleted', {id: clickedRow.id});
+    //       fetchUserData(); // 데이터를 다시 불러와서 테이블을 갱신
+    //     } catch (error) {
+    //       console.log('삭제 실패', error)
+    //     }
+    //   }
+    // };
+
+      // 행 클릭 시 선택 상태 변경
     const handleRowClick = (user) => {
+      if (selectedRows.includes(user)) {
+        setSelectedRows(selectedRows.filter(row => row !== user));
+      } else {
+        setSelectedRows([...selectedRows, user]);
+      }
       setClickedRow(user);
     };
 
-    // 삭제버튼을 클릭했을 때, 데이터를 DB에서 삭제시킨 후, 갱신된 데이터를 다시 불러옴
+    // 삭제버튼을 클릭했을 때, 선택된 데이터를 DB에서 삭제시킨 후, 갱신된 데이터를 다시 불러옴
     const handleDeleteClick = async () => {
-      if (clickedRow) {
+      if (selectedRows.length > 0) {
         try {
-          await axios.post('http://localhost:3001/adminpage/deleted', {id: clickedRow.id});
+          const ids = selectedRows.map(row => row.id);
+          await axios.post('http://localhost:3001/adminpage/deleted', { ids });
           fetchUserData(); // 데이터를 다시 불러와서 테이블을 갱신
+          setSelectedRows([]); // 선택된 행 초기화
         } catch (error) {
           console.log('삭제 실패', error)
         }
@@ -74,7 +99,8 @@ const Adminpage = () => {
           <span className='admin-title'>사용자 목록</span>
         </div>
         <div className="admin-btn-container">
-            <button className="admin-icon-set-wrap" onClick={adminSetIconClick}><img src={iconSet} className="admin-icon-set"></img></button>
+            {/* <button className="admin-icon-set-wrap" onClick={adminSetIconClick}><img src={iconSet} className="admin-icon-set"></img></button> */}
+            <button className='admin-main-btn admin-score-btn' onClick={adminSetIconClick}><p>ARON SCORE</p></button>
             <button className='admin-main-btn' onClick={adminAddBtnClick}>추가</button>
             <button className='admin-main-btn' onClick={handleDeleteClick}>삭제</button>
         </div>
@@ -82,6 +108,8 @@ const Adminpage = () => {
           <table className="admin-user-data">
             <thead className='admin-user-data-thead'>
               <tr className='admin-user-data-tr'>
+                {/* 체크박스 컬럼 */}
+                <th className='admin-th-name'></th> 
                 <th className='admin-th-name'>ID</th>
                 {/* <th className='admin-th-name'>PW</th> */}
                 <th className='admin-th-name'>Name</th>
@@ -89,8 +117,17 @@ const Adminpage = () => {
               </tr>
             </thead>
             <tbody className='admin-user-data-tbody'>
-              {userData.map((user, index) => (
-                <tr key={index} className={`admin-user-data-tr ${user === clickedRow ? 'clicked' : ''}`} onClick={() => handleRowClick(user)}>
+              {/* {userData.map((user, index) => (
+                <tr key={index} className={`admin-user-data-tr ${user === clickedRow ? 'clicked' : ''}`} onClick={() => handleRowClick(user)}> */}
+                  {userData.map((user, index) => (
+                  <tr key={index} className={`admin-user-data-tr ${user === clickedRow ? 'clicked' : ''}`} onClick={() => handleRowClick(user)}>
+                  <td className='admin-user-data-td'>
+                    <input
+                      type="checkbox"
+                      checked={selectedRows.includes(user)}
+                      onChange={() => handleRowClick(user)}
+                    />
+                    </td>
                   <td className='admin-user-data-td'>{user.id}</td>
                   {/* <td className='admin-user-data-td'>{user.pw}</td> */}
                   <td className='admin-user-data-td'>{user.name}</td>

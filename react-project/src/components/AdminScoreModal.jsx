@@ -38,8 +38,28 @@ const AdminScoreModal = ({closeModal}) => {
             <div className="admin-score-modal-content">
             <span className='admin-score-modal-title'>패혈증 의심 수치 설정</span>
             <div className="modal-score-set">
-                <input type="text" className='score-box' value={sepsis_score} onChange={(e) => setSepsis_score(e.target.value)}/>
+            <input
+              type="text"
+              className="score-box"
+              value={sepsis_score}
+              onChange={(e) => {
+                const input = e.target.value;
+                const regex = /^[1-9][0-9]?$|^100$/; // 1부터 100까지의 숫자를 허용하는 정규표현식
+                if (input === "" || regex.test(input)) {
+                  setSepsis_score(input);
+                }
+              }}
+            />
+                {/* <input type="text" className='score-box' value={sepsis_score} onChange={(e) => setSepsis_score(e.target.value)}/> */}
+                {/* <select className="score-box" value={sepsis_score} onChange={(e) => setSepsis_score(e.target.value)}>
+                  <option value="option1">1</option>
+                  <option value="option2">2</option>
+                  <option value="option3">3</option>
+              </select> */}
                 <span className='score-box-text'>점 이상</span>
+            </div>
+            <div>
+              <span className='score-box-text-warn'>1 ~ 100 숫자만 입력 가능</span>
             </div>
             <button className='admin-score-modal-confirm' onClick={scoreModalConfirmClick}>확인</button>
         </div>
