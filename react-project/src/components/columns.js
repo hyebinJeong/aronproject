@@ -24,7 +24,7 @@ export const COLUMNS = [
     accessor: "record_time",
   },
   {
-    Header: "Sepsis",
+    Header: "Aron Score",
     accessor: "sepsis_score",
   },
   {

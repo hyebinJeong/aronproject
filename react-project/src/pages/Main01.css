@@ -18,7 +18,7 @@ hr {
 .status-main {
   display: flex;
   position: absolute;
-  /* padding: 0 0 0 10vw; */
+  padding: 0 0 0 10vw;
   justify-content: space-between;
 }
 
@@ -41,6 +41,8 @@ hr {
 
 .sus-table-container {
   margin: 5px 0 40px 0;
+  width: 100%;
+  height: 100%;
 }
 
 .p-table-container {
@@ -67,6 +69,14 @@ hr {
   display: flex;
   align-items: center;
 }
+
+.nav-cate-button {
+  border: none;
+  background-color: transparent;
+  font-size: x-large;
+  margin-right: 10px;
+}
+
 .nav-front {
   /* padding: 0 0 0 10vw; */
   display: flex;
@@ -133,6 +143,6 @@ hr {
 }
 
 hr {
-  border-left : 0;
+  border-left: 0;
   border-right: 0;
 }

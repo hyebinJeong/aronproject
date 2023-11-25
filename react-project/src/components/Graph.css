@@ -1,99 +1,104 @@
 .graph-size {
-    width: 95vw;
-     /* width: 200vw; */
-    height: 40vh;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    /* overflow-x: scroll; */
-      font-family: Arial, Helvetica, sans-serif;
-  }
+  width: 95vw;
+  /* width: 200vw; */
+  height: 40vh;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  /* overflow-x: scroll; */
+  font-family: Arial, Helvetica, sans-serif;
+}
 
-  .parent-container{
-    width: 200vw;
-    height: 40vh;
-    display: flex;
-    justify-content: space-between;
-    /* overflow-x: auto; */
-  }
+.parent-container {
+  width: 200vw;
+  height: 40vh;
+  display: flex;
+  /* justify-content: space-between; */
+  /* overflow-x: auto; */
+}
 
 .graph-container {
-    display: inline-block;
-    /* width: 70vw; */
-    width: 200%;
-    min-width: 40vw;
-    height: 40vh;
-    /* overflow-x: scroll; */
+  display: inline-block;
+  width: 84vw;
+  /* width: 100%; */
+  max-width: 82vw;
+  min-width: 40vw;
+  height: 40vh;
+  overflow-x: scroll;
+  margin-left: 1em;
 }
 
-  .checkbox-wrap {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 5vw;
-    height: 30vh;
-    text-align: center;
-    margin-top: 3em;
-    /* margin-right: 1em; */
-    border-radius: 10px;
-    padding-left: 5em;
-    border: 1px solid gray;
-    font-size: 1.2em;
-    font-weight: 500;
-
-  }
-
-  .index-name{
-    justify-content: center;
-    text-align: left;
-    vertical-align: center;
-    width: 200px;
-    margin-bottom: 5px;
-    padding-right: 1em;
-  }
-
-  .date{
-    margin-top: 50px;
-    width: 160px;
-    margin-right: 120px;
-    display: flex;
-    justify-content: space-between;
-  }
-
-  .date p{
-    margin-left: 5px;
-    margin-right: 5px;
-  }
-
-  .date input[type="date"]:first-child {
-    /* margin-right: 100px; */
-    width: 180px;
-    height: 20px;
-    font-size: 9.5px;
-  }
-  
-  .date input[type="date"] {
-    width: 180px;
-    height: 20px;
-    font-size: 9.5px;
-  }
-  
-  .search-button {
-    margin-top: 30px;
-    width: 160px;
-    height: 30px;
-    border: none;
-    font-weight: 400;
-    /* border-radius: 64px; */
-    border-radius: 10px;
-    color: #fff;
-    cursor: pointer;
-    background-color: #0D47A1;
-    margin-right: 120px;
+.graph-container > div {
+  width: 200% !important;
 }
 
-.detail-check-btn{
+.checkbox-wrap {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 5vw;
+  height: 35vh;
+  text-align: center;
+  margin-top: 2em;
+  border-radius: 10px;
+  padding-left: 5em;
+  border: 1px solid gray;
+  font-size: 1.2em;
+  font-weight: 500;
+}
+
+.index-name {
+  justify-content: center;
+  text-align: left;
+  vertical-align: center;
+  width: 200px;
+  margin-bottom: 5px;
+  padding-right: 1em;
+}
+
+.date {
+  margin-top: 2em;
+  width: 160px;
+  margin-right: 120px;
+  margin-left: 1em;
+  display: flex;
+  justify-content: space-between;
+}
+
+.date p {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.date input[type="date"]:first-child {
+  /* margin-right: 100px; */
+  width: 180px;
+  height: 20px;
+  font-size: 9.5px;
+}
+
+.date input[type="date"] {
+  width: 180px;
+  height: 20px;
+  font-size: 9.5px;
+}
+
+.search-button {
+  margin-top: 30px;
+  width: 160px;
+  height: 30px;
+  border: none;
+  font-weight: 400;
+  /* border-radius: 64px; */
+  border-radius: 10px;
+  color: #fff;
+  cursor: pointer;
+  background-color: #0d47a1;
+  margin-right: 120px;
+}
+
+.detail-check-btn {
   display: flex;
   /* justify-content: center; */
   /* align-items: center; */
@@ -102,15 +107,14 @@
   justify-content: flex-start;
   margin-bottom: 1em;
   margin-right: 5em;
-  
 }
 
-.all-btn{
+.all-btn {
   margin-right: 0.5em;
   width: 8vw;
   height: 3vh;
-  background-color: #0D47A1;
-  border: 1px solid #0D47A1;
+  background-color: #0d47a1;
+  border: 1px solid #0d47a1;
   color: #fff;
   border-radius: 0.5em;
   cursor: pointer;
@@ -119,11 +123,11 @@
   font-weight: 600;
 }
 
-.allout-btn{
+.allout-btn {
   width: 16vw;
   height: 3vh;
-  background-color: #0D47A1;
-  border: 1px solid #0D47A1;
+  background-color: #0d47a1;
+  border: 1px solid #0d47a1;
   color: #fff;
   border-radius: 0.5em;
   cursor: pointer;
@@ -132,8 +136,8 @@
   font-weight: 600;
 }
 
-  .detail-graph-wrap{
-    height: 50vh;
-    width: 200%;
-    /* overflow-x: scroll; */
-  }
+.detail-graph-wrap {
+  height: 50vh;
+  width: 200%;
+  /* overflow-x: scroll; */
+}

@@ -1,11 +1,10 @@
-// Graph.jsx
-import { useEffect, useState } from "react"
-import { ResponsiveLine } from '@nivo/line'
-import './Graph.css'
-import axios from 'axios';
-import { useSearchParams } from 'react-router-dom'
+import { useEffect, useState } from "react";
+import { ResponsiveLine } from "@nivo/line";
+import "./Graph.css";
+import axios from "axios";
+import { useSearchParams } from "react-router-dom";
 
-function GraphLine() {
+function GraphLine({ startDate, endDate }) {
   // record_time, sepsis_score, HR, O2Sat, SBP, DBP, BT, pid 필요
 
   const [HR, showHR] = useState(true);
@@ -19,8 +18,6 @@ function GraphLine() {
   const [sepsis_score, showSepsis_score] = useState(true);
   const [searchParams] = useSearchParams();
   const pid = searchParams.get("pid"); // 환자 id가져오기
-
-  console.log(pid);
 
   // 모든 체크박스를 체크하는 함수
   const checkAll = () => {
@@ -48,123 +45,120 @@ function GraphLine() {
 
   // axios주소 가져오게 되면
   const [DBdata, setDBdata] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
 
-  // const [DBdata, setDBdata] = useState([
-  //   // 가상의 데이터베이스에서 받아온 정보
-  //   {
-  //     //record_time, sepsis_score, HR, O2Sat, SBP, DBP, BT, pid 필요
-  //     record_time: "00:00",
-  //     sepsis_score: 70,
-  //     HR: 110,
-  //     BT: 36.5,
-  //     SBP: 120,
-  //     O2Sat: 98,
-  //     DBP: 107,
-  //   },
-  //   {
-  //     record_time: "04:00",
-  //     sepsis_score: 65,
-  //     HR: 111,
-  //     BT: 36.8,
-  //     SBP: 119,
-  //     O2Sat: 99,
-  //     DBP: 109,
-  //   },
-  //   {
-  //     record_time: "08:00",
-  //     sepsis_score: 73,
-  //     HR: 107,
-  //     BT: 37.1,
-  //     SBP: 119,
-  //     O2Sat: 99,
-  //     DBP: 111,
-  //   },
-  //   {
-  //     record_time: "12:00",
-  //     sepsis_score: 70,
-  //     HR: 104,
-  //     BT: 36.9,
-  //     SBP: 120,
-  //     O2Sat: 97,
-  //     DBP: 113,
-  //   },
-  //   {
-  //     record_time: "16:00",
-  //     sepsis_score: 80,
-  //     HR: 106,
-  //     BT: 36.8,
-  //     SBP: 120,
-  //     O2Sat: 98,
-  //     DBP: 112,
-  //   },
-  //   {
-  //     record_time: "20:00",
-  //     sepsis_score: 76,
-  //     HR: 112,
-  //     BT: 37.0,
-  //     SBP: 121,
-  //     O2Sat: 96,
-  //     DBP: 117,
-  //   },
-  // ]);
 
-  // 데이터 받아옴
+  // useEffect(() => {
+  //   if (startDate !== "" && endDate !== "") {
+  //     // 날짜 문자열을 Date 객체로 변환합니다.
+  //     const start = new Date(startDate);
+  //     const end = new Date(endDate);
+
+  //     // 선택된 기간에 맞는 데이터만 필터링합니다.
+  //     const newFilteredData = DBdata.filter((d) => {
+  //       // record_time이 'YYYY-MM-DD HH:MM' 형태라고 가정하고, 이를 Date 객체로 변환합니다.
+  //       const recordTime = new Date(d.record_time.replace(" ", "T"));
+  //       return recordTime >= start && recordTime <= end;
+  //     });
+
+  //     // 필터링된 데이터로 상태를 업데이트합니다.
+  //     setFilteredData(newFilteredData);
+  //   }
+  // }, [startDate, endDate]);
 
   useEffect(() => {
-    console.log('useeffect')
+    if (startDate !== null && endDate !== null) {
+      // 날짜 문자열을 Date 객체로 변환합니다.
+      const start = new Date(startDate);
+      start.setHours(0, 0, 0, 0)
 
-    axios.post("http://localhost:3001/detail/alldata", {
-      patient_id: pid
-    }).then((res) => {
-      console.log('res', res)
-      setDBdata(res.data);
-    })
-      ;
-  }, [])
+      const end = new Date(endDate);
+
+      // endDate를 해당 날짜의 종료 시점으로 설정
+      end.setHours(23, 59, 59, 999);
+
+      // 선택된 기간에 맞는 데이터만 필터링합니다.
+      const newFilteredData = DBdata.filter((d) => {
+        // record_time이 'YYYY-MM-DD HH:MM' 형태라고 가정하고, 이를 Date 객체로 변환합니다.
+        const recordTime = new Date(d.record_time.replace(" ", "T"));
+        return recordTime >= start && recordTime <= end;
+      });
+
+      // 필터링된 데이터로 상태를 업데이트합니다.
+      setFilteredData(newFilteredData);
+    } else {
+      // startDate나 endDate가 초기값인 경우, 모든 데이터를 그대로 사용합니다.
+      setFilteredData(DBdata);
+    }
+  }, [startDate, endDate, DBdata]);
+
+
+  // 데이터 받아옴
+  useEffect(() => {
+    console.log("useeffect");
+
+    axios
+      .post("http://localhost:3001/detail/alldata", {
+        patient_id: pid,
+      })
+      .then((res) => {
+        console.log("res", res);
+        setDBdata(res.data);
+      });
+  }, []);
 
   const originalData = [
     // DB에서 받아온 정보를 map함수로 반복처리
     {
       id: "HR",
       color: "hsl(211, 70%, 50%)",
-      data: DBdata.map((d) => ({ x: d.record_time.slice(11,16), y: d.HR })),
+      data: filteredData.map((d) => ({
+        x: d.record_time,
+        y: d.HR,
+      })),
     },
     {
       id: "sepsis_score",
       color: "hsl(211, 70%, 50%)",
-      data: DBdata.map((d) => ({ x: d.record_time.slice(11,16), y: d.sepsis_score })),
+      data: filteredData.map((d) => ({
+        x: d.record_time,
+        y: d.sepsis_score,
+      })),
     },
     {
       id: "O2Sat",
       color: "hsl(211, 70%, 50%)",
-      data: DBdata.map((d) => ({ x: d.record_time.slice(11,16), y: d.O2Sat })),
+      data: filteredData.map((d) => ({
+        x: d.record_time,
+        y: d.O2Sat,
+      })),
     },
     {
       id: "BT",
       color: "hsl(211, 70%, 50%)",
-      data: DBdata.map((d) => ({ x: d.record_time.slice(11,16), y: d.Temp })),
+      data: filteredData.map((d) => ({
+        x: d.record_time,
+        y: d.Temp,
+      })),
     },
     {
       id: "SBP",
       color: "hsl(211, 70%, 50%)",
-      data: DBdata.map((d) => ({ x: d.record_time.slice(11,16), y: d.SBP })),
+      data: filteredData.map((d) => ({
+        x: d.record_time,
+        y: d.SBP,
+      })),
     },
     {
       id: "DBP",
       color: "hsl(211, 70%, 50%)",
-      data: DBdata.map((d) => ({ x: d.record_time.slice(11,16), y: d.DBP })),
+      data: filteredData.map((d) => ({
+        x: d.record_time,
+        y: d.DBP,
+      })),
     },
   ];
-  
-  // let minY = Infinity;
-  // let maxY = -Infinity;
 
-  // originalData.forEach((d) => {
-  //   d.data.forEach((point) => {
-  //     minY = Math.min(minY, point.y);
-  //     maxY = Math.max(maxY, point.y);
-  //   });
-  // });
 
   let data = originalData.filter((d) => {
     if (d.id === "sepsis_score" && sepsis_score) return true;
@@ -210,28 +204,7 @@ function GraphLine() {
         legendOffset: -40,
         legendPosition: "middle",
       }}
-      // axisLeft={
-      //   [{
-      //     orient: "left",
-      //     tickSize: 10,
-      //     tickPadding: 5,
-      //     tickRotation: 0,
-      //     legend: "HR",
-      //     legendOffset: -40,
-      //     legendPosition: "middle",
-      //     scale: { type: "linear", min: "auto", max: "auto" }, // 각 요소의 스케일을 설정합니다.
-      //   },
-      //   {
-      //     orient: "right",
-      //     tickSize: 10,
-      //     tickPadding: 5,
-      //     tickRotation: 0,
-      //     legend: "O2Sat",
-      //     legendOffset: -40,
-      //     legendPosition: "middle",
-      //     scale: { type: "linear", min: "auto", max: "auto" },
-      //   }]
-      // }
+
       colors={{ scheme: "category10" }}
       pointSize={6}
       pointColor={{ from: "color", modifiers: [] }}
@@ -333,21 +306,16 @@ function GraphLine() {
               />{" "}
               BT
             </div>
-            {/* <div className="index-name">
-            <input type="checkbox" checked={Resp} onChange={() => showResp(!Resp)} /> Resp
-          </div> */}
-            {/* <div className="date"> */}
-            {/* <input type="date" onChange={(e) => setStartDate(e.target.value)} /> */}
-            {/* <p> - </p> */}
-            {/* <input type="date" onChange={(e) => setEndDate(e.target.value)} /> */}
-            {/* </div> */}
-            {/* <button className="search-button" onClick={handleSearch}>
-            검색
-          </button> */}
+            {/* <div className="date">
+              <input type="date" onChange={(e) => setStartDate(e.target.value)} />
+              <p> - </p>
+              <input type="date" onChange={(e) => setEndDate(e.target.value)} />
+            </div> */}
+
           </div>
         </div>
         <div className="graph-container">
-          <MyResponsiveLine className="detail-graph-wrap" data={data} />
+          <MyResponsiveLine className="detail-graph-wrap" style={{ width: '1000%' }} data={data} />
         </div>
       </div>
     </div>
