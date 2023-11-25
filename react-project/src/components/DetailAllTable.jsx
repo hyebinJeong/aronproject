@@ -3,8 +3,8 @@ import { COLUMNS } from './detailallcolumns';
 import './DetailAllTable.css'
 
 const DetailAllTable = (props) => {
+
     const columns = useMemo(() => COLUMNS, []);
-    // const selectedData = useMemo(() => (props.data && props.data.length > 0) ? props.data : {}, [props.data]);
     const selectedData = useMemo(() => (props.data && props.data.length > 0) ? props.data : [], [props.data]);
 
     const array = ['record_time', 'sepsis_score', 'HR', 'SBP', 'DBP', 'Temp', 'O2Sat']

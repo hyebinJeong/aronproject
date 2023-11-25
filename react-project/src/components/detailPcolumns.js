@@ -32,7 +32,7 @@ export const COLUMNS = [
     accessor: "medical_department",
   },
   {
-    Header: "Sepsis Score",
+    Header: "Aron Score",
     accessor: "sepsis_score",
   },
 ];

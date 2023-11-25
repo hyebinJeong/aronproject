@@ -1,13 +1,13 @@
 .modal-graph-size {
-  width: 800px;
-  height: 300px;
-  /* margin: 0 auto;
+  width: 90%;
+  height: 50vh;
+  margin: auto;
   display: flex;
-  justify-content: space-between; */
+  justify-content: space-between;
   font-family: Arial, Helvetica, sans-serif;
 }
 
 .modal-detail-graph-wrap {
   height: 50%;
-  width: 90%;
+  width: 50%;
 }

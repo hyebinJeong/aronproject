@@ -10,7 +10,7 @@ import { CheckBox } from './CheckBox'
 import axios from 'axios';
 import ColumnFilter from './Columnfilter.jsx'
 
-const PatientTable = ({ modal, selectedColumn, searchTerm, setting, setModal, setPid , pid, commentArr, classifyComment, patAxios, setPatAxios}) => {
+const PatientTable = ({ modal, selectedColumn, searchTerm, setting, setModal, setPid, pid, commentArr, classifyComment, patAxios, setPatAxios }) => {
 
     const columns = useMemo(() => {
         return COLUMNS.map((column) => {
@@ -24,7 +24,7 @@ const PatientTable = ({ modal, selectedColumn, searchTerm, setting, setModal, se
     const [datas, setDatas] = useState([]);
     const data = useMemo(() => datas, [datas]);
 
-    const commentSvg = <svg width='1rem' clip-rule="evenodd" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m11.25 6c.398 0 .75.352.75.75 0 .414-.336.75-.75.75-1.505 0-7.75 0-7.75 0v12h17v-8.75c0-.414.336-.75.75-.75s.75.336.75.75v9.25c0 .621-.522 1-1 1h-18c-.48 0-1-.379-1-1v-13c0-.481.38-1 1-1zm-2.011 6.526c-1.045 3.003-1.238 3.45-1.238 3.84 0 .441.385.626.627.626.272 0 1.108-.301 3.829-1.249zm.888-.889 3.22 3.22 8.408-8.4c.163-.163.245-.377.245-.592 0-.213-.082-.427-.245-.591-.58-.578-1.458-1.457-2.039-2.036-.163-.163-.377-.245-.591-.245-.213 0-.428.082-.592.245z" fill-rule="nonzero"/></svg>
+    const commentSvg = <svg width='1rem' clip-rule="evenodd" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m11.25 6c.398 0 .75.352.75.75 0 .414-.336.75-.75.75-1.505 0-7.75 0-7.75 0v12h17v-8.75c0-.414.336-.75.75-.75s.75.336.75.75v9.25c0 .621-.522 1-1 1h-18c-.48 0-1-.379-1-1v-13c0-.481.38-1 1-1zm-2.011 6.526c-1.045 3.003-1.238 3.45-1.238 3.84 0 .441.385.626.627.626.272 0 1.108-.301 3.829-1.249zm.888-.889 3.22 3.22 8.408-8.4c.163-.163.245-.377.245-.592 0-.213-.082-.427-.245-.591-.58-.578-1.458-1.457-2.039-2.036-.163-.163-.377-.245-.591-.245-.213 0-.428.082-.592.245z" fill-rule="nonzero" /></svg>
 
     const nav = useNavigate();
 
@@ -128,10 +128,10 @@ const PatientTable = ({ modal, selectedColumn, searchTerm, setting, setModal, se
                                     {/* 열 필터 컴포넌트를 추가합니다. */}
                                     {columns.Filter ? <div>{columns.render('Filter')}</div> : null}
                                 </th>
-                                
+
                             ))}
                             <th className='p-tb-column'>Comment
-                            
+
                             </th>
                         </tr>
                     ))}
@@ -148,15 +148,15 @@ const PatientTable = ({ modal, selectedColumn, searchTerm, setting, setModal, se
                                     const cellClassName = columnIndex === 0 ? "row-checkbox" : "";
                                     return <td {...cell.getCellProps()} className={cellClassName}>{cell.render('Cell')}</td>
                                 })}
-                                <td><button 
-                                className='table-page-col'
-                                onClick={()=> {
-                                     setPid(row.original.patient_id)
-                                     setModal(true)
-                                }}>{ commentArr &&
-                                    commentArr.includes(row.original.patient_id) ? 'O' : 'X'
-                                }</button></td>
-                                
+                                <td><button
+                                    className='table-page-col'
+                                    onClick={() => {
+                                        setPid(row.original.patient_id)
+                                        setModal(true)
+                                    }}>{commentArr &&
+                                        commentArr.includes(row.original.patient_id) ? 'O' : 'X'
+                                    }</button></td>
+
                             </tr>
                         )
                     })}

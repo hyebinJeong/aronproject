@@ -20,13 +20,24 @@ const Main01 = () => {
   const [commentArr, setCommentArr] = useState();
 
   //추가한 코드
-  const { sepsisScores } = useContext(SepsisScoreContext); 
-useEffect(() => {
-  console.log(JSON.stringify(sepsisScores, null, 2));
-}, [sepsisScores]);
+  const { sepsisScores } = useContext(SepsisScoreContext);
+  useEffect(() => {
+    console.log(JSON.stringify(sepsisScores, null, 2));
+  }, [sepsisScores]);
 
-    const [susAxios, setSusAxios] = useState(false);
-    const [patAxios, setPatAxios] = useState(false);
+  const [susAxios, setSusAxios] = useState(false);
+  const [patAxios, setPatAxios] = useState(false);
+
+
+  const [isSuspicious, setIsSuspicious] = useState(true); // Default로 의심 테이블을 보여줍니다.
+
+  const handleSuspiciousClick = () => {
+    setIsSuspicious(true);
+  };
+
+  const handleTotalClick = () => {
+    setIsSuspicious(false);
+  };
 
 
   const handleSearchTermChange = (e) => {
@@ -64,77 +75,78 @@ useEffect(() => {
   // }, [])
 
   return (
-    <div style={{ position: "relative" }}>
-      <div className="space">
-        <div className="nav">
-          <div className="nav-back">
-            <div className="search-bar">
-              <select
-                name="column"
-                id="select-column"
+    <div style={{ position: 'relative' }}>
+      <div className='space'>
+        <div className='nav'>
+          <button className='nav-cate-button' onClick={handleSuspiciousClick}>의심</button>
+          <button className='nav-cate-button' onClick={handleTotalClick}>전체</button>
+          <div className='nav-back'>
+            <div className='search-bar'>
+              <select name="column" id="select-column"
                 value={selectedColumn}
                 onChange={handleColumnChange}
               >
                 <option value="patient_id">ID</option>
                 <option value="name">Name</option>
               </select>
-              <input
-                className="search-input"
-                placeholder="검색어를 입력하세요."
+              <input className='search-input'
+                placeholder='검색어를 입력하세요.'
                 value={searchTerm}
-                onChange={handleSearchTermChange}
-              ></input>
+                onChange={handleSearchTermChange}></input>
             </div>
 
             <LiveClock />
             {/* <Modify></Modify> */}
           </div>
+
         </div>
       </div>
       <hr />
-      <div className="space">
-        <div className="main-table">
-          <p className="class-status-font">의심({susNum})</p>
-          <div className="sus-table-container">
-            <SuspiciousTable
-              selectedColumn={selectedColumn}
-              searchTerm={searchTerm}
-              setting={setSusNum}
-              setModal={setModal}
-              setPid={setPid}
-              pid={pid}
-              classifyComment={classifyComment}
-              commentArr={commentArr}
-              susAxios = {susAxios}
-              setSusAxios={setSusAxios}
-            ></SuspiciousTable>
-          </div>
-          <p className="class-status-font">전체({patNum})</p>
-          <div className="p-table-container">
-            <PatientTable
-              selectedColumn={selectedColumn}
-              searchTerm={searchTerm}
-              setting={setPatNum}
-              setModal={setModal}
-              setPid={setPid}
-              pid={pid}
-              classifyComment={classifyComment}
-              commentArr={commentArr}
-              patAxios = {patAxios}
-              setPatAxios={setPatAxios}
-            ></PatientTable>
-          </div>
+      <div className='space'>
+        <div className='main-table'>
+          {isSuspicious ? (
+            <div>
+              <p className='class-status-font'>의심({susNum})</p>
+              <div className='sus-table-container'>
+                <SuspiciousTable
+                  selectedColumn={selectedColumn}
+                  searchTerm={searchTerm}
+                  setting={setSusNum}
+                  setModal={setModal}
+                  setPid={setPid}
+                  pid={pid}
+                  classifyComment={classifyComment}
+                  commentArr={commentArr}
+                  susAxios={susAxios}
+                  setSusAxios={setSusAxios}></SuspiciousTable>
+              </div>
+            </div>
+          ) : (
+            <div>
+              <p className='class-status-font'>전체({patNum})</p>
+              <div className='p-table-container'>
+                <PatientTable
+                  selectedColumn={selectedColumn}
+                  searchTerm={searchTerm}
+                  setting={setPatNum}
+                  setModal={setModal}
+                  setPid={setPid}
+                  pid={pid}
+                  classifyComment={classifyComment}
+                  commentArr={commentArr}
+                  patAxios={patAxios}
+                  setPatAxios={setPatAxios}></PatientTable>
+
+              </div>
+            </div>
+          )}
         </div>
       </div>
-      {modal ? (
-        <Modal
-          setModal={setModal}
-          pid={pid}
-          classifyComment={classifyComment}
-        ></Modal>
-      ) : null}
+      {modal
+        ? <Modal setModal={setModal} pid={pid} classifyComment={classifyComment}></Modal>
+        : null}
     </div>
-  );
-};
+  )
+}
 
 export default Main01;

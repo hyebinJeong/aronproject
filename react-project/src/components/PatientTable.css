@@ -81,7 +81,6 @@
   width: 12vw;
 }
 
-
 .p-tb-thead tr th:nth-child(8),
 .p-tb-thead tr th:nth-child(9),
 .p-tb-thead tr th:nth-child(10),
@@ -93,7 +92,6 @@
 }
 /* thead 길이 조절 끝 */
 
-
 /* tbody 길이 조절 시작 */
 
 .p-tb {
@@ -101,7 +99,7 @@
   max-height: 4vh;
 }
 
-.p-tb-thead tr th:first-child .row-checkBox{
+.p-tb-thead tr th:first-child .row-checkBox {
   display: none;
 }
 
@@ -109,9 +107,13 @@
   border-radius: 50%;
   width: 30px;
   height: 30px;
-  
 }
 
 .p-tb tbody tr {
   max-height: 4vh;
+}
+
+.table-page-col {
+  border: none;
+  background-color: transparent;
 }
