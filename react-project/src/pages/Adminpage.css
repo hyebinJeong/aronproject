@@ -29,18 +29,27 @@
     margin-left: 1em;
     margin-bottom: 2em;
     background-color: #0D47A1;
+    font-size: 1.1em;
     font-weight: 400;
     border: none;
     border-radius: 0.5em;
     color: #fff;
-    width: 3vw;
-    height: 4vh;
+    width: 4vw;
+    height: 5vh;
     cursor: pointer;
 }
 
+.admin-score-btn {
+    font-size: 0.9em;
+    width: 8vw;
+    /* height: 6vh; */
+    background-color: #Be2e22;
+    font-weight: 500;
+}
+/* 
 .admin-btn-container.admin-icon-set-wrap{
     background-color: #fff;
-}
+} */
 
 .admin-user-data-container {
     width: 93vw;
@@ -70,13 +79,12 @@
     height: 20vh;
 }
 
-.admin-icon-set{
-    width: 20px;
-    height: 20px;
-    padding-top: 2px;
-}
+/* .admin-icon-set{
+    width: 40px;
+    height: 40px;
+} */
 
-.admin-icon-set-wrap{
+/* .admin-icon-set-wrap{
     background-color: #fff;
     cursor: pointer;
     margin-left: 1em;
@@ -86,8 +94,8 @@
     border-radius: 0.5em;
     color: #fff;
     width: 3vw;
-    height: 4vh;
-}
+    height: 3vh;
+} */
 
 .pagenation-wrap{
     text-align: center;
