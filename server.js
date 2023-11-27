@@ -24,6 +24,7 @@ const userRouter = require("./routes/user");
 const indexRouter = require("./routes");
 const commentRouter = require("./routes/comment");
 const detailRouter = require("./routes/detail");
+const statusRouter = require("./routes/status");
 
 const path = require("path");
 
@@ -58,6 +59,7 @@ app.use("/", indexRouter);
 app.use("/user", userRouter);
 app.use("/detail", detailRouter);
 app.use("/comment", commentRouter);
+app.use("/status", statusRouter);
 
 // 미들웨어 정의
 function ensureAuthenticated(req, res, next) {

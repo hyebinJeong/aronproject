@@ -92,7 +92,9 @@ router.post("/alldata", async (req, res) => {
 FROM 
 data
 WHERE
-  patient_id = ?;
+  patient_id = ?
+ORDER BY
+  record_time DESC
   `;
 
   try {
