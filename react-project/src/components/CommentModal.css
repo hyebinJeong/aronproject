@@ -136,6 +136,10 @@
     
 }
 
+.modal-comment-box .comment-content {
+    font-weight: bold;
+}
+
 .modal-comment-box button {
     /* background-color: transparent; */
     background-color: #fff;

@@ -8,11 +8,10 @@ const express = require('express');
 const router = express.Router();
 // 이 경로에 있는 데이터베이스 연결 모듈 가져옴
 const conn = require('../config/database');
-
-
+const bcrypt = require('bcrypt');
 
 // 로그인 라우터
-router.post('/login', (req, res) => {
+router.post('/login', async (req, res) => {
     let { id, pw } = req.body;
 
     // ID 또는 비밀번호가 입력되지 않은 경우 에러 메시지 반환
@@ -20,34 +19,43 @@ router.post('/login', (req, res) => {
         return res.status(400).json({ msg: 'failed', detail: 'ID 또는 비밀번호가 제공되지 않았습니다.' });
     }
 
-    // 사용자 ID와 비밀번호를 사용하여 DB에서 일치하는 사용자 조회
-    const sql = "SELECT id, name, class FROM user WHERE id=? AND pw=?";
-
-    conn.query(sql, [id, pw], (err, rows) => {
-        console.log('rows', rows);
-
-        if (rows.length > 0) {
-            // 로그인 성공
-            req.session.user = rows[0];  // 세션에 사용자 정보 저장
-
-            // 마지막 로그인 시간 업데이트
-            const updateLoginSql = "UPDATE user SET last_login = CURRENT_TIMESTAMP WHERE id = ?";
-            conn.query(updateLoginSql, [id], (err, result) => {
-                if(err) throw err;
+    try {
+        // 사용자 ID를 사용하여 DB에서 일치하는 사용자 조회
+        const sql = "SELECT id, name, class, pw FROM user WHERE id=?";
+        const userResult = await new Promise((resolve, reject) => {
+            conn.query(sql, [id], (err, rows) => {
+                if (err) reject(err);
+                else resolve(rows[0]);
             });
-            res.json({ msg: 'success', user: rows[0] }) // 사용자 정보 반환
+        });
+
+        if (userResult) {
+            // 비밀번호 비교
+            const isPasswordValid = await bcrypt.compare(pw, userResult.pw);
+
+            if (isPasswordValid) {
+                // 로그인 성공
+                req.session.user = { id: userResult.id, name: userResult.name, class: userResult.class };
+                res.json({ msg: 'success', user: req.session.user });
+            } else {
+                // 비밀번호 불일치, 로그인 실패
+                res.json({ msg: 'failed', detail: '비밀번호가 일치하지 않습니다.' });
+            }
         } else {
-            // 로그인 실패
-            res.json({ msg: 'failed' })
+            // 사용자가 없음, 로그인 실패
+            res.json({ msg: 'failed', detail: '해당 ID에 대한 사용자가 없습니다.' });
         }
-    })
+    } catch (error) {
+        console.error('로그인 에러:', error);
+        res.status(500).json({ msg: 'failed', detail: '서버 오류로 로그인에 실패했습니다.' });
+    }
 });
 
 // 로그아웃 라우터
 router.post('/logout', (req, res) => {
     // 세션 삭제
     req.session.destroy((err) => {
-        // 세션 삭제 중 에러 발생 시 에러 메시지 반환
+        // 세션 삭제 중 에러 발생 시 에러 메시a지 반환
         if (err) {
             return res.json({ msg: 'failed', detail: '세션 삭제 중 에러가 발생했습니다.' });
         }
