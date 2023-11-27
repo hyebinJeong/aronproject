@@ -8,6 +8,7 @@ const conn = require("../config/database");
 
 // 전체 데이터
 router.post("/patients", async (req, res) => {
+  const {sepsis_score} = req.body;
   const sql = `
   SELECT 
     p.patient_id, 
@@ -30,7 +31,7 @@ router.post("/patients", async (req, res) => {
     data AS d
   ON 
     p.patient_id = d.patient_id
-  WHERE d.sepsis_score < 70
+  WHERE d.sepsis_score < ?
     and d.record_time = (
         SELECT 
             MAX(record_time)
@@ -43,7 +44,7 @@ router.post("/patients", async (req, res) => {
 
   try {
     const results = await new Promise((resolve, reject) => {
-      conn.query(sql, (err, result) => {
+      conn.query(sql, [sepsis_score],(err, result) => {
         if (err) throw err;
         else res.json(result);
       });
@@ -53,7 +54,7 @@ router.post("/patients", async (req, res) => {
   }
 });
 
-// 패혈증 의심 환자 테이블 불러오기 (패혈증 점수 70이상)
+// 패혈증 의심 환자 테이블 불러오기 (패혈증 점수 ?이상)
 router.post('/suspicious', async (req, res) => {
   const {sepsis_score} = req.body;
   const sql = `
@@ -155,6 +156,27 @@ router.post('/adminpage/deleted', async (req,res)=>{
       });
     });
     res.status(200).send('user deleted');
+  } catch(err) {
+    res.status(500).send('An error occurred, please try again.');
+  }
+});
+
+// 패혈증 점수 업데이트
+router.post('/adminpage/sepsis', async (req,res)=>{
+  const {sepsis_score} = req.body;
+  const sql = "update score set sepsis_score = ?";
+  console.log(req.body.id)
+  try {
+    await new Promise((resolve, reject)=>{
+      conn.query(sql, [sepsis_score], (err, rows)=>{
+        if(err){
+          reject(err);
+        } else {
+          resolve(rows)
+        }
+      });
+    });
+    res.status(200).send('sepsis score updated');
   } catch(err) {
     res.status(500).send('An error occurred, please try again.');
   }

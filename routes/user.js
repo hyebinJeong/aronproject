@@ -29,6 +29,12 @@ router.post('/login', (req, res) => {
         if (rows.length > 0) {
             // 로그인 성공
             req.session.user = rows[0];  // 세션에 사용자 정보 저장
+
+            // 마지막 로그인 시간 업데이트
+            const updateLoginSql = "UPDATE user SET last_login = CURRENT_TIMESTAMP WHERE id = ?";
+            conn.query(updateLoginSql, [id], (err, result) => {
+                if(err) throw err;
+            });
             res.json({ msg: 'success', user: rows[0] }) // 사용자 정보 반환
         } else {
             // 로그인 실패
