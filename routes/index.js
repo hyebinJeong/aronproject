@@ -9,7 +9,8 @@ const bcrypt = require('bcrypt');
 
 // 전체 데이터
 router.post("/patients", async (req, res) => {
-  const {sepsis_score} = req.body;
+  console.log(req.body);
+
   const sql = `
   SELECT 
     p.patient_id, 
@@ -17,7 +18,6 @@ router.post("/patients", async (req, res) => {
     p.gender,
     p.age,
     p.ward_room,
-    p.status,
     d.sepsis_score,
     DATE_FORMAT(d.record_time, '%Y-%m-%d %H:%i') as record_time,
     d.HR,
@@ -33,8 +33,7 @@ router.post("/patients", async (req, res) => {
     data AS d
   ON 
     p.patient_id = d.patient_id
-  WHERE d.sepsis_score < ?
-    and d.record_time = (
+  WHERE d.record_time = (
         SELECT 
             MAX(record_time)
         FROM 
@@ -46,7 +45,7 @@ router.post("/patients", async (req, res) => {
 
   try {
     const results = await new Promise((resolve, reject) => {
-      conn.query(sql, [sepsis_score],(err, result) => {
+      conn.query(sql,(err, result) => {
         if (err) throw err;
         else res.json(result);
       });
@@ -56,9 +55,11 @@ router.post("/patients", async (req, res) => {
   }
 });
 
-// 패혈증 의심 환자 테이블 불러오기 (패혈증 점수 ?이상)
+// 패혈증 의심 환자 테이블 불러오기
 router.post('/suspicious', async (req, res) => {
-  const {sepsis_score} = req.body;
+  console.log(req.body);
+
+  const { u_score } = req.body; // u_score 값을 가져옵니다.
   const sql = `
   select  
     p.patient_id, 
@@ -66,7 +67,6 @@ router.post('/suspicious', async (req, res) => {
     p.gender,
     p.age,
     p.ward_room,
-    p.status,
     d.sepsis_score,
     DATE_FORMAT(d.record_time, '%Y-%m-%d %H:%i') as record_time,
     d.HR,
@@ -88,7 +88,7 @@ router.post('/suspicious', async (req, res) => {
     `;
   try {
       const results = await new Promise((resolve, reject) => {
-          conn.query(sql,[sepsis_score],(err, rows) => {
+          conn.query(sql,[u_score],(err, rows) => { 
               if (err) {
                   reject(err);
               } else {
@@ -193,7 +193,7 @@ router.post('/adminpage/deleted', async (req,res)=>{
 });
 
 // 패혈증 점수 업데이트
-router.post('/adminpage/sepsis', async (req,res)=>{
+router.post('/adminpage/update_sepsis', async (req,res)=>{
   const {u_score} = req.body;
   const sql = "update score set u_score = ?";
   console.log(req.body.id)
@@ -208,6 +208,25 @@ router.post('/adminpage/sepsis', async (req,res)=>{
       });
     });
     res.status(200).send('sepsis score updated');
+  } catch(err) {
+    res.status(500).send('An error occurred, please try again.');
+  }
+});
+
+// 관리자 패혈증
+router.post('/adminpage/sepsis_score', async (req,res)=>{
+  const sql = "select * from score";
+  try {
+    const result = await new Promise((resolve, reject)=>{
+      conn.query(sql, (err, rows)=>{
+        if(err){
+          reject(err);
+        } else {
+          resolve(rows)
+        }
+      });
+    });
+    res.json(result)
   } catch(err) {
     res.status(500).send('An error occurred, please try again.');
   }
