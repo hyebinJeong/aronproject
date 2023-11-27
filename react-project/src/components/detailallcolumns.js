@@ -4,7 +4,7 @@ export const COLUMNS = [
     accessor: "record_time",
   },
   {
-    Header: "Aron Score",
+    Header: "ARON Score",
     accessor: "sepsis_score",
   },
   {

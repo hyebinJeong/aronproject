@@ -68,7 +68,7 @@ const PatientTable = ({ modal, selectedColumn, searchTerm, setting, setModal, se
     } = useTable({
         columns,
         data,
-        initialState: { pageIndex: 0 }
+        initialState: { pageIndex: 0, pageSize: 15 }
     }, useFilters,
         useGlobalFilter,
         //Sort는 filter보다 뒤에 와야 작동함. 위치 변동 하지 말 것.
@@ -142,7 +142,7 @@ const PatientTable = ({ modal, selectedColumn, searchTerm, setting, setModal, se
                     {page.map((row, idx) => {
                         prepareRow(row)
                         return (
-                            <tr {...row.getRowProps()} onDoubleClick={() => {
+                            <tr style={{ cursor: 'pointer' }} {...row.getRowProps()} onDoubleClick={() => {
                                 nav(`/detailpage?pid=${row.original.patient_id}`)
                             }}>
                                 {row.cells.map((cell, columnIndex) => {
@@ -150,6 +150,7 @@ const PatientTable = ({ modal, selectedColumn, searchTerm, setting, setModal, se
                                     return <td {...cell.getCellProps()} className={cellClassName}>{cell.render('Cell')}</td>
                                 })}
                                 <td><button
+                                    style={{ cursor: 'pointer', width: '100%' }}
                                     className='table-page-col'
                                     onClick={() => {
                                         setPid(row.original.patient_id)
