@@ -36,6 +36,13 @@ router.post('/login', async (req, res) => {
             if (isPasswordValid) {
                 // 로그인 성공
                 req.session.user = { id: userResult.id, name: userResult.name, class: userResult.class };
+
+                // 마지막 로그인 시간 업데이트
+                const updateLoginSql = "UPDATE user SET last_login = CURRENT_TIMESTAMP WHERE id = ?";
+                conn.query(updateLoginSql, [id], (err, result) => {
+                    if(err) throw err;
+                });
+                
                 res.json({ msg: 'success', user: req.session.user });
             } else {
                 // 비밀번호 불일치, 로그인 실패
