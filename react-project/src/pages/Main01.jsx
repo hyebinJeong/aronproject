@@ -78,8 +78,8 @@ const Main01 = () => {
     <div style={{ position: 'relative' }}>
       <div className='space'>
         <div className='nav'>
-          <button className='nav-cate-button' onClick={handleSuspiciousClick}>의심</button>
-          <button className='nav-cate-button' onClick={handleTotalClick}>전체</button>
+          <button style={{ cursor: 'pointer' }} className='nav-cate-button' onClick={handleSuspiciousClick}>의심</button>
+          <button style={{ cursor: 'pointer' }} className='nav-cate-button' onClick={handleTotalClick}>전체</button>
           <div className='nav-back'>
             <div className='search-bar'>
               <select name="column" id="select-column"

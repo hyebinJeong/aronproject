@@ -92,13 +92,13 @@ const Detailpage = () => {
           {/* 날짜 확인 */}
           <label>
             <input
-              style={{ width: '110px', height: '27px', border: '2px solid', borderRadius: '5px', borderColor: '#cfdaec', strokeWidth: '1px', stroke: 'black', fontFamily: 'Arial, Helvetica, sans- serif' }}
+              style={{ width: '110px', height: '27px', border: '2px solid', borderRadius: '5px', borderColor: '#cfdaec', strokeWidth: '1px', stroke: 'black', fontFamily: 'Arial, Helvetica, sans- serif', cursor: 'pointer' }}
               type="date" value={startDate || ''} onChange={e => setStartDate(e.target.value)} />
           </label>
           -
           <label>
             <input
-              style={{ width: '110px', height: '27px', border: '2px solid', borderRadius: '5px', borderColor: '#cfdaec', strokeWidth: '1px', stroke: 'black', fontFamily: 'Arial, Helvetica, sans-serif' }}
+              style={{ width: '110px', height: '27px', border: '2px solid', borderRadius: '5px', borderColor: '#cfdaec', strokeWidth: '1px', stroke: 'black', fontFamily: 'Arial, Helvetica, sans-serif', cursor: 'pointer' }}
               type="date" value={endDate || ''} onChange={e => setEndDate(e.target.value)} />
           </label>
         </div>
@@ -113,7 +113,8 @@ const Detailpage = () => {
             color: 'white',
             border: 'none',
             borderRadius: '5px',
-            fontFamily: 'Arial, Helvetica, sans-serif'
+            fontFamily: 'Arial, Helvetica, sans-serif',
+            cursor: 'pointer'
           }}
         >
           PDF

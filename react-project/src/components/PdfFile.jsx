@@ -1,7 +1,5 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import { ResponsiveLine } from "@nivo/line";
-import "./ModalGraph.css";
 import axios from "axios";
 import '../components/SingleTable.css';
 import { SingleTable } from "./SingleTable";
@@ -34,8 +32,8 @@ const PdfFile = ({ pid, startDate, endDate }) => {
     const [data2, setData2] = useState([]);
     useEffect(() => {
         const fetchData = async () => {
+            const response = await axios.post('http://localhost:3001/detail/alldata', { patient_id: pid });
             if (pid !== null && startDate !== null && endDate !== null) {
-                const response = await axios.post('http://localhost:3001/detail/alldata', { patient_id: pid });
                 const start = new Date(startDate);
                 start.setHours(0, 0, 0, 0);
                 const end = new Date(endDate);
@@ -46,12 +44,13 @@ const PdfFile = ({ pid, startDate, endDate }) => {
                     return recordTime >= start && recordTime <= end;
                 });
                 setData2(filteredData);
+            } else {
+                setData2(response.data);
             }
         };
 
         fetchData();
     }, [pid, startDate, endDate]);
-
 
 
 
