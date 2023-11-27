@@ -165,12 +165,12 @@ router.post('/adminpage/deleted', async (req,res)=>{
 
 // 패혈증 점수 업데이트
 router.post('/adminpage/sepsis', async (req,res)=>{
-  const {sepsis_score} = req.body;
-  const sql = "update score set sepsis_score = ?";
+  const {u_score} = req.body;
+  const sql = "update score set u_score = ?";
   console.log(req.body.id)
   try {
     await new Promise((resolve, reject)=>{
-      conn.query(sql, [sepsis_score], (err, rows)=>{
+      conn.query(sql, [u_score], (err, rows)=>{
         if(err){
           reject(err);
         } else {
