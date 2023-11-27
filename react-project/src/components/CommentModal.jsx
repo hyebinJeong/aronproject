@@ -8,7 +8,7 @@ const Modal = ({setModal, pid, classifyComment}) => {
 
   //추가한 코드
   // 수정할 댓글의 상태와 변경하는 함수를 선언
-  const [editingComment, setEditingComment] = useState(null);
+  const [editingComment, setEditingComment] = useState({ comment_id: null, comment: "" });
 
   // comment 불러오기
   const selectComment = async () => {
@@ -16,10 +16,25 @@ const Modal = ({setModal, pid, classifyComment}) => {
       .post("http://localhost:3001/comment/read", {
         patient_id: pid,
       })
-      .then((res) => {
-        setData(res.data);
+      .then(async (res) => {
+        // 작성일자 정보를 받아오기
+        const commentsWithDate = await Promise.all(
+          res.data.map(async (comment) => {
+            const dateRes = await axios.post("http://localhost:3001/comment/read-date", {
+              comment_id: comment.comment_id,
+            });
+            const commentWithDate = { ...comment, created_at: dateRes.data };
+    console.log(commentWithDate); // 작성일자 정보 확인을 위한 로그
+    return commentWithDate;
+          })
+        );
+  
+        setData(commentsWithDate);
       });
   };
+
+
+  
 
   // comment 입력
   const insertComment = async (word) => {
@@ -28,8 +43,9 @@ const Modal = ({setModal, pid, classifyComment}) => {
         patient_id: pid,
         comment: word,
       })
-      .then((res) => {
+      .then(async (res) => {
         classifyComment();
+        await selectComment(); // 입력 후 작성된 코멘트를 다시 불러옴
       });
 
     await selectComment();
@@ -68,13 +84,27 @@ const Modal = ({setModal, pid, classifyComment}) => {
     selectComment();
   }, []);
 
-  // 추가한 코드
-    const modifyFunc = async () => {
-      if (editingComment) {
-        await modifyComment(editingComment.comment, editingComment.comment_id);
-        setEditingComment(null); // 수정이 끝나면 상태를 초기화합니다.
-      }
-    };
+  const modifyFunc = async () => {
+    if (editingComment) {
+        try {
+            const response = await axios.post("http://localhost:3001/comment/update-with-date", {
+                comment: editingComment.comment,
+                comment_id: editingComment.comment_id,
+            });
+
+            console.log("댓글이 수정되었습니다.");
+            // 수정된 날짜를 받아와서 활용하거나 로그에 출력 등의 작업을 수행할 수 있습니다.
+            console.log("수정된 날짜:", response.data.updatedDate);
+
+            setEditingComment({ comment_id: null, comment: "" }); // 수정이 끝나면 상태를 초기화합니다.
+            await selectComment(); // 수정 후 코멘트를 다시 불러옵니다.
+        } catch (err) {
+            console.error(err);
+        }
+    }
+};
+
+
 
   return (
     <div className="modal-container">
@@ -116,6 +146,9 @@ const Modal = ({setModal, pid, classifyComment}) => {
           {data.map((d) => {
             return (
               <div className="modal-comment-box">
+                <div className="comment-info">
+        <span className="comment-date" style={{ marginRight: '8px' }}>{d.created_at}</span>
+        <span className="comment-content">
                 {editingComment &&
                 editingComment.comment_id === d.comment_id ? (
                   <textarea className='modal-comment-box-modify-textarea'
@@ -130,6 +163,9 @@ const Modal = ({setModal, pid, classifyComment}) => {
                 ) : (
                   d.comment
                 )}
+                </span>
+                </div>
+                
                 <button
                   className="comment-modify-btn"
                   onClick={() => {
@@ -158,6 +194,7 @@ const Modal = ({setModal, pid, classifyComment}) => {
             );
           })}
         </div>
+        
         <div className="modal-main-bottom">
           <div>
             <textarea
@@ -182,4 +219,19 @@ const Modal = ({setModal, pid, classifyComment}) => {
   );
 }
 
+
+
 export default Modal
+
+// 작성일자를 표시하기 위한 함수 추가
+function formatDate(dateString) {
+  const options = {
+    year: "numeric",
+    month: "numeric",
+    day: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+  };
+  const date = new Date(dateString);
+  return date.toLocaleDateString("ko-KR", options);
+}

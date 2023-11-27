@@ -123,16 +123,23 @@ const Login = () => {
         } setNotAllow(true);
     }, [idValid, pwValid]);
 
+    // handleKeyPress 함수 추가
+const handleKeyPress = (e) => {
+    if (e.key === 'Enter' && !notAllow) {
+        onClickconfirmButton();
+    }
+};
+
     return (
         <div className='page'>
-
             <div className="logo-wrap">
                 <img className="logo-img" src={aronlogo} alt="로고자리" />
             </div>
-
             <div className="content-wrap">
                 <div className="input-wrap">
-                    <input type="text" className='input' placeholder='사번' value={id} onChange={handleId} />
+                    <input 
+                    type="text" className='input' placeholder='사번' value={id} onChange={handleId} onKeyPress={handleKeyPress} 
+                    />
                 </div>
                 <div className="error-message-wrap">
                     {!idValid && id.length > 0 && (
@@ -140,7 +147,8 @@ const Login = () => {
                     )}
                 </div>
                 <div className="input-wrap">
-                    <input type="password" className='input' placeholder='비밀번호' value={pw} onChange={handlePw} />
+                    <input type="password" className='input' placeholder='비밀번호' value={pw} onChange={handlePw} onKeyPress={handleKeyPress}  
+                    />
                 </div>
                 <div className="error-message-wrap">
                     {!pwValid && pw.length > 0 && (
@@ -149,7 +157,15 @@ const Login = () => {
                 </div>
                 <div>
                     {/* disabled 속성 : 해당 요소가 비활성화 됨을 명시 */}
-                    <button onClick={onClickconfirmButton} className='bottom-button' disabled={notAllow}>LOGIN</button>
+                    <button
+    onClick={onClickconfirmButton}
+    className='bottom-button'
+    disabled={notAllow}
+    onKeyPress={handleKeyPress}
+    tabIndex="0" // tabIndex 추가
+>
+    LOGIN
+</button>
                 </div>
             </div>
 
