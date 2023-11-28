@@ -132,7 +132,6 @@ const Adminpage = () => {
               </tr>
             </thead>
             <tbody className='admin-user-data-tbody'>
-              {/* {filteredUserData.map((user, index) => ( */}
               {filteredUserData.map((user, index) => (
                 <tr
                   key={index}

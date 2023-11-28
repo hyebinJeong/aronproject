@@ -102,7 +102,7 @@
   display: flex;
   /* justify-content: center; */
   /* align-items: center; */
-  width: 6vw;
+  width: 9vw;
   height: 2.5vh;
   justify-content: flex-start;
   margin-bottom: 1em;
@@ -112,28 +112,29 @@
 .all-btn {
   margin-right: 0.5em;
   width: 8vw;
-  height: 3vh;
+  height: 4vh;
   background-color: #0d47a1;
   border: 1px solid #0d47a1;
   color: #fff;
   border-radius: 0.5em;
   cursor: pointer;
-  font-size: 0.6em;
+  font-size: 0.7em;
   padding: 0.5em;
   font-weight: 600;
 }
 
 .allout-btn {
-  width: 16vw;
-  height: 3vh;
+  width: 14vw;
+  height: 4vh;
   background-color: #0d47a1;
   border: 1px solid #0d47a1;
   color: #fff;
   border-radius: 0.5em;
   cursor: pointer;
-  font-size: 0.6em;
+  font-size: 0.7em;
   padding: 0.5em;
   font-weight: 600;
+  margin-bottom: 0.5em;
 }
 
 .detail-graph-wrap {
