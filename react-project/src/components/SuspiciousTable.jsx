@@ -6,11 +6,10 @@ import { COLUMNS } from './columns'
 import './SuspiciousTable.css'
 import iconSortUp from '../image/iconSortUp.svg'
 import iconSortDown from '../image/iconSortDown.svg'
-import { CheckBox } from './CheckBox'
 import axios from 'axios';
 import ColumnFilter from './Columnfilter.jsx'
 
-const SuspiciousTable = ({ modal, selectedColumn, searchTerm, setting, setModal, setPid, pid, commentArr, classifyComment, susAxios, setSusAxios }) => {
+const SuspiciousTable = ({ modal, selectedColumn, searchTerm, setting, setModal, setPid, pid, commentArr, classifyComment, susAxios, setSusAxios, setAlert }) => {
 
     const columns = useMemo(() => {
         return COLUMNS.map((column) => {
@@ -22,7 +21,8 @@ const SuspiciousTable = ({ modal, selectedColumn, searchTerm, setting, setModal,
         });
     }, [selectedColumn, searchTerm]);
     const [datas, setDatas] = useState([]);
-    const data = useMemo(() => datas, [datas]);
+    const data = useMemo(() => datas.filter(d => d.status !== 0), [datas]);
+
 
     //status modal useState
     const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -32,6 +32,12 @@ const SuspiciousTable = ({ modal, selectedColumn, searchTerm, setting, setModal,
 
     //status modal input
     const [inputValue, setInputValue] = useState("");
+
+    //u_score변경
+    const [u_score, setUScore] = useState(null);
+    const [newDataPIDs, setNewDataPIDs] = useState([]);
+    const [prevDataLength, setPrevDataLength] = useState(0);
+    const [prevUScore, setPrevUScore] = useState(null);
 
     //stattus modal 
     const openModal = (cell) => {
@@ -73,18 +79,40 @@ const SuspiciousTable = ({ modal, selectedColumn, searchTerm, setting, setModal,
         axios.post('http://localhost:3001/adminpage/sepsis_score').then((res) => {
             const fetchedScore = res.data[0].u_score;
             console.log(fetchedScore);
-            axios.post('http://localhost:3001/suspicious', {
-                u_score: fetchedScore
-            }).then((res) => {
-                setDatas(res.data);
-                setting(res.data.length);
-            });
+
+            if (fetchedScore !== prevUScore) {
+                setPrevUScore(fetchedScore);
+
+                axios.post('http://localhost:3001/suspicious', {
+                    u_score: fetchedScore
+                }).then((res) => {
+                    setDatas(res.data);
+                    setting(res.data.length);
+
+                    // 새로운 데이터가 있을 때만 알림을 띄웁니다.
+                    if (res.data.length > prevDataLength) {
+                        const newDatas = res.data.slice(prevDataLength);
+                        const newPIDs = newDatas.map(data => data.pid);
+                        const newNames = newDatas.map(data => data.name);
+                        setNewDataPIDs(newPIDs);
+                        setAlert(`새로운 데이터가 있습니다! ${newNames.join(', ')}`);
+                    }
+                    setPrevDataLength(res.data.length);
+                });
+            } else {
+                setNewDataPIDs([]);
+                setAlert(null);
+            }
         });
     };
 
     useEffect(() => {
         loadSuspicious()
-    }, []);
+    }, [u_score]);
+
+
+
+
 
 
     const { getTableProps,
@@ -253,15 +281,15 @@ const SuspiciousTable = ({ modal, selectedColumn, searchTerm, setting, setModal,
             {/* status modal창 */}
             {modalIsOpen && (
                 <div style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', backgroundColor: 'rgba(0,0,0,0.5)', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                    <div style={{ backgroundColor: 'white', padding: '1em', width: '19vw', height: '40vh', borderRadius: '0.7em', border: '2px solid grey', boxShadow: '0 1em 1em -0.5em rgba(0, 0, 0, 0.2), 0 0.2em 0.2em -0.2em rgba(0, 0, 0, 0.14), 0 0.1em 0.5em -0.5em rgba(0, 0, 0, 0.12)', fontFamily : 'Arial, Helvetica, sans-serif' }}>
+                    <div style={{ backgroundColor: 'white', padding: '1em', width: '19vw', height: '40vh', borderRadius: '0.7em', border: '2px solid grey', boxShadow: '0 1em 1em -0.5em rgba(0, 0, 0, 0.2), 0 0.2em 0.2em -0.2em rgba(0, 0, 0, 0.14), 0 0.1em 0.5em -0.5em rgba(0, 0, 0, 0.12)', fontFamily: 'Arial, Helvetica, sans-serif' }}>
                         <button style={{ border: 'none', backgroundColor: 'transparent', float: 'right', fontWeight: '600', height: '2vh' }} onClick={closeModal}>✕</button>
                         <div>
                             <h2 style={{ width: '100%', height: '30%', display: 'flex', justifyContent: 'center', marginTop: '1.5em' }}>STATUS CHANGE</h2>
                             <form style={{ width: '100%', marginTop: '8%', display: 'flex', flexWrap: 'wrap', flexDirection: 'column' }} onSubmit={(e) => e.preventDefault()}>
-                                <div style={{display: 'inline-block', marginLeft: '20%', marginBottom: '2em'}}>
+                                <div style={{ display: 'inline-block', marginLeft: '20%', marginBottom: '2em' }}>
                                     <div style={{ marginTop: '15px', marginLeft: '0' }}>
                                         <input type="radio" id="option-0" name="option" value="0" onChange={handleChange} />
-                                        <label style={{ fontWeight: "500", fontSize: "1.5em", color: "#49B140", marginLeft: '0.5em'}} for="option-0" >Stable</label>
+                                        <label style={{ fontWeight: "500", fontSize: "1.5em", color: "#49B140", marginLeft: '0.5em' }} for="option-0" >Stable</label>
                                     </div>
                                     <div style={{ marginTop: '10px' }}>
                                         <input type="radio" id="option-1" name="option" value="1" onChange={handleChange} />

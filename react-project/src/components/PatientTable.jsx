@@ -6,7 +6,6 @@ import { COLUMNS } from './columns'
 import './PatientTable.css'
 import iconSortUp from '../image/iconSortUp.svg'
 import iconSortDown from '../image/iconSortDown.svg'
-import { CheckBox } from './CheckBox'
 import axios from 'axios';
 import ColumnFilter from './Columnfilter.jsx'
 
@@ -117,17 +116,7 @@ const PatientTable = ({ modal, selectedColumn, searchTerm, setting, setModal, se
         useSortBy,
         usePagination,
         useRowSelect,
-        // Checkbox
-        // (hooks) => {
-        //     hooks.visibleColumns.push((columns) => [
-        //         {
-        //             id: 'selection',
-        //             Header: ({ getToggleAllRowsSelectedProps }) => <CheckBox {...getToggleAllRowsSelectedProps()} />,
-        //             Cell: ({ row }) => <CheckBox {...row.getToggleRowSelectedProps()} />,
-        //         },
-        //         ...columns,
-        //     ]);
-        // }
+
     );
 
     // pagination
@@ -259,15 +248,15 @@ const PatientTable = ({ modal, selectedColumn, searchTerm, setting, setModal, se
             {/* status modal창 */}
             {modalIsOpen && (
                 <div style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', backgroundColor: 'rgba(0,0,0,0.5)', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                    <div style={{ backgroundColor: 'white', padding: '1em', width: '19vw', height: '43vh', borderRadius: '0.7em', border: '2px solid grey', boxShadow: '0 1em 1em -0.5em rgba(0, 0, 0, 0.2), 0 0.2em 0.2em -0.2em rgba(0, 0, 0, 0.14), 0 0.1em 0.5em -0.5em rgba(0, 0, 0, 0.12)', fontFamily : 'Arial, Helvetica, sans-serif' }}>
+                    <div style={{ backgroundColor: 'white', padding: '1em', width: '19vw', height: '43vh', borderRadius: '0.7em', border: '2px solid grey', boxShadow: '0 1em 1em -0.5em rgba(0, 0, 0, 0.2), 0 0.2em 0.2em -0.2em rgba(0, 0, 0, 0.14), 0 0.1em 0.5em -0.5em rgba(0, 0, 0, 0.12)', fontFamily: 'Arial, Helvetica, sans-serif' }}>
                         <button style={{ border: 'none', backgroundColor: 'transparent', float: 'right', fontWeight: '600', height: '2vh' }} onClick={closeModal}>✕</button>
                         <div>
                             <h2 style={{ width: '100%', height: '30%', display: 'flex', justifyContent: 'center', marginTop: '1.5em' }}>STATUS CHANGE</h2>
                             <form style={{ width: '100%', marginTop: '8%', display: 'flex', flexWrap: 'wrap', flexDirection: 'column' }} onSubmit={(e) => e.preventDefault()}>
-                                <div style={{display: 'inline-block', marginLeft: '20%', marginBottom: '2em'}}>
+                                <div style={{ display: 'inline-block', marginLeft: '20%', marginBottom: '2em' }}>
                                     <div style={{ marginTop: '15px', marginLeft: '0' }}>
                                         <input type="radio" id="option-0" name="option" value="0" onChange={handleChange} />
-                                        <label style={{ fontWeight: "500", fontSize: "1.5em", color: "#49B140", marginLeft: '0.5em'}} for="option-0" >Stable</label>
+                                        <label style={{ fontWeight: "500", fontSize: "1.5em", color: "#49B140", marginLeft: '0.5em' }} for="option-0" >Stable</label>
                                     </div>
                                     <div style={{ marginTop: '10px' }}>
                                         <input type="radio" id="option-1" name="option" value="1" onChange={handleChange} />

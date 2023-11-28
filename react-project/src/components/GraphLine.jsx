@@ -102,8 +102,16 @@ function GraphLine({ startDate, endDate }) {
         patient_id: pid,
       })
       .then((res) => {
-        console.log("res", res);
-        setDBdata(res.data);
+        // 데이터를 시간 순으로 정렬합니다.
+        const sortedData = res.data.sort((a, b) => new Date(a.record_time) - new Date(b.record_time));
+
+        // 가장 최신의 날짜를 찾습니다.
+        const latestDate = sortedData[sortedData.length - 1].record_time.split(" ")[0];
+
+        // 최신의 날짜에 해당하는 데이터만 필터링합니다.
+        const latestData = sortedData.filter(d => d.record_time.startsWith(latestDate));
+
+        setDBdata(latestData);
       });
   }, []);
 
