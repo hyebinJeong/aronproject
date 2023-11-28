@@ -1,32 +1,42 @@
-// import React from 'react'
 import './AdminScoreModal.css'
 import X from '../image/X.png'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import axios from 'axios'
-// 추가한 코드
-import React, { useContext } from "react";
-import { SepsisScoreContext } from '../contexts/SepsisScoreContext'
 
 const AdminScoreModal = ({closeModal}) => {
+  const [u_score, setU_score] = useState('');  // state 이름을 sepsis_score에서 u_score로 변경
+  const [previousScore, setPreviousScore] = useState(''); // 이전 점수를 저장
 
-  // 추가한 코드
-  const { sepsisScores, setSepsisScores } = useContext(SepsisScoreContext);
-  const [sepsis_score, setSepsis_score] = useState("");
+  useEffect(() => {
+    fetchPreviousScore(); // 컴포넌트가 로드될 때 이전 점수 가져오기
+  }, []);
+
+  const fetchPreviousScore = async () => {
+    try {
+      const response = await axios.post('http://localhost:3001/adminpage/sepsis_score'); // 이전 점수를 가져오는 API 경로
+      console.log(response.data)
+      setPreviousScore(response.data[0].u_score);
+    } catch (error) {
+      console.log('패혈증 점수 불러오기 실패', error);
+    }
+  };
 
   const xIconClick = () => {
-    closeModal(); // 부모 컴포넌트에서 전달 받은 closModal함수 호출
-    console.log('clicked')
+    closeModal();
   };
 
   const scoreModalConfirmClick = async () => {
     try {
-      const response = await axios.post('http://localhost:3001/suspicious', {
-        sepsis_score: sepsis_score
+      console.log('Sending u_score:', u_score);
+      const response = await axios.post('http://localhost:3001/adminpage/update_sepsis', {
+        u_score: parseFloat(u_score),  // 관리자가 입력한 새로운 패혈증 점수를 사용
       });
-      console.log(response.data);
-      closeModal(); // 패혈증 점수 설정 후 모달 닫기
+      console.log('Response from server:', response.data);
+
+      setPreviousScore(u_score); // 새로운 점수를 이전 점수 상태에 저장
+      closeModal(); 
     } catch (error) {
-        console.log('패혈증 점수 설정 실패, error')
+      console.log('패혈증 점수 설정 실패', error);
     }
   };
 
@@ -35,27 +45,22 @@ const AdminScoreModal = ({closeModal}) => {
         <div className="x-button-wrap">
             <button className='x-button' onClick={xIconClick}><img src={X} alt="닫기버튼" className='x-button-img'/></button>
         </div>
-            <div className="admin-score-modal-content">
+        <div className="admin-score-modal-content">
             <span className='admin-score-modal-title'>패혈증 의심 수치 설정</span>
+            <span className='admin-before-score'>이전 설정 점수 : {previousScore}</span>
             <div className="modal-score-set">
             <input
-              type="text"
-              className="score-box"
-              value={sepsis_score}
-              onChange={(e) => {
-                const input = e.target.value;
-                const regex = /^[1-9][0-9]?$|^100$/; // 1부터 100까지의 숫자를 허용하는 정규표현식
-                if (input === "" || regex.test(input)) {
-                  setSepsis_score(input);
-                }
-              }}
-            />
-                {/* <input type="text" className='score-box' value={sepsis_score} onChange={(e) => setSepsis_score(e.target.value)}/> */}
-                {/* <select className="score-box" value={sepsis_score} onChange={(e) => setSepsis_score(e.target.value)}>
-                  <option value="option1">1</option>
-                  <option value="option2">2</option>
-                  <option value="option3">3</option>
-              </select> */}
+                type="text"
+                className="score-box"
+                value={u_score}
+                onChange={(e) => {
+                  const input = e.target.value;
+                  const regex = /^[1-9][0-9]?$|^100$/; // 1부터 100까지의 숫자를 허용하는 정규표현식
+                  if (input === "" || regex.test(input)) {
+                    setU_score(input);
+                  }
+                }}
+              />
                 <span className='score-box-text'>점 이상</span>
             </div>
             <div>
