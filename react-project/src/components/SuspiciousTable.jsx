@@ -253,32 +253,33 @@ const SuspiciousTable = ({ modal, selectedColumn, searchTerm, setting, setModal,
             {/* status modal창 */}
             {modalIsOpen && (
                 <div style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', backgroundColor: 'rgba(0,0,0,0.5)', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                    <div style={{ backgroundColor: 'white', padding: '1em', width: '20%', height: '25%' }}>
-                        <button style={{ border: 'none', backgroundColor: 'transparent', float: 'right' }} onClick={closeModal}>✕</button>
+                    <div style={{ backgroundColor: 'white', padding: '1em', width: '19vw', height: '40vh', borderRadius: '0.7em', border: '2px solid grey', boxShadow: '0 1em 1em -0.5em rgba(0, 0, 0, 0.2), 0 0.2em 0.2em -0.2em rgba(0, 0, 0, 0.14), 0 0.1em 0.5em -0.5em rgba(0, 0, 0, 0.12)', fontFamily : 'Arial, Helvetica, sans-serif' }}>
+                        <button style={{ border: 'none', backgroundColor: 'transparent', float: 'right', fontWeight: '600', height: '2vh' }} onClick={closeModal}>✕</button>
                         <div>
-                            <h2 style={{ width: '100%', height: '30%', display: 'flex', justifyContent: 'center' }}>Status Change</h2>
-                            <form style={{ width: '100%', display: 'flex', flexWrap: 'wrap', alignItems: 'center', flexDirection: 'column' }} onSubmit={(e) => e.preventDefault()}>
-                                <div style={{ width: '40%', marginTop: '15px', display: 'flex', justifyContent: 'center' }}>
-                                    <input type="radio" id="option-0" name="option" value="0" onChange={handleChange} />
-                                    <label style={{ color: "#4caf50" }} for="option-0" >stable</label>
+                            <h2 style={{ width: '100%', height: '30%', display: 'flex', justifyContent: 'center', marginTop: '1.5em' }}>STATUS CHANGE</h2>
+                            <form style={{ width: '100%', marginTop: '8%', display: 'flex', flexWrap: 'wrap', flexDirection: 'column' }} onSubmit={(e) => e.preventDefault()}>
+                                <div style={{display: 'inline-block', marginLeft: '20%', marginBottom: '2em'}}>
+                                    <div style={{ marginTop: '15px', marginLeft: '0' }}>
+                                        <input type="radio" id="option-0" name="option" value="0" onChange={handleChange} />
+                                        <label style={{ fontWeight: "500", fontSize: "1.5em", color: "#49B140", marginLeft: '0.5em'}} for="option-0" >Stable</label>
+                                    </div>
+                                    <div style={{ marginTop: '10px' }}>
+                                        <input type="radio" id="option-1" name="option" value="1" onChange={handleChange} />
+                                        <label style={{ fontWeight: "500", fontSize: "1.5em", color: "#ffc107", marginLeft: '0.5em' }} for="option-1" >Screening</label>
+                                    </div>
+                                    <div style={{ marginTop: '10px' }}>
+                                        <input type="radio" id="option-2" name="option" value="2" onChange={handleChange} />
+                                        <label style={{ fontWeight: "500", fontSize: "1.5em", color: "#f44336", marginLeft: '0.5em' }} for="option-2" >Emergency</label>
+                                    </div>
                                 </div>
-                                <div style={{ width: '40%', marginTop: '10px', display: 'flex', justifyContent: 'center' }}>
-                                    <input type="radio" id="option-1" name="option" value="1" onChange={handleChange} />
-                                    <label style={{ color: "#ffc107" }} for="option-1" >screening</label>
+                                <div style={{ display: 'flex', justifyContent: "center" }}>
+                                    <button style={{ width: '15vw', height: '5vh', marginTop: '0.5em', padding: '1.5%', display: 'flex', alignItems: 'center', justifyContent: "center", border: 'none', color: '#ddd', backgroundColor: '#0d47a1', borderRadius: '0.7em', fontWeight: '600', fontSize: '1em' }} onClick={handleSave}>SAVE</button>
                                 </div>
-                                <div style={{ width: '40%', marginTop: '10px', display: 'flex', justifyContent: 'center' }}>
-                                    <input type="radio" id="option-2" name="option" value="2" onChange={handleChange} />
-                                    <label style={{ color: "#f44336" }} for="option-2" >emergency</label>
-                                </div>
-                                <button style={{ width: '5vw', height: '3vh', marginTop: '5%', padding: '1.5%', display: 'flex', justifyContent: 'center', border: 'none', color: '#ddd', backgroundColor: '#0d47a1' }} onClick={handleSave}>Save</button>
                             </form>
-
-
                         </div>
                     </div>
                 </div>
-            )
-            }
+            )}
         </div >
     )
 }
