@@ -15,6 +15,7 @@ const AdminAddModal = ({ onUserAdded, closeModal }) => {
   };
 
   const addModalConfirmClick = async () => {
+
     try {
       const response = await axios.post("http://localhost:3001/adminpage/add", {
         id: id,
@@ -26,10 +27,10 @@ const AdminAddModal = ({ onUserAdded, closeModal }) => {
       onUserAdded(); // 데이터 성공적으로 추가한 뒤 사용자 목록 다시 불러옴
       closeModal(); // 데이터 성공적으로 추가한 뒤 모달 닫음
     } catch (error) {
+      console.log("데이터 추가 실패, error");
     }
   };
 
-  console.log(classValue);
 
   return (
     <div className="admin-add-modal">

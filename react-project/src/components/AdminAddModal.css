@@ -49,7 +49,7 @@
 }
 
 .admin-add-modal-title{
-    font-size: 2em;
+    font-size: 1.5em;
     text-align: center;
     margin-top: 1em;
     margin-bottom: 2em;
@@ -100,7 +100,7 @@
 }
 .admin-add-modal-confirm {
     margin-top: 3em;
-    width: 70%;
+    width: 75%;
     height: 3em;
     border: none;
     font-weight: 700;

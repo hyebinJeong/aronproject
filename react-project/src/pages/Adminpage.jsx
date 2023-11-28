@@ -13,6 +13,12 @@ const Adminpage = () => {
   const [addModal, setAddModal] = useState(false );
   const [clickedRow, setClickedRow] = useState(null); // 현재 클릭된 행
   const [selectedRows, setSelectedRows] = useState([]); // 선택된 행들
+  const [searchInput, setSearchInput] = useState(''); // 검색 입력 관리
+
+  // 검색 입력이 변경될 때 호출하는 함수
+  const handleSearchChange = (event) => {
+    setSearchInput(event.target.value);
+  };
 
   // 설정 버튼 클릭
   const adminSetIconClick = () => {
@@ -51,46 +57,44 @@ const Adminpage = () => {
     }
   };
 
-    // // 삭제버튼을 누르기 전, 삭제할 Row를 click하기 위해 만듬
-    // const handleRowClick = (user) => {
-    //   setClickedRow(user);
-    // };
-
-    // // 삭제버튼을 클릭했을 때, 데이터를 DB에서 삭제시킨 후, 갱신된 데이터를 다시 불러옴
-    // const handleDeleteClick = async () => {
-    //   if (clickedRow) {
-    //     try {
-    //       await axios.post('http://localhost:3001/adminpage/deleted', {id: clickedRow.id});
-    //       fetchUserData(); // 데이터를 다시 불러와서 테이블을 갱신
-    //     } catch (error) {
-    //       console.log('삭제 실패', error)
-    //     }
-    //   }
-    // };
-
-      // 행 클릭 시 선택 상태 변경
     const handleRowClick = (user) => {
-      if (selectedRows.includes(user)) {
-        setSelectedRows(selectedRows.filter(row => row !== user));
-      } else {
-        setSelectedRows([...selectedRows, user]);
-      }
+      // 현재 클릭한 행이 이미 선택되어 있는지 확인
+      const isRowSelected = selectedRows.includes(user);
+      setSelectedRows((prevSelectedRows) =>
+        isRowSelected
+          ? prevSelectedRows.filter((row) => row !== user)
+          : [...prevSelectedRows, user]
+      );
+      // 현재 클릭한 행을 클릭된 행으로 설정
       setClickedRow(user);
     };
 
-    // 삭제버튼을 클릭했을 때, 선택된 데이터를 DB에서 삭제시킨 후, 갱신된 데이터를 다시 불러옴
     const handleDeleteClick = async () => {
       if (selectedRows.length > 0) {
         try {
           const ids = selectedRows.map(row => row.id);
           await axios.post('http://localhost:3001/adminpage/deleted', { ids });
-          fetchUserData(); // 데이터를 다시 불러와서 테이블을 갱신
-          setSelectedRows([]); // 선택된 행 초기화
+          fetchUserData();
+          setSelectedRows([]);
         } catch (error) {
-          console.log('삭제 실패', error)
+          console.log('삭제 실패', error);
         }
       }
     };
+
+    // 검색 입력에 따라 사용자 데이터를 필터링
+    const filteredUserData = userData.filter(user => user.name.includes(searchInput));
+
+    const handleSelectAll = (event) => {
+      if (event.target.checked) {
+        setSelectedRows(filteredUserData);
+      } else {
+        setSelectedRows([]);
+      }
+    };
+  
+    const selectAll = filteredUserData.length > 0 && filteredUserData.every(user => selectedRows.includes(user));
+  
 
   return (
     <div className='admin-page'>
@@ -98,8 +102,14 @@ const Adminpage = () => {
         <div className="admin-title-container">
           <span className='admin-title'>사용자 목록</span>
         </div>
-        <div className="admin-btn-container">
-            {/* <button className="admin-icon-set-wrap" onClick={adminSetIconClick}><img src={iconSet} className="admin-icon-set"></img></button> */}
+        <div className="admin-right-container">
+          <input
+              className='admin-search-input'
+              type="text"
+              placeholder="이름을 검색하세요"
+              value={searchInput}
+              onChange={handleSearchChange}
+            />
             <button className='admin-main-btn admin-score-btn' onClick={adminSetIconClick}><p>ARON SCORE</p></button>
             <button className='admin-main-btn' onClick={adminAddBtnClick}>추가</button>
             <button className='admin-main-btn' onClick={handleDeleteClick}>삭제</button>
@@ -108,30 +118,37 @@ const Adminpage = () => {
           <table className="admin-user-data">
             <thead className='admin-user-data-thead'>
               <tr className='admin-user-data-tr'>
+                {/* 전체선택 체크박스 컬럼 테이블 헤더 추가 */}
+                <th className='admin-th-name'>
+                  <input type="checkbox" checked={selectAll} onChange={handleSelectAll} />
+                </th>
                 {/* 체크박스 컬럼 */}
-                <th className='admin-th-name'></th> 
-                <th className='admin-th-name'>ID</th>
-                {/* <th className='admin-th-name'>PW</th> */}
-                <th className='admin-th-name'>Name</th>
-                <th className='admin-th-name'>Class</th>
+                <th className='admin-th-name'>사번</th>
+                <th className='admin-th-name'>이름</th>
+                <th className='admin-th-name'>직급</th>
+                <th className='admin-th-name'>마지막 로그인 시간</th>
               </tr>
             </thead>
             <tbody className='admin-user-data-tbody'>
-              {/* {userData.map((user, index) => (
-                <tr key={index} className={`admin-user-data-tr ${user === clickedRow ? 'clicked' : ''}`} onClick={() => handleRowClick(user)}> */}
-                  {userData.map((user, index) => (
-                  <tr key={index} className={`admin-user-data-tr ${user === clickedRow ? 'clicked' : ''}`} onClick={() => handleRowClick(user)}>
+              {/* {filteredUserData.map((user, index) => ( */}
+              {filteredUserData.map((user, index) => (
+                <tr
+                  key={index}
+                  className={`admin-user-data-tr ${selectedRows.includes(user) ? 'clicked' : '' }`}
+                  style={{backgroundColor: selectedRows.includes(user) ? '#b3d9ff' : 'inherit'}}
+                  onClick={() => handleRowClick(user)}>
                   <td className='admin-user-data-td'>
-                    <input
-                      type="checkbox"
-                      checked={selectedRows.includes(user)}
-                      onChange={() => handleRowClick(user)}
-                    />
-                    </td>
+                    <input type="checkbox"
+                    checked={selectedRows.includes(user)}
+                    onChange={(event) => {
+                      event.stopPropagation();
+                      handleRowClick(user);
+                    }} />
+                  </td>
                   <td className='admin-user-data-td'>{user.id}</td>
-                  {/* <td className='admin-user-data-td'>{user.pw}</td> */}
-                  <td className='admin-user-data-td'>{user.name}</td>
-                  <td className='admin-user-data-td'>{user.class}</td>
+                  <td className={'admin-user-data-td'}>{user.name}</td>
+                  <td className={'admin-user-data-td'}>{user.class}</td>
+                  <td className={'admin-user-data-td'}>{user.last_login}</td>
                 </tr>
               ))}
             </tbody>
@@ -144,6 +161,8 @@ const Adminpage = () => {
 
       {addModal && <AdminAddModal closeModal={closeModal} onUserAdded={handleUserAdded} />}
 
+      {/* 새로 추가한 코드 */}
+      {scoreModal && <AdminScoreModal closeModal={closeModal} isOpen={scoreModal} />}
     </div>
     )
     }
