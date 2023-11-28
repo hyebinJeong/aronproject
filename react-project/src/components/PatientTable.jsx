@@ -109,7 +109,7 @@ const PatientTable = ({ modal, selectedColumn, searchTerm, setting, setModal, se
     } = useTable({
         columns,
         data,
-        initialState: { pageIndex: 0, pageSize: 15 }
+        initialState: { pageIndex: 0, pageSize: 10 }
     }, useFilters,
         useGlobalFilter,
         //Sort는 filter보다 뒤에 와야 작동함. 위치 변동 하지 말 것.

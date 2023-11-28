@@ -8,7 +8,6 @@ import PatientTable from "../components/PatientTable";
 import SuspiciousTable from "../components/SuspiciousTable";
 import Modal from "../components/CommentModal";
 import axios from "axios";
-import { CheckBox } from "../components/CheckBox";
 
 const Main01 = () => {
   const [selectedColumn, setSelectedColumn] = useState("patient_id"); // Default column
@@ -101,7 +100,7 @@ const Main01 = () => {
 
   useEffect(() => {
     if (newDataPIDs.length > 0) {
-      setAlert(`새로운 데이터가 있습니다! ${newDataPIDs.join(', ')}`);
+      setAlert(`update ${newDataPIDs.join(', ')}`);
     } else {
       setAlert(null);
     }
@@ -115,16 +114,12 @@ const Main01 = () => {
           <div className="toggle-switch">
             <input type="checkbox" checked={toggle} onChange={handleToggle} id="toggle-switch" />
             <label className="toggle-slider" htmlFor="toggle-switch"></label>
-            {/* <button style={{ cursor: 'pointer' }} className='nav-cate-button' onClick={handleSuspiciousClick}>의심</button>
-            <button style={{ cursor: 'pointer' }} className='nav-cate-button' onClick={handleTotalClick}>전체</button> */}
           </div>
-          <button style={{ cursor: 'pointer' }} className='nav-cate-button' onClick={handleSuspiciousClick}>의심</button>
-          <button style={{ cursor: 'pointer' }} className='nav-cate-button' onClick={handleTotalClick}>전체</button>
-          {/*  */}
+          {/* 회원 alert */}
           {alert && (
-            <div>
+            <div className="update-patient-alert">
               <p>{alert}</p>
-              <button onClick={handleAlertConfirm}>확인</button>
+              <button className="update-alert-btn" onClick={handleAlertConfirm}>확인</button>
             </div>
           )}
 

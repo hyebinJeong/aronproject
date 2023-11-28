@@ -95,7 +95,7 @@ const SuspiciousTable = ({ modal, selectedColumn, searchTerm, setting, setModal,
                         const newPIDs = newDatas.map(data => data.pid);
                         const newNames = newDatas.map(data => data.name);
                         setNewDataPIDs(newPIDs);
-                        setAlert(`새로운 데이터가 있습니다! ${newNames.join(', ')}`);
+                        setAlert(`update ${newNames.join(', ')}`);
                     }
                     setPrevDataLength(res.data.length);
                 });
@@ -140,7 +140,7 @@ const SuspiciousTable = ({ modal, selectedColumn, searchTerm, setting, setModal,
     } = useTable({
         columns,
         data,
-        initialState: { pageIndex: 0, pageSize: 15 }
+        initialState: { pageIndex: 0, pageSize: 10 }
     }, useFilters,
         useGlobalFilter,
         //Sort는 filter보다 뒤에 와야 작동함. 위치 변동 하지 말 것.
