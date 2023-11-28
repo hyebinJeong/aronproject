@@ -78,7 +78,7 @@ const Detailpage = () => {
       image: { type: 'jpeg', quality: 1.0 },
       html2canvas: { scale: 3 },
       jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-      exclude: ["#download-pdf-btn", "#pdf-close-btn", ".button"]
+      exclude: ["#download-pdf-btn"]
     };
 
     html2pdf().set(opt).from(element).save();
@@ -156,41 +156,44 @@ const Detailpage = () => {
               zIndex: 1
             }}
           >
-            <div className="pdf-content" ref={ref}>
-              <button
-                className='download-pdf-btn'
-                onClick={handleDownload}
-                style={{
-                  margin: '5px',
-                  backgroundColor: '#0d47a1',
-                  width: '100px',
-                  height: '30px',
-                  color: 'white',
-                  border: 'none',
-                  borderRadius: '5px',
-                  fontFamily: 'Arial, Helvetica, sans-serif'
-                }}
-              >
-                Download PDF
-              </button>
+            <button
+              className='download-pdf-btn'
+              onClick={handleDownload}
+              style={{
+                cursor: 'pointer',
+                margin: '5px',
+                backgroundColor: '#0d47a1',
+                width: '100px',
+                height: '30px',
+                color: 'white',
+                border: 'none',
+                borderRadius: '5px',
+                fontFamily: 'Arial, Helvetica, sans-serif'
+              }}
+            >
+              Download PDF
+            </button>
 
-              <button
-                className='pdf-close-btn'
-                onClick={handleCloseModal}
-                style={{
-                  float: 'right',
-                  margin: '5px',
-                  backgroundColor: '#0d47a1',
-                  width: '50px',
-                  height: '30px',
-                  color: 'white',
-                  border: 'none',
-                  borderRadius: '5px',
-                  fontFamily: 'Arial, Helvetica, sans-serif'
-                }}
-              >
-                Close
-              </button>
+            <button
+              className='pdf-close-btn'
+              onClick={handleCloseModal}
+              style={{
+                cursor: 'pointer',
+                float: 'right',
+                margin: '5px',
+                backgroundColor: 'transparent',
+                width: '50px',
+                height: '30px',
+                color: 'black',
+                fontSize: 'x-large',
+                border: 'none',
+                borderRadius: '5px',
+                fontFamily: 'Arial, Helvetica, sans-serif'
+              }}
+            >
+              ✕
+            </button>
+            <div className="pdf-content" ref={ref}>
               <PdfFile pid={pid} startDate={startDate} endDate={endDate} />
             </div>
           </div>

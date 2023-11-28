@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-//추가한 코드
+
 import { SepsisScoreContext } from "../contexts/SepsisScoreContext";
 
 import "./Main01.css";
@@ -19,6 +19,19 @@ const Main01 = () => {
   const [modal, setModal] = useState(false);
   const [pid, setPid] = useState();
   const [commentArr, setCommentArr] = useState();
+
+
+  //새로 들어온 데이터에 대한 alert
+  const [alert, setAlert] = useState(null);
+  const [newDataPIDs, setNewDataPIDs] = useState([]);
+
+  // 알림 확인 버튼 클릭 이벤트 핸들러
+  const handleAlertConfirm = () => {
+    // 확인된 알림의 PID를 로컬 스토리지에 저장
+    localStorage.setItem('confirmedPIDs', JSON.stringify(newDataPIDs));
+    setAlert(null);
+  };
+
 
   //추가한 코드
   const { sepsisScores } = useContext(SepsisScoreContext);
@@ -74,18 +87,26 @@ const Main01 = () => {
   //             console.error('Axios 오류:', error);
   //         });
   // }, [])
-  
-    const [toggle, setToggle] = useState(false); // 상태 관리할 state
 
-    const handleToggle = () => {
-      setToggle(!toggle) //토글 상태 변경
-      if (!toggle) {
-        handleTotalClick();
-      } else {
-        handleSuspiciousClick();
-      }
-    };
-  
+  const [toggle, setToggle] = useState(false); // 상태 관리할 state
+
+  const handleToggle = () => {
+    setToggle(!toggle) //토글 상태 변경
+    if (!toggle) {
+      handleTotalClick();
+    } else {
+      handleSuspiciousClick();
+    }
+  };
+
+  useEffect(() => {
+    if (newDataPIDs.length > 0) {
+      setAlert(`새로운 데이터가 있습니다! ${newDataPIDs.join(', ')}`);
+    } else {
+      setAlert(null);
+    }
+  }, [newDataPIDs]);
+
 
   return (
     <div style={{ position: 'relative' }}>
@@ -97,6 +118,16 @@ const Main01 = () => {
             {/* <button style={{ cursor: 'pointer' }} className='nav-cate-button' onClick={handleSuspiciousClick}>의심</button>
             <button style={{ cursor: 'pointer' }} className='nav-cate-button' onClick={handleTotalClick}>전체</button> */}
           </div>
+          <button style={{ cursor: 'pointer' }} className='nav-cate-button' onClick={handleSuspiciousClick}>의심</button>
+          <button style={{ cursor: 'pointer' }} className='nav-cate-button' onClick={handleTotalClick}>전체</button>
+          {/*  */}
+          {alert && (
+            <div>
+              <p>{alert}</p>
+              <button onClick={handleAlertConfirm}>확인</button>
+            </div>
+          )}
+
           <div className='nav-back'>
             <div className='search-bar'>
               <select name="column" id="select-column"
@@ -113,7 +144,6 @@ const Main01 = () => {
             </div>
 
             <LiveClock />
-            {/* <Modify></Modify> */}
           </div>
 
         </div>
@@ -129,6 +159,9 @@ const Main01 = () => {
                   selectedColumn={selectedColumn}
                   searchTerm={searchTerm}
                   setting={setSusNum}
+                  newDataPIDs={newDataPIDs}
+                  setNewDataPIDs={setNewDataPIDs}
+                  setAlert={setAlert}
                   setModal={setModal}
                   setPid={setPid}
                   pid={pid}

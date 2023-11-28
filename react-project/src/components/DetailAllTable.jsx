@@ -18,16 +18,18 @@ const DetailAllTable = (props) => {
                         </tr>
                     ))}
                 </th>
-                <div className='detail-all-data-div'>
-                    {selectedData.map((d, idx) => (
-                        <th className='detail-all-data'>
-                            {columns.map((column, colIndex) => (
-                                <tr className='detail-all-data-tr'>
-                                    <th className='detail-all-data-th'>{d[array[colIndex]]}</th>
-                                </tr>
-                            ))}
-                        </th>
-                    ))}
+                <div className='detail-all-data-scroll'>
+                    <div className='detail-all-data-div'>
+                        {selectedData.map((d, idx) => (
+                            <th className='detail-all-data'>
+                                {columns.map((column, colIndex) => (
+                                    <tr className='detail-all-data-tr'>
+                                        <th className='detail-all-data-th'>{d[array[colIndex]]}</th>
+                                    </tr>
+                                ))}
+                            </th>
+                        ))}
+                    </div>
                 </div>
             </tbody>
         </table>
