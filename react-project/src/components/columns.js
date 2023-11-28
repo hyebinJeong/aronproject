@@ -1,26 +1,30 @@
 export const COLUMNS = [
   {
+    Header: "Status",
+    accessor: "status",
+  },
+  {
     Header: "ID",
     accessor: "patient_id",
   },
   {
-    Header: "이름",
+    Header: "Name",
     accessor: "name",
   },
   {
-    Header: "성별",
+    Header: "Gender",
     accessor: "gender",
   },
   {
-    Header: "나이",
+    Header: "Age",
     accessor: "age",
   },
   {
-    Header: "병동 위치",
+    Header: "Ward Room",
     accessor: "ward_room",
   },
   {
-    Header: "기록 시간",
+    Header: "Record Time",
     accessor: "record_time",
   },
   {
