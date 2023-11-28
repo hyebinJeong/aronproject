@@ -8,6 +8,7 @@ import PatientTable from "../components/PatientTable";
 import SuspiciousTable from "../components/SuspiciousTable";
 import Modal from "../components/CommentModal";
 import axios from "axios";
+import { CheckBox } from "../components/CheckBox";
 
 const Main01 = () => {
   const [selectedColumn, setSelectedColumn] = useState("patient_id"); // Default column
@@ -73,13 +74,29 @@ const Main01 = () => {
   //             console.error('Axios 오류:', error);
   //         });
   // }, [])
+  
+    const [toggle, setToggle] = useState(false); // 상태 관리할 state
+
+    const handleToggle = () => {
+      setToggle(!toggle) //토글 상태 변경
+      if (!toggle) {
+        handleTotalClick();
+      } else {
+        handleSuspiciousClick();
+      }
+    };
+  
 
   return (
     <div style={{ position: 'relative' }}>
       <div className='space'>
         <div className='nav'>
-          <button style={{ cursor: 'pointer' }} className='nav-cate-button' onClick={handleSuspiciousClick}>의심</button>
-          <button style={{ cursor: 'pointer' }} className='nav-cate-button' onClick={handleTotalClick}>전체</button>
+          <div className="toggle-switch">
+            <input type="checkbox" checked={toggle} onChange={handleToggle} id="toggle-switch" />
+            <label className="toggle-slider" htmlFor="toggle-switch"></label>
+            {/* <button style={{ cursor: 'pointer' }} className='nav-cate-button' onClick={handleSuspiciousClick}>의심</button>
+            <button style={{ cursor: 'pointer' }} className='nav-cate-button' onClick={handleTotalClick}>전체</button> */}
+          </div>
           <div className='nav-back'>
             <div className='search-bar'>
               <select name="column" id="select-column"

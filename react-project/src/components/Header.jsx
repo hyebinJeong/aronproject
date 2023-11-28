@@ -30,6 +30,9 @@ const Header = () => {
 
   // 초 단위 시간을 mm:ss형식의 문자열로 변환
   const formatTime = (time) => {
+    if (time <= 0) {
+      return '00:00';
+    }
     const minutes = Math.floor(time / 60);
     const seconds = time % 60;
     // minutes가 10보다 작으면 앞에 0을 붙여서 '01', '02' 이런식으로 표기, 10보다 크면 그대로 표기

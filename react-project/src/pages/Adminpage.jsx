@@ -73,9 +73,11 @@ const Adminpage = () => {
       if (selectedRows.length > 0) {
         try {
           const ids = selectedRows.map(row => row.id);
+          alert('삭제하시겠습니까?')
           await axios.post('http://localhost:3001/adminpage/deleted', { ids });
           fetchUserData();
           setSelectedRows([]);
+          alert('삭제되었습니다')
         } catch (error) {
           console.log('삭제 실패', error);
         }

@@ -88,18 +88,18 @@ const Detailpage = () => {
     <div>
 
 
-      <div className="space" style={{ float: 'right', display: 'flex', alignItems: 'center', width: "22vw", height: '7vh', justifyContent: 'space-between' }}>
-        <div style={{ width: '80%', display: 'flex', justifyContent: 'space-between' }}>
+      <div className="space" style={{ float: 'right', display: 'flex', alignItems: 'center', width: "340px", height: '7vh', marginRight: '2em', justifyContent: "space-between"}}>
+        <div style={{ width: '70%', display: 'flex' }}>
           {/* 날짜 확인 */}
           <label>
             <input
-              style={{ width: '110px', height: '27px', border: '2px solid', borderRadius: '5px', borderColor: '#cfdaec', strokeWidth: '1px', stroke: 'black', fontFamily: 'Arial, Helvetica, sans- serif', cursor: 'pointer' }}
+              style={{ width: '110px', height: '27px', marginRight: '1em', border: '2px solid', borderRadius: '5px', borderColor: '#cfdaec', strokeWidth: '1px', stroke: 'black', fontFamily: 'Arial, Helvetica, sans- serif', cursor: 'pointer', textAlign: 'center' }}
               type="date" value={startDate || ''} onChange={e => setStartDate(e.target.value)} />
           </label>
           -
           <label>
             <input
-              style={{ width: '110px', height: '27px', border: '2px solid', borderRadius: '5px', borderColor: '#cfdaec', strokeWidth: '1px', stroke: 'black', fontFamily: 'Arial, Helvetica, sans-serif', cursor: 'pointer' }}
+              style={{ width: '110px', height: '27px', marginLeft: '1em', marginRight: '1em', border: '2px solid', borderRadius: '5px', borderColor: '#cfdaec', strokeWidth: '1px', stroke: 'black', fontFamily: 'Arial, Helvetica, sans-serif', cursor: 'pointer', textAlign: 'center' }}
               type="date" value={endDate || ''} onChange={e => setEndDate(e.target.value)} />
           </label>
         </div>
@@ -107,7 +107,8 @@ const Detailpage = () => {
         <button
           onClick={handleOpenModal}
           style={{
-            margin: '5px',
+            marginRight: '5px',
+            marginLeft: '1em',
             backgroundColor: '#0d47a1',
             width: '50px',
             height: '30px',
