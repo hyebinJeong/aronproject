@@ -77,7 +77,8 @@ const Detailpage = () => {
       filename: 'download.pdf',
       image: { type: 'jpeg', quality: 1.0 },
       html2canvas: { scale: 3 },
-      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+      exclude: ["#download-pdf-btn", "#pdf-close-btn", ".button"]
     };
 
     html2pdf().set(opt).from(element).save();
@@ -156,6 +157,7 @@ const Detailpage = () => {
           >
             <div className="pdf-content" ref={ref}>
               <button
+                className='download-pdf-btn'
                 onClick={handleDownload}
                 style={{
                   margin: '5px',
@@ -172,6 +174,7 @@ const Detailpage = () => {
               </button>
 
               <button
+                className='pdf-close-btn'
                 onClick={handleCloseModal}
                 style={{
                   float: 'right',

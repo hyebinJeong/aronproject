@@ -122,3 +122,11 @@
   border: none;
   background-color: transparent;
 }
+
+.sus-status-btn {
+  padding: 4px;
+  text-align: center;
+  background-color: transparent;
+  border: none;
+  font-size: x-large;
+}
