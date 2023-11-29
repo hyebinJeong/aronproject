@@ -15,6 +15,27 @@ const AdminAddModal = ({ onUserAdded, closeModal }) => {
   };
 
   const addModalConfirmClick = async () => {
+    const idRegEx = /^\d{8}$/;
+    const pwRegEx = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+    const nameRegEx = /^[A-Za-z가-힣]{1,40}$/;
+    const classRegEx = /^[019]$/;
+
+    if (!idRegEx.test(id)) {
+      alert('사번은 8자리 숫자로 입력해주세요.');
+      return;
+    }
+    if (!pwRegEx.test(pw)) {
+      alert('비밀번호는 최소 하나의 문자, 하나의 숫자 및 하나의 특수 문자를 포함한 8자 이상이어야 합니다.');
+      return;
+    }
+    if (!nameRegEx.test(name)) {
+      alert('이름은 한글 또는 영어 40자 이내로 입력해주세요.');
+      return;
+    }
+    if (!classRegEx.test(classValue)) {
+      alert('직급은 0, 1, 9 중 하나로 입력해주세요.');
+      return;
+    }
 
     try {
       const response = await axios.post("http://localhost:3001/adminpage/add", {
@@ -43,7 +64,7 @@ const AdminAddModal = ({ onUserAdded, closeModal }) => {
       <div className="admin-add-modal-content">
         <span className="admin-add-modal-title">사용자 추가</span>
         <div className="modal-info-set modal-info-id">
-          <span className="info-box-text">ID : </span>
+          <span className="info-box-text">사번 : </span>
           <input
             type="text"
             className="info-box"
@@ -52,7 +73,7 @@ const AdminAddModal = ({ onUserAdded, closeModal }) => {
           />
         </div>
         <div className="modal-info-set modal-info-pw">
-          <span className="info-box-text">PW : </span>
+          <span className="info-box-text">비밀번호 : </span>
           <input
             type="text"
             className="info-box"
@@ -61,7 +82,7 @@ const AdminAddModal = ({ onUserAdded, closeModal }) => {
           />
         </div>
         <div className="modal-info-set modal-info-name">
-          <span className="info-box-text">NAME : </span>
+          <span className="info-box-text">이름 : </span>
           <input
             type="text"
             className="info-box"
@@ -70,7 +91,7 @@ const AdminAddModal = ({ onUserAdded, closeModal }) => {
           />
         </div>
         <div className="modal-info-set modal-info-class ">
-          <span className="info-box-text">CLASS :</span>
+          <span className="info-box-text">직급 :</span>
           <input
             type="text"
             className="info-box"

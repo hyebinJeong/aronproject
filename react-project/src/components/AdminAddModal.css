@@ -84,19 +84,19 @@
 } */
 
 .modal-info-id {
-    margin-left: 0.6em;
+    /* margin-left: 0.6em; */
 }
 
-.moda-info-pw {
-    margin-left: 0;
+.modal-info-pw {
+    margin-left: -2em;
 }
 
 .modal-info-name {
-    margin-right: 1.2em;
+    /* margin-right: 1.2em; */
 }
 
 .modal-info-class {
-    margin-right: 1.6em;
+    /* margin-right: 1.6em; */
 }
 .admin-add-modal-confirm {
     margin-top: 3em;

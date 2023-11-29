@@ -94,6 +94,21 @@ const Adminpage = () => {
         setSelectedRows([]);
       }
     };
+
+    // 각 class 번호에 따라 직급 화면에 보여주기
+    const translateClass = (userClass) => {
+      switch(userClass){
+        case 0:
+          return '간호사';
+        case 1:
+          return '의사';
+        case 9:
+          return '관리자';
+        default:
+          return '';
+      }
+    }
+    
   
     const selectAll = filteredUserData.length > 0 && filteredUserData.every(user => selectedRows.includes(user));
   
@@ -148,7 +163,7 @@ const Adminpage = () => {
                   </td>
                   <td className='admin-user-data-td'>{user.id}</td>
                   <td className={'admin-user-data-td'}>{user.name}</td>
-                  <td className={'admin-user-data-td'}>{user.class}</td>
+                  <td className={'admin-user-data-td'}>{translateClass(user.class)}</td>
                   <td className={'admin-user-data-td'}>{user.last_login}</td>
                 </tr>
               ))}
