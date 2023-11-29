@@ -41,16 +41,9 @@ const Main01 = () => {
   const [susAxios, setSusAxios] = useState(false);
   const [patAxios, setPatAxios] = useState(false);
 
+  const [toggle, setToggle] = useState(localStorage.getItem('toggle') === 'true' ? true : false); // 상태 관리할 state
+  const [isSuspicious, setIsSuspicious] = useState(toggle); // Default로 의심 테이블을 보여줍니다.
 
-  const [isSuspicious, setIsSuspicious] = useState(true); // Default로 의심 테이블을 보여줍니다.
-
-  const handleSuspiciousClick = () => {
-    setIsSuspicious(true);
-  };
-
-  const handleTotalClick = () => {
-    setIsSuspicious(false);
-  };
 
 
   const handleSearchTermChange = (e) => {
@@ -87,16 +80,17 @@ const Main01 = () => {
   //         });
   // }, [])
 
-  const [toggle, setToggle] = useState(false); // 상태 관리할 state
+
+  //toggle상태가 변하고 새로고침해도 그대로 table유지
+  useEffect(() => {
+    setIsSuspicious(!toggle);
+  }, [toggle]);
 
   const handleToggle = () => {
-    setToggle(!toggle) //토글 상태 변경
-    if (!toggle) {
-      handleTotalClick();
-    } else {
-      handleSuspiciousClick();
-    }
+    setToggle(!toggle); //토글 상태 변경
+    localStorage.setItem('toggle', !toggle); // 토글 상태 localStorage에 저장
   };
+
 
   useEffect(() => {
     if (newDataPIDs.length > 0) {
