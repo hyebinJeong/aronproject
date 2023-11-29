@@ -3,6 +3,7 @@ const router = express.Router();
 const path = require('path');
 const conn = require('../config/database');
 
+
 // 코멘트 조회
 router.post('/read', async(req,res)=>{
     const {patient_id} = req.body;
@@ -46,11 +47,14 @@ router.post('/read-date', async (req, res) => {
 
 // 코멘트 추가
 router.post('/add', async(req,res)=>{
-    const {patient_id, comment} = req.body;
-    const sql = 'insert into comments (patient_id, comment) values (?,?)';
+    const {patient_id, comment, author_name, author_job} = req.body;
+
+    console.log('Received data:', patient_id, comment, author_name, author_job); // 이 부분을 추가
+    
+    const sql = 'INSERT INTO comments (patient_id, comment, author_name, author_job) VALUES (?, ?, ?, ?)';
     try{
         await new Promise((resolve, reject)=>{
-            conn.query(sql, [patient_id, comment] ,(err, rows)=>{
+            conn.query(sql, [patient_id, comment, author_name, author_job] ,(err, rows)=>{
                 if(err){
                     reject(err);
                 } else {
@@ -63,6 +67,7 @@ router.post('/add', async(req,res)=>{
         res.status(500).send('An error occurred, please try again.');
     }
 });
+
 
 
 // // 코멘트 수정
@@ -123,14 +128,14 @@ router.post('/add', async(req,res)=>{
 
 // 코멘트 수정 및 날짜 업데이트
 router.post('/update-with-date', async (req, res) => {
-    const { comment, comment_id } = req.body;
+    const { comment, comment_id, author_name, author_job } = req.body;
     try {
         // 이 부분에서 서버의 현재 시간을 가져와서 변수에 저장합니다.
         const currentTimestamp = new Date().toISOString().slice(0, 19).replace('T', ' ');
 
-        const updateCommentSql = 'UPDATE comments SET comment = ?, created_at = ? WHERE comment_id = ?';
+        const updateCommentSql = 'UPDATE comments SET comment = ?, created_at = ?, author_name = ?, author_job = ? WHERE comment_id = ?';
         await new Promise((resolve, reject) => {
-            conn.query(updateCommentSql, [comment, currentTimestamp, comment_id], (err) => {
+            conn.query(updateCommentSql, [comment, currentTimestamp, author_name, author_job, comment_id], (err) => {
                 if (err) {
                     reject(err);
                 } else {

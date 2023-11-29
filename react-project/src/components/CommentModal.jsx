@@ -1,13 +1,14 @@
-import React, { useEffect, useRef, useState } from 'react'
-import './CommentModal.css'
-import axios from 'axios'
+import React, { useEffect, useRef, useState, useContext } from 'react';
+import './CommentModal.css';
+import axios from 'axios';
+import UserContext from '../contexts/UserContext';
 
 const Modal = ({setModal, pid, classifyComment}) => {
   const commentRef = useRef();
   const [data, setData] = useState([]);
+  const { user } = useContext(UserContext);
 
-  //추가한 코드
-  // 수정할 댓글의 상태와 변경하는 함수를 선언
+  // 수정할 댓글의 상태 변경하는 함수 선언
   const [editingComment, setEditingComment] = useState({ comment_id: null, comment: "" });
 
   // comment 불러오기
@@ -17,14 +18,24 @@ const Modal = ({setModal, pid, classifyComment}) => {
         patient_id: pid,
       })
       .then(async (res) => {
-        // 작성일자 정보를 받아오기
+        // 작성일자 정보 받아오기
         const commentsWithDate = await Promise.all(
           res.data.map(async (comment) => {
             const dateRes = await axios.post("http://localhost:3001/comment/read-date", {
               comment_id: comment.comment_id,
             });
-            const commentWithDate = { ...comment, created_at: dateRes.data };
-    console.log(commentWithDate); // 작성일자 정보 확인을 위한 로그
+             // 원본 댓글의 담당자 정보 저장
+          const commentWithDate = {
+            ...comment,
+            created_at: formatTo24Hour(dateRes.data),
+            original_author_name: comment.author_name,
+            original_author_job: comment.author_job,
+          };
+
+          // 로그 추가
+          console.log("Original Author Name:", commentWithDate.original_author_name);
+          console.log("Original Author Job:", commentWithDate.original_author_job);
+          console.log("Comment with date:", commentWithDate);
     return commentWithDate;
           })
         );
@@ -33,23 +44,24 @@ const Modal = ({setModal, pid, classifyComment}) => {
       });
   };
 
-
-  
-
   // comment 입력
-  const insertComment = async (word) => {
-    await axios
-      .post("http://localhost:3001/comment/add", {
-        patient_id: pid,
-        comment: word,
-      })
-      .then(async (res) => {
-        classifyComment();
-        await selectComment(); // 입력 후 작성된 코멘트를 다시 불러옴
-      });
+const insertComment = async (word) => {
+  console.log("User object:", user); // 로그 추가
+  try {
+    await axios.post("http://localhost:3001/comment/add", {
+      patient_id: pid,
+      comment: word,
+      author_name: user.name,
+      author_job: user.job,
+      author_id : user.id,
+    });
 
-    await selectComment();
-  };
+    classifyComment();
+    await selectComment(); // 입력 후 작성된 코멘트를 다시 불러옴
+  } catch (error) {
+    console.error("Error inserting comment:", error);
+  }
+};
 
   const deleteComment = async (id) => {
     await axios
@@ -90,11 +102,14 @@ const Modal = ({setModal, pid, classifyComment}) => {
             const response = await axios.post("http://localhost:3001/comment/update-with-date", {
                 comment: editingComment.comment,
                 comment_id: editingComment.comment_id,
+                author_name: user.name,
+        author_job: user.job,
+        author_id: user.id,
             });
 
             console.log("댓글이 수정되었습니다.");
             // 수정된 날짜를 받아와서 활용하거나 로그에 출력 등의 작업을 수행할 수 있습니다.
-            console.log("수정된 날짜:", response.data.updatedDate);
+console.log("수정된 날짜:", new Date(response.data.updatedDate));
 
             setEditingComment({ comment_id: null, comment: "" }); // 수정이 끝나면 상태를 초기화합니다.
             await selectComment(); // 수정 후 코멘트를 다시 불러옵니다.
@@ -145,9 +160,15 @@ const Modal = ({setModal, pid, classifyComment}) => {
           {/* 추가한코드 */}
           {data.map((d) => {
             return (
-              <div className="modal-comment-box">
+              <div className="modal-comment-box" key={d.comment_id}>
                 <div className="comment-info">
-        <span className="comment-date" style={{ marginRight: '8px' }}>{d.created_at}</span>
+        <span className="comment-date" style={{ marginRight: '8px' , fontSize: 'x-small'}}>{d.created_at}</span>
+        
+        {/* 추가: 담당자 정보를 화면에 표시 */}
+        <span className="comment-author-info" style={{ fontSize: 'x-small' }}>
+          담당{getJobTitle(d.original_author_job)} [{d.original_author_name}]
+        </span>
+        
         <span className="comment-content">
                 {editingComment &&
                 editingComment.comment_id === d.comment_id ? (
@@ -164,6 +185,7 @@ const Modal = ({setModal, pid, classifyComment}) => {
                   d.comment
                 )}
                 </span>
+                
                 </div>
                 
                 <button
@@ -223,15 +245,64 @@ const Modal = ({setModal, pid, classifyComment}) => {
 
 export default Modal
 
-// 작성일자를 표시하기 위한 함수 추가
-function formatDate(dateString) {
-  const options = {
-    year: "numeric",
-    month: "numeric",
-    day: "numeric",
-    hour: "numeric",
-    minute: "numeric",
-  };
-  const date = new Date(dateString);
-  return date.toLocaleDateString("ko-KR", options);
+// getJobTitle 함수가 정의되어 있다고 가정
+function getJobTitle(job) {
+  switch (job) {
+    case 0:
+      return '간호사';
+    case 1:
+      return '의사';
+    case 9:
+      return '관리자';
+    default:
+      return '';
+  }
 }
+
+// // 날짜를 24시간 형식으로 포맷팅하는 함수
+// const formatTo24Hour = (date) => {
+//   const options = {
+//     year: 'numeric',
+//     month: '2-digit',
+//     day: '2-digit',
+//     hour: '2-digit',
+//     minute: '2-digit',
+//     second: '2-digit',
+//     hour12: false, // 시간을 24시간 형식으로 표시
+//   };
+
+//   return new Date(date).toLocaleString('en-US', options);
+// };
+
+// // 사용 예시
+// const formattedDate = formatTo24Hour('2023-11-28T15:30:00Z');
+// console.log(formattedDate);
+
+// 날짜를 24시간 형식으로 포맷팅하는 함수
+const formatTo24Hour = (date) => {
+  const options = {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    hour12: false, // 시간을 24시간 형식으로 표시
+  };
+
+  try {
+    // "23-11-29 03:02:55" 형식의 날짜를 "2023-11-29T03:02:55Z" 형식으로 변환
+    const convertedDate = new Date(date.replace(/(\d{2})-(\d{2})-(\d{2}) (\d{2}:\d{2}:\d{2})/, '20$3-$2-$1T$4Z'));
+    
+    console.log('Converted Date:', convertedDate);
+
+    const formattedDate = `${convertedDate.getFullYear()}-${(convertedDate.getMonth() + 1).toString().padStart(2, '0')}-${convertedDate.getDate().toString().padStart(2, '0')} ${convertedDate.getHours().toString().padStart(2, '0')}:${convertedDate.getMinutes().toString().padStart(2, '0')}:${convertedDate.getSeconds().toString().padStart(2, '0')}`;
+
+    console.log('Formatted Date:', formattedDate);
+
+    return formattedDate;
+  } catch (error) {
+    console.error('Date parsing error:', error);
+    return 'Invalid Date';
+  }
+};
