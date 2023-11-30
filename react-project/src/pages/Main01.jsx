@@ -86,6 +86,7 @@ const Main01 = () => {
     }
   }, []);
 
+
   //toggle상태가 변하고 새로고침해도 그대로 table유지
   useEffect(() => {
     setIsSuspicious(!toggle);

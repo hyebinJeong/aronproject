@@ -74,7 +74,6 @@ function GraphLine({ startDate, endDate }) {
         patient_id: pid,
       })
       .then((res) => {
-        console.log(res.data);
         if (res.data.length > 0) { // 데이터가 있을 경우에만 처리
           setDBdata(res.data);
 
@@ -107,7 +106,6 @@ function GraphLine({ startDate, endDate }) {
         const recordTime = new Date(d.record_time.replace(" ", "T"));
         return recordTime >= start && recordTime <= end;
       });
-      console.log(DBdata);
 
       setFilteredData(newFilteredData);
     } else {

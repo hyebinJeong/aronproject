@@ -9,7 +9,7 @@ import iconSortDown from '../image/iconSortDown.svg'
 import axios from 'axios';
 import ColumnFilter from './Columnfilter.jsx'
 
-const SuspiciousTable = ({ modal, selectedColumn, searchTerm, setting, setModal, setPid, pid, commentArr, classifyComment, susAxios, setSusAxios, setAlert }) => {
+const SuspiciousTable = ({ modal, selectedColumn, searchTerm, setting, setModal, setPid, pid, commentArr, classifyComment, susAxios, setSusAxios, setAlert, tableStatus, updateStatusData }) => {
 
     const columns = useMemo(() => {
         return COLUMNS.map((column) => {
@@ -55,7 +55,9 @@ const SuspiciousTable = ({ modal, selectedColumn, searchTerm, setting, setModal,
         setInputValue(e.target.value);
     };
 
-    // 데이터 저장 함수
+
+
+
     const handleSave = async () => {
         // 데이터를 변경합니다.
         selectedCell.row.original[selectedCell.column.id] = inputValue;
@@ -67,6 +69,17 @@ const SuspiciousTable = ({ modal, selectedColumn, searchTerm, setting, setModal,
             console.log(res);
         }).catch((error) => {
             console.error(error);
+        });
+
+        //상태를 갱신합니다.
+        await new Promise(resolve => {
+            setDatas(datas.map(data => {
+                if (data.patient_id === selectedCell.row.original.patient_id) {
+                    return { ...data, status: inputValue };
+                }
+                return data;
+            }));
+            resolve();
         });
 
         closeModal();
@@ -119,8 +132,6 @@ const SuspiciousTable = ({ modal, selectedColumn, searchTerm, setting, setModal,
     // useEffect(() => {
     //     loadSuspicious()
     // }, [u_score]);
-
-
 
 
 
@@ -217,35 +228,35 @@ const SuspiciousTable = ({ modal, selectedColumn, searchTerm, setting, setModal,
                         return (
                             <tr style={{ cursor: 'pointer' }} {...row.getRowProps()} onDoubleClick={() => {
                                 nav(`/detailpage?pid=${row.original.patient_id}`)
-                            }}>
-                                {row.cells.map((cell, columnIndex) => {
-                                    let buttonTextColor = 'grey'
-                                    if (columnIndex === 0) {
-                                        switch (cell.row.original[cell.column.id]) {
-                                            case 0:
-                                                buttonTextColor = '#4caf50';
-                                                break;
-                                            case 1:
-                                                buttonTextColor = '#ffc107';
-                                                break;
-                                            case 2:
-                                                buttonTextColor = '#f44336';
-                                                break;
-                                            default:
-                                                break;
-                                        }
+                            }}>{row.cells.map((cell, columnIndex) => {
+                                let buttonTextColor = null;
+                                if (columnIndex === 0 && cell.row.original[cell.column.id] !== null) {
+                                    switch (cell.row.original[cell.column.id]) {
+                                        case 0:
+                                            buttonTextColor = '#4caf50';
+                                            break;
+                                        case 1:
+                                            buttonTextColor = '#ffc107';
+                                            break;
+                                        case 2:
+                                            buttonTextColor = '#f44336';
+                                            break;
+                                        default:
+                                            buttonTextColor = 'grey';
+                                            break;
                                     }
-                                    return (
-                                        <td {...cell.getCellProps()}>
-                                            {columnIndex === 0 ?
-                                                <button style={{ cursor: 'pointer', padding: '4px', color: buttonTextColor, textAlign: 'center', backgroundColor: 'transparent', border: 'none', fontSize: 'x-large' }}
-                                                    onClick={() => openModal(cell)}>
-                                                    ●
-                                                </button> :
-                                                cell.render('Cell')}
-                                        </td>
-                                    )
-                                })}
+                                }
+                                return (
+                                    <td {...cell.getCellProps()}>
+                                        {columnIndex === 0 ?
+                                            <button style={{ cursor: 'pointer', padding: '4px', color: buttonTextColor, textAlign: 'center', backgroundColor: 'transparent', border: 'none', fontSize: 'x-large' }}
+                                                onClick={() => openModal(cell)}>
+                                                ●
+                                            </button> :
+                                            cell.render('Cell')}
+                                    </td>
+                                )
+                            })}
                                 <td><button
                                     style={{ cursor: 'pointer', width: '100%' }}
                                     className='table-page-col'
