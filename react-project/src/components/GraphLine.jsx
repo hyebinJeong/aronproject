@@ -66,54 +66,68 @@ function GraphLine({ startDate, endDate }) {
   //   }
   // }, [startDate, endDate]);
 
+
   useEffect(() => {
-    if (startDate !== null && endDate !== null) {
-      // 날짜 문자열을 Date 객체로 변환합니다.
-      const start = new Date(startDate);
-      start.setHours(0, 0, 0, 0)
-
-      const end = new Date(endDate);
-
-      // endDate를 해당 날짜의 종료 시점으로 설정
-      end.setHours(23, 59, 59, 999);
-
-      // 선택된 기간에 맞는 데이터만 필터링합니다.
-      const newFilteredData = DBdata.filter((d) => {
-        // record_time이 'YYYY-MM-DD HH:MM' 형태라고 가정하고, 이를 Date 객체로 변환합니다.
-        const recordTime = new Date(d.record_time.replace(" ", "T"));
-        return recordTime >= start && recordTime <= end;
-      });
-
-      // 필터링된 데이터로 상태를 업데이트합니다.
-      setFilteredData(newFilteredData);
-    } else {
-      // startDate나 endDate가 초기값인 경우, 모든 데이터를 그대로 사용합니다.
-      setFilteredData(DBdata);
-    }
-  }, [startDate, endDate, DBdata]);
-
-
-  // 데이터 받아옴
-  useEffect(() => {
-    console.log("useeffect");
-
+    // 전체 데이터 가져오기
     axios
       .post("http://localhost:3001/detail/alldata", {
         patient_id: pid,
       })
       .then((res) => {
-        // 데이터를 시간 순으로 정렬합니다.
-        const sortedData = res.data.sort((a, b) => new Date(a.record_time) - new Date(b.record_time));
+        console.log(res.data);
+        if (res.data.length > 0) { // 데이터가 있을 경우에만 처리
+          setDBdata(res.data);
 
-        // 가장 최신의 날짜를 찾습니다.
-        const latestDate = sortedData[sortedData.length - 1].record_time.split(" ")[0];
-
-        // 최신의 날짜에 해당하는 데이터만 필터링합니다.
-        const latestData = sortedData.filter(d => d.record_time.startsWith(latestDate));
-
-        setDBdata(latestData);
+          // 가장 최신 날짜의 데이터 하루 필터링
+          const sortedData = res.data.sort((a, b) => new Date(a.record_time) - new Date(b.record_time));
+          if (sortedData.length > 0) {
+            const latestDate = sortedData[sortedData.length - 1].record_time.split(" ")[0];
+            const startDate = new Date(latestDate);
+            const endDate = new Date(latestDate);
+            startDate.setHours(0, 0, 0, 0);
+            endDate.setHours(23, 59, 59, 999);
+            const latestData = sortedData.filter((d) => {
+              const recordTime = new Date(d.record_time.replace(" ", "T"));
+              return recordTime >= startDate && recordTime <= endDate;
+            });
+            setFilteredData(latestData);
+          }
+        }
       });
-  }, []);
+  }, [pid]);
+
+  useEffect(() => {
+    if (startDate && endDate) {
+      const start = new Date(startDate);
+      const end = new Date(endDate);
+      start.setHours(0, 0, 0, 0);
+      end.setHours(23, 59, 59, 999);
+
+      const newFilteredData = DBdata.filter((d) => {
+        const recordTime = new Date(d.record_time.replace(" ", "T"));
+        return recordTime >= start && recordTime <= end;
+      });
+      console.log(DBdata);
+
+      setFilteredData(newFilteredData);
+    } else {
+      // startDate와 endDate가 없을 때는 최신 데이터 중 하루만 필터링
+      const sortedData = DBdata.sort((a, b) => new Date(a.record_time) - new Date(b.record_time));
+      if (sortedData.length > 0) {
+        const latestDate = sortedData[sortedData.length - 1].record_time.split(" ")[0];
+        const startDate = new Date(latestDate);
+        const endDate = new Date(latestDate);
+        startDate.setHours(0, 0, 0, 0);
+        endDate.setHours(23, 59, 59, 999);
+        const latestData = sortedData.filter((d) => {
+          const recordTime = new Date(d.record_time.replace(" ", "T"));
+          return recordTime >= startDate && recordTime <= endDate;
+        });
+        setFilteredData(latestData);
+      }
+    }
+  }, [startDate, endDate, DBdata]);
+
 
   const originalData = [
     // DB에서 받아온 정보를 map함수로 반복처리

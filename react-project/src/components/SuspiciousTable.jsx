@@ -39,6 +39,8 @@ const SuspiciousTable = ({ modal, selectedColumn, searchTerm, setting, setModal,
     const [prevDataLength, setPrevDataLength] = useState(0);
     const [prevUScore, setPrevUScore] = useState(null);
 
+    const [currentUScore, setCurrentUScore] = useState(null); // 현재 u_score 상태 추가
+
     //stattus modal 
     const openModal = (cell) => {
         setSelectedCell(cell)
@@ -80,9 +82,9 @@ const SuspiciousTable = ({ modal, selectedColumn, searchTerm, setting, setModal,
             const fetchedScore = res.data[0].u_score;
             console.log(fetchedScore);
 
-            if (fetchedScore !== prevUScore) {
-                setPrevUScore(fetchedScore);
-
+            const confirmedUScore = localStorage.getItem('confirmedUScore');
+            if (confirmedUScore !== fetchedScore) {
+                // u_score가 바뀌었을 때만 서버에서 데이터를 가져옵니다.
                 axios.post('http://localhost:3001/suspicious', {
                     u_score: fetchedScore
                 }).then((res) => {
@@ -99,16 +101,24 @@ const SuspiciousTable = ({ modal, selectedColumn, searchTerm, setting, setModal,
                     }
                     setPrevDataLength(res.data.length);
                 });
-            } else {
-                setNewDataPIDs([]);
-                setAlert(null);
+
+                // 새로운 u_score 값을 로컬 스토리지에 저장합니다.
+                localStorage.setItem('confirmedUScore', fetchedScore);
             }
+            setUScore(fetchedScore); // u_score 상태 업데이트
         });
     };
 
     useEffect(() => {
-        loadSuspicious()
-    }, [u_score]);
+        loadSuspicious();
+        setNewDataPIDs([]);
+        setAlert(null);
+    }, [u_score]); // u_score 값이 바뀔 때마다 이 훅을 실행
+
+
+    // useEffect(() => {
+    //     loadSuspicious()
+    // }, [u_score]);
 
 
 

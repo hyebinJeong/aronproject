@@ -220,11 +220,17 @@ input:checked + .toggle-slider:after {
 }
 
 .update-patient-alert {
-  width: 45%;
+  width: 35%;
+  height: 1%;
   display: flex;
-  margin: 1% 1% 1% 4%;
+  margin: 1% 1% 1% 1%;
   align-items: center;
   justify-content: center;
+  position: relative;
+  background: white;
+  padding: 1em;
+  border-radius: 4px;
+  animation: color-change 2s infinite;
 }
 
 .update-patient-alert p {
@@ -243,10 +249,36 @@ input:checked + .toggle-slider:after {
 }
 
 .update-alert-btn {
-  width: 10%;
-  height: 30px;
-  border: none;
-  background-color: #0d47a1;
-  color: #ddd;
+  width: 15%;
+  height: 25px;
+  margin-left: 2px;
+  border: 1px solid #0d47a1;
+  background-color: transparent;
+  color: black;
   border-radius: 5px;
+}
+
+.icon-alram {
+  width: 3%;
+  height: 25px;
+  background-color: transparent;
+}
+
+@keyframes color-change {
+  0% {
+    box-shadow: 0 0 2px #ffebee, 0 0 2px #ffebee, 0 0 15px #ffebee,
+      0 0 20px #ffebee;
+  }
+  33% {
+    box-shadow: 0 0 2px #e57373, 0 0 2px #e57373, 0 0 15px #e57373,
+      0 0 20px #e57373;
+  }
+  66% {
+    box-shadow: 0 0 2px #f44336, 0 0 2px #f44336, 0 0 15px #f44336,
+      0 0 20px #f44336;
+  }
+  100% {
+    box-shadow: 0 0 2px #ffebee, 0 0 2px #ffebee, 0 0 15px #ffebee,
+      0 0 20px #ffebee;
+  }
 }

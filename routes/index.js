@@ -4,12 +4,11 @@ const express = require("express");
 const router = express.Router();
 const path = require("path");
 const conn = require("../config/database");
-const bcrypt = require('bcrypt');
-
+const bcrypt = require("bcrypt");
 
 // 전체 데이터
 router.post("/patients", async (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
 
   const sql = `
   SELECT 
@@ -46,7 +45,7 @@ router.post("/patients", async (req, res) => {
 
   try {
     const results = await new Promise((resolve, reject) => {
-      conn.query(sql,(err, result) => {
+      conn.query(sql, (err, result) => {
         if (err) throw err;
         else res.json(result);
       });
@@ -57,8 +56,8 @@ router.post("/patients", async (req, res) => {
 });
 
 // 패혈증 의심 환자 테이블 불러오기
-router.post('/suspicious', async (req, res) => {
-  console.log(req.body);
+router.post("/suspicious", async (req, res) => {
+  // console.log(req.body);
 
   const { u_score } = req.body; // u_score 값을 가져옵니다.
   const sql = `
@@ -89,29 +88,9 @@ router.post('/suspicious', async (req, res) => {
   )
     `;
   try {
-      const results = await new Promise((resolve, reject) => {
-          conn.query(sql,[u_score],(err, rows) => { 
-              if (err) {
-                  reject(err);
-              } else {
-                  resolve(rows);
-              }
-          });
-      });
-      res.json(results);
-  } catch (err) {
-      res.status(500).send('An error occurred, please try again.');
-  }
-});
-
-
-// 관리자 페이지 user 데이터
-router.post('/adminpage', async(req,res)=>{
-  const sql = "select * from user";
-  try {
-    const results = await new Promise((resolve, reject)=>{
-      conn.query(sql,(err, rows)=>{
-        if(err){
+    const results = await new Promise((resolve, reject) => {
+      conn.query(sql, [u_score], (err, rows) => {
+        if (err) {
           reject(err);
         } else {
           resolve(rows);
@@ -120,15 +99,33 @@ router.post('/adminpage', async(req,res)=>{
     });
     res.json(results);
   } catch (err) {
-    res.status(500).send('An error occurred, please try again.');
+    res.status(500).send("An error occurred, please try again.");
   }
+});
 
+// 관리자 페이지 user 데이터
+router.post("/adminpage", async (req, res) => {
+  const sql = "select * from user";
+  try {
+    const results = await new Promise((resolve, reject) => {
+      conn.query(sql, (err, rows) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(rows);
+        }
+      });
+    });
+    res.json(results);
+  } catch (err) {
+    res.status(500).send("An error occurred, please try again.");
+  }
 });
 
 const saltRounds = 10; // 솔트의 길이, 높을수록 보안이 높아짐
 
 // 사용자 추가 엔드포인트
-router.post('/adminpage/add', async (req, res) => {
+router.post("/adminpage/add", async (req, res) => {
   const { id, pw, name, classvalue } = req.body;
 
   try {
@@ -136,7 +133,7 @@ router.post('/adminpage/add', async (req, res) => {
     const hashedPw = await bcrypt.hash(pw, saltRounds);
 
     const sql = "INSERT INTO user (id, pw, name, class) VALUES (?, ?, ?, ?)";
-    
+
     await new Promise((resolve, reject) => {
       conn.query(sql, [id, hashedPw, name, classvalue], (err, rows) => {
         if (err) {
@@ -147,9 +144,9 @@ router.post('/adminpage/add', async (req, res) => {
       });
     });
 
-    res.status(200).send('User added successfully');
+    res.status(200).send("User added successfully");
   } catch (err) {
-    res.status(500).send('An error occurred, please try again.');
+    res.status(500).send("An error occurred, please try again.");
   }
 });
 
@@ -175,62 +172,108 @@ router.post('/adminpage/add', async (req, res) => {
 // });
 
 // 관리자 페이지 user 삭제
-router.post('/adminpage/deleted', async (req,res)=>{
+router.post("/adminpage/deleted", async (req, res) => {
   const { ids } = req.body;
   const sql = "DELETE FROM user WHERE id IN (?)";
   try {
-    await new Promise((resolve, reject)=>{
+    await new Promise((resolve, reject) => {
       conn.query(sql, [ids], (err, rows) => {
-        if(err){
+        if (err) {
           reject(err);
         } else {
-          resolve(rows)
+          resolve(rows);
         }
       });
     });
-    res.status(200).send('user deleted');
-  } catch(err) {
-    res.status(500).send('An error occurred, please try again.');
+    res.status(200).send("user deleted");
+  } catch (err) {
+    res.status(500).send("An error occurred, please try again.");
   }
 });
 
 // 패혈증 점수 업데이트
-router.post('/adminpage/update_sepsis', async (req,res)=>{
-  const {u_score} = req.body;
+router.post("/adminpage/update_sepsis", async (req, res) => {
+  const { u_score } = req.body;
   const sql = "update score set u_score = ?";
-  console.log(req.body.id)
   try {
-    await new Promise((resolve, reject)=>{
-      conn.query(sql, [u_score], (err, rows)=>{
-        if(err){
+    await new Promise((resolve, reject) => {
+      conn.query(sql, [u_score], (err, rows) => {
+        if (err) {
           reject(err);
         } else {
-          resolve(rows)
+          resolve(rows);
         }
       });
     });
-    res.status(200).send('sepsis score updated');
-  } catch(err) {
-    res.status(500).send('An error occurred, please try again.');
+    res.status(200).send("sepsis score updated");
+  } catch (err) {
+    res.status(500).send("An error occurred, please try again.");
   }
 });
 
 // 관리자 패혈증
-router.post('/adminpage/sepsis_score', async (req,res)=>{
+router.post("/adminpage/sepsis_score", async (req, res) => {
   const sql = "select * from score";
   try {
-    const result = await new Promise((resolve, reject)=>{
-      conn.query(sql, (err, rows)=>{
-        if(err){
+    const result = await new Promise((resolve, reject) => {
+      conn.query(sql, (err, rows) => {
+        if (err) {
           reject(err);
         } else {
-          resolve(rows)
+          resolve(rows);
         }
       });
     });
-    res.json(result)
-  } catch(err) {
-    res.status(500).send('An error occurred, please try again.');
+    res.json(result);
+  } catch (err) {
+    res.status(500).send("An error occurred, please try again.");
+  }
+});
+
+//범식이가 추가한 코드
+router.post("/getAlert", async (req, res) => {
+  const sql = `
+  select patient.name, 
+  data.sepsis_score 
+  from patient 
+  join data 
+  on patient.patient_id = data.patient_id 
+  where data.alert = 1
+  `;
+  try {
+    const result = await new Promise((resolve, reject) => {
+      conn.query(sql, (err, rows) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(rows);
+        }
+      });
+    });
+    res.json(result);
+  } catch (err) {
+    res.status(500).send("An error occurred, please try again.");
+  }
+});
+
+router.post("/updateAlert", async (req, res) => {
+  const sql = `
+  update data
+  set alert = 0
+  where alert = 1`;
+  try {
+    const result = await new Promise((resolve, reject) => {
+      conn.query(sql, (err, rows) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(rows);
+        }
+      });
+      res.json({ result: 1 });
+    });
+  } catch (err) {
+    res.status(500).send("An error occurred, please try again.");
   }
 });
 
