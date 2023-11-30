@@ -75,7 +75,7 @@ const AdminAddModal = ({ onUserAdded, closeModal }) => {
         <div className="modal-info-set modal-info-pw">
           <span className="info-box-text">비밀번호 : </span>
           <input
-            type="text"
+            type="password"
             className="info-box"
             value={pw}
             onChange={(e) => setPw(e.target.value)}
