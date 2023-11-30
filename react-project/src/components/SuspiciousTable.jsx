@@ -34,7 +34,8 @@ const SuspiciousTable = ({ modal, selectedColumn, searchTerm, setting, setModal,
     const [inputValue, setInputValue] = useState("");
 
     //u_score변경
-    const [u_score, setUScore] = useState(null);
+    // const [u_score, setUScore] = useState(null);
+    const [u_score, setU_score] = useState(localStorage.getItem('confirmedUScore') || '');
     const [newDataPIDs, setNewDataPIDs] = useState([]);
     const [prevDataLength, setPrevDataLength] = useState(0);
     const [prevUScore, setPrevUScore] = useState(null);
@@ -83,6 +84,8 @@ const SuspiciousTable = ({ modal, selectedColumn, searchTerm, setting, setModal,
         });
 
         closeModal();
+        // 데이터를 새로 불러옵니다.
+        loadSuspicious();
     };
 
 
@@ -118,22 +121,13 @@ const SuspiciousTable = ({ modal, selectedColumn, searchTerm, setting, setModal,
                 // 새로운 u_score 값을 로컬 스토리지에 저장합니다.
                 localStorage.setItem('confirmedUScore', fetchedScore);
             }
-            setUScore(fetchedScore); // u_score 상태 업데이트
+            setU_score(fetchedScore);// u_score 상태 업데이트
         });
     };
 
     useEffect(() => {
         loadSuspicious();
-        setNewDataPIDs([]);
-        setAlert(null);
-    }, [u_score]); // u_score 값이 바뀔 때마다 이 훅을 실행
-
-
-    // useEffect(() => {
-    //     loadSuspicious()
-    // }, [u_score]);
-
-
+    }, [u_score]);
 
 
     const { getTableProps,
