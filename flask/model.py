@@ -135,29 +135,46 @@ def predict() :
     if not db.open:
         db.connect()
         
-    patient_id = 9891
+    patient_id = 11745
     # sql = 'select * from data where patient_id = %s'
-    sql = 'select * from data as d inner join patient as p on d.patient_id = p.patient_id and p.patient_id = %s'
     
-    cursor.execute(sql, (patient_id,))
+    test_sql = 'select patient_id from data where sepsis_score is null'
     
-    data = cursor.fetchall()
+    cursor.execute(test_sql)
     
-    column_names = [i[0] for i in cursor.description]
-    df = pd.DataFrame(data, columns=column_names)
-    df.rename(columns = {'age' : 'Age'}, inplace=True)
+    res = cursor.fetchall()
     
-    prediction_result = predict_sepsis(df)
+    result = []
     
-    update_sql = 'update data set sepsis_score = %s where patient_id = %s order by record_time desc limit 1'
+    if len(res) > 0 :
+        for pid in res :
+            
+            sql = 'select * from data as d inner join patient as p on d.patient_id = p.patient_id and p.patient_id = %s'
+            
+            cursor.execute(sql, (pid,))
+            
+            data = cursor.fetchall()
+            
+            column_names = [i[0] for i in cursor.description]
+            df = pd.DataFrame(data, columns=column_names)
+            df.rename(columns = {'age' : 'Age'}, inplace=True)
+            
+            prediction_result = predict_sepsis(df)
+            
+            update_sql = 'update data set sepsis_score = %s where patient_id = %s order by record_time desc limit 1'
+            
+            cursor.execute(update_sql, (int(float(prediction_result) * 100), pid,))
+            
+            result.append(int(float(prediction_result) * 100))
+        
+    # result.append('i')
     
-    cursor.execute(update_sql, (int(float(prediction_result) * 100), patient_id,))
-    
-    db.commit()
+        db.commit()
 
     db.close()
     
-    return jsonify(prediction_result)
+    # return jsonify(prediction_result)
+    return jsonify(result)
 
 
 
