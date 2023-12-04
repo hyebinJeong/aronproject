@@ -181,13 +181,13 @@ const PatientTable = ({ modal, selectedColumn, searchTerm, setting, setModal, se
                                     if (columnIndex === 0) {
                                         switch (cell.row.original[cell.column.id]) {
                                             case 0:
-                                                buttonTextColor = 'green';
+                                                buttonTextColor = '#4caf50';
                                                 break;
                                             case 1:
-                                                buttonTextColor = 'yellow';
+                                                buttonTextColor = '#ffc107';
                                                 break;
                                             case 2:
-                                                buttonTextColor = 'red';
+                                                buttonTextColor = '#f44336';
                                                 break;
                                             default:
                                                 break;

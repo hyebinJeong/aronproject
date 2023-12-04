@@ -283,7 +283,7 @@ function GraphLine({ startDate, endDate }) {
                 checked={sepsis_score}
                 onChange={() => showSepsis_score(!sepsis_score)}
               />{" "}
-              Sepsis score
+              ARON Score
             </div>
             <div className="index-name">
               <input

@@ -51,20 +51,21 @@ function App() {
   const auth = localStorage.getItem('user')
   // const auth = JSON.parse(localStorage.getItem("user")); 
 
-  useEffect(() => {
-    const checkLoginStatus = async () => {
-      try {
-        const response = await axios.get("/check-login");
-        if (response.data.loggedIn) {
-          setUser(response.data.user);
-        }
-      } catch (error) {
-        console.error("로그인 상태 확인 실패", error);
-      }
-    };
+  // useEffect(() => {
+  //   const checkLoginStatus = async () => {
+  //     try {
+  //       const response = await axios.get("/check-login");
+  //       if (response.data.loggedIn) {
+  //         setUser(response.data.user);
+  //       }
+  //     } catch (error) {
+  //       console.error("로그인 상태 확인 실패", error);
+  //     }
+  //   };
 
-    checkLoginStatus();
-  }, []);
+  //   checkLoginStatus();
+  // }, []);
+
 
   return (
     // 추가한 코드

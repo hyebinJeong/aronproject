@@ -81,6 +81,7 @@ router.post("/suspicious", async (req, res) => {
   inner join data d 
   on p.patient_id=d.patient_id
   where d.sepsis_score >= ?
+  and p.status > 0
   and d.record_time = (
     select max(record_time)
     from data

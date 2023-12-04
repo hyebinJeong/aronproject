@@ -67,7 +67,6 @@ const SuspiciousTable = ({ modal, selectedColumn, searchTerm, setting, setModal,
         await axios.post('http://localhost:3001/status/update', {
             ...selectedCell.row.original,  // 변경된 데이터를 포함한 행의 데이터
         }).then((res) => {
-            console.log(res);
         }).catch((error) => {
             console.error(error);
         });
@@ -96,7 +95,6 @@ const SuspiciousTable = ({ modal, selectedColumn, searchTerm, setting, setModal,
     const loadSuspicious = () => {
         axios.post('http://localhost:3001/adminpage/sepsis_score').then((res) => {
             const fetchedScore = res.data[0].u_score;
-            console.log(fetchedScore);
 
             const confirmedUScore = localStorage.getItem('confirmedUScore');
             if (confirmedUScore !== fetchedScore) {

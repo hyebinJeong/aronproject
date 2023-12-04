@@ -30,11 +30,9 @@ const Main01 = () => {
 
   const handleAlertConfirm = () => {
     // 확인된 알림의 PID를 로컬 스토리지에 저장
-    console.log('handleAlertConfirm')
     localStorage.setItem('confirmedPIDs', JSON.stringify(newDataPIDs));
 
     // 현재 u_score 값을 로컬 스토리지에 저장
-    console.log(u_score)
     localStorage.setItem('confirmedUScore', u_score);
 
     // newDataPIDs 비우기
@@ -49,7 +47,6 @@ const Main01 = () => {
   //추가한 코드
   const { sepsisScores } = useContext(SepsisScoreContext);
   useEffect(() => {
-    console.log(JSON.stringify(sepsisScores, null));
   }, [sepsisScores]);
 
 
