@@ -1,24 +1,28 @@
-## morgorithm
+## Morgorithm
 
-### PR 활용법
-0. 항상 보내기 전에 pull부터 실행합시다.
-```
-git pull origin master
-```
-1. git branch 생성하고 그 branch로 이동함
-```
-git checkout -b <branch 이름>
-```
-2. 작업한 코드를 add, commit, push함
-```
-git add .
-git commit -m 'commit message'
-git push origin <branch 이름>
-```
-3. PR 승인 대기하기
-4. Merge 이후 동기화 및 branch 삭제할 것
-```
-git checkout master
-git pull origin master
-git branch -d <branch 이름>
-```
+## 🖥️ 프로젝트 소개
+광주인공지능사관학교 4기 JS-B반 팀 Morgorithm의 ARON프로젝트입니다.
+<br>
+ARON은 환자의 생체 데이터를 기반으로 모델링한 인공지능과 웹 서비스를 접목시킨 프로젝트입니다.
+<br>
+
+## 🕰️ 개발 기간
+* 23.11 ~ 23.12 (약 4주간 진행)
+
+### 👫 멤버구성
+- 팀장 김석태 : AI Modeling 및 Project Manager
+- 팀원 서혜림 : Back-End Developer
+- 팀원 최진아 : Front-End Developer
+- 팀원 정혜빈 : Front-End Developer
+- 팀원 임예슬 : Back-End Developer
+
+### ⚙️ 개발환경
+- ReactJS
+- NodeJS
+- ExpressJS
+- Flask
+- MariaDB
+
+##  주요 기능
+1. 각 환자들의 중환자실 생체 시계열 데이터를 기반으로 패혈증을 예측하는 모델 탑재
+2. 환자의 생체 데이터를 실시간으로 모니터링 할 수 있도록 UI / UX 제작
