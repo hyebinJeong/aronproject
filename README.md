@@ -16,6 +16,19 @@ ARON은 환자의 생체 데이터를 기반으로 모델링한 인공지능과 
 - 팀원 정혜빈 : Front-End Developer
 - 팀원 임예슬 : Back-End Developer
 
+## 기술 스택
+
+- AI: python, Flask
+- FrontEnd: React.js, CSS
+- BackEnd: Node.js
+- DB: MariaDB
+- 기타: figma, Notion, VSCode
+
+## 서비스 흐름도
+
+<img width="1874" height="842" alt="image" src="https://github.com/user-attachments/assets/baef6184-42a1-4059-a1e9-197ec86ef3f0" />
+
+
 ## 서비스 web 화면
 
 ### 1. 로그인페이지 구현 ⭐My position⭐
